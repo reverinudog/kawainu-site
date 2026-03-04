@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 620" fill="none">
+  <!-- モニター筐体（ベゼル） -->
+  <rect x="60" y="20" width="680" height="440" rx="18" ry="18"
+        fill="#111114" stroke="#222228" stroke-width="3"/>
+  <!-- 内側ベゼル -->
+  <rect x="72" y="32" width="656" height="416" rx="10" ry="10"
+        fill="#0a0a0d" stroke="#1a1a20" stroke-width="2"/>
+
+  <!-- モニター画面 -->
+  <rect id="monitor-screen" x="82" y="42" width="636" height="396" rx="6" ry="6"
+        fill="#020204"/>
+
+  <!-- 画面反射（ガラス風ハイライト） -->
+  <rect x="82" y="42" width="636" height="396" rx="6" ry="6"
+        fill="url(#screenReflection)" opacity="0.08" class="screen-reflection"/>
+
+  <!-- 電源LED -->
+  <circle id="monitor-led" cx="400" cy="468" r="4" fill="#1a1a1a" class="monitor-led"/>
+  <!-- LED グロー（初期非表示） -->
+  <circle cx="400" cy="468" r="8" fill="none" class="led-glow"/>
+
+  <!-- スタンド（首） -->
+  <path d="M350 480 L350 530 Q350 540 360 540 L440 540 Q450 540 450 530 L450 480"
+        fill="#111114" stroke="#1a1a20" stroke-width="2"/>
+
+  <!-- スタンド（ベース） -->
+  <ellipse cx="400" cy="555" rx="160" ry="22"
+           fill="#111114" stroke="#1a1a20" stroke-width="2"/>
+  <ellipse cx="400" cy="552" rx="140" ry="14"
+           fill="#0d0d10"/>
+
+  <!-- ベゼル下部のブランドロゴ風ライン -->
+  <rect x="340" y="462" width="120" height="1.5" rx="1"
+        fill="#222228"/>
+
+  <!-- グラデーション定義 -->
+  <defs>
+    <!-- 画面反射 -->
+    <linearGradient id="screenReflection" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6"/>
+      <stop offset="30%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- 電源ON時の画面グロー -->
+    <radialGradient id="screenGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#00ff6a" stop-opacity="0.15"/>
+      <stop offset="60%" stop-color="#00ff6a" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#00ff6a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>川犬 — VTuber Official Site</title>
+    <meta name="description" content="VTuber 川犬の公式サイト。配信情報、SNSリンク、ミニゲームなど。">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700;900&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="monitor-booting">
+    <!-- モニター電源ON → ズームイン演出 -->
+    <div id="boot-overlay">
+        <div class="boot-monitor">
+            <!-- インラインSVGモニター -->
+            <svg class="monitor-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 620" fill="none">
+                <rect x="60" y="20" width="680" height="440" rx="18" ry="18" fill="#111114" stroke="#222228"
+                    stroke-width="3" />
+                <rect x="72" y="32" width="656" height="416" rx="10" ry="10" fill="#0a0a0d" stroke="#1a1a20"
+                    stroke-width="2" />
+                <rect class="monitor-screen" x="82" y="42" width="636" height="396" rx="6" ry="6" fill="#020204" />
+                <!-- 画面グロー -->
+                <rect class="screen-glow" x="82" y="42" width="636" height="396" rx="6" ry="6" fill="url(#screenGlow)"
+                    opacity="0" />
+                <!-- 画面反射 -->
+                <rect x="82" y="42" width="636" height="396" rx="6" ry="6" fill="url(#screenReflection)"
+                    opacity="0.06" />
+                <!-- 電源LED -->
+                <circle class="monitor-led" cx="400" cy="468" r="4" fill="#1a1a1a" />
+                <!-- スタンド -->
+                <path d="M350 480 L350 530 Q350 540 360 540 L440 540 Q450 540 450 530 L450 480" fill="#111114"
+                    stroke="#1a1a20" stroke-width="2" />
+                <ellipse cx="400" cy="555" rx="160" ry="22" fill="#111114" stroke="#1a1a20" stroke-width="2" />
+                <ellipse cx="400" cy="552" rx="140" ry="14" fill="#0d0d10" />
+                <rect x="340" y="462" width="120" height="1.5" rx="1" fill="#222228" />
+                <defs>
+                    <linearGradient id="screenReflection" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6" />
+                        <stop offset="30%" stop-color="#ffffff" stop-opacity="0" />
+                        <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+                    </linearGradient>
+                    <radialGradient id="screenGlow" cx="50%" cy="50%" r="60%">
+                        <stop offset="0%" stop-color="#00ff6a" stop-opacity="0.2" />
+                        <stop offset="60%" stop-color="#00ff6a" stop-opacity="0.08" />
+                        <stop offset="100%" stop-color="#00ff6a" stop-opacity="0" />
+                    </radialGradient>
+                </defs>
+            </svg>
+            <!-- 画面内iframe（実際のサイトを表示） -->
+            <div class="monitor-screen-content">
+                <iframe src="?noboot=1" class="screen-iframe"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- パーティクル背景 -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- ナビゲーション -->
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="#hero" class="nav-logo">川犬</a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#links">Links</a>
+                <a href="#games">Games</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-content">
+            <div class="hero-avatar-wrapper">
+                <div class="hero-avatar-glow"></div>
+                <img src="assets/avatar.png" alt="川犬" class="hero-avatar" id="hero-avatar">
+            </div>
+            <h1 class="hero-name">
+                <span class="hero-name-jp">川犬</span>
+                <span class="hero-name-en">KAWAINU</span>
+            </h1>
+            <p class="hero-tagline">Virtual Streamer</p>
+            <div class="hero-scroll-hint">
+                <span>Scroll</span>
+                <div class="scroll-arrow"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-inner">
+            <h2 class="section-title" data-reveal>About</h2>
+            <div class="about-card" data-reveal>
+                <div class="about-text">
+                    <p class="about-greeting">はじめまして！<span class="highlight">川犬</span>です。</p>
+                    <p>TRPGとゲームをこよなく愛するバーチャルストリーマー。<br>
+                        シナリオ制作やツール開発もやっています。</p>
+                    <p class="about-note">※ アバターとプロフィールは仮置きです。後で差し替えます！</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Links Section -->
+    <section id="links">
+        <div class="section-inner">
+            <h2 class="section-title" data-reveal>Links</h2>
+            <div class="links-grid">
+                <a href="https://www.youtube.com/c/KawakenChannel?sub_confirmation=1" target="_blank" rel="noopener"
+                    class="link-card" data-reveal data-type="youtube">
+                    <div class="link-icon">▶</div>
+                    <div class="link-info">
+                        <div class="link-name">YouTube</div>
+                        <div class="link-desc">配信・動画はこちら</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+                <a href="https://x.com/reverinu_vtuber" target="_blank" rel="noopener" class="link-card" data-reveal
+                    data-type="x">
+                    <div class="link-icon">𝕏</div>
+                    <div class="link-info">
+                        <div class="link-name">X (Twitter)</div>
+                        <div class="link-desc">日常・告知をチェック</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+                <a href="https://reverinu.booth.pm/" target="_blank" rel="noopener" class="link-card" data-reveal
+                    data-type="booth">
+                    <div class="link-icon">📖</div>
+                    <div class="link-info">
+                        <div class="link-name">BOOTH — TRPGシナリオ</div>
+                        <div class="link-desc">オリジナルシナリオ販売中</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+                <a href="https://reverinu-vtuber.booth.pm/" target="_blank" rel="noopener" class="link-card" data-reveal
+                    data-type="booth">
+                    <div class="link-icon">🛍️</div>
+                    <div class="link-info">
+                        <div class="link-name">BOOTH — グッズ</div>
+                        <div class="link-desc">オリジナルグッズ販売中</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section id="games">
+        <div class="section-inner">
+            <h2 class="section-title" data-reveal>Games</h2>
+            <p class="section-subtitle" data-reveal>遊んでいってね！</p>
+            <div class="games-grid">
+                <div class="game-card" data-reveal>
+                    <div class="game-visual">
+                        <div class="game-emoji">🎲</div>
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">お祓いシミュレーター</h3>
+                        <p class="game-desc">100面ダイスを100個振って運試し！<br>クリティカル vs ファンブルの行方は…</p>
+                        <span class="game-btn">遊ぶ →</span>
+                    </div>
+                </div>
+                <div class="game-card game-card-coming" data-reveal>
+                    <div class="game-visual">
+                        <div class="game-emoji">🔮</div>
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Coming Soon...</h3>
+                        <p class="game-desc">次のミニゲームをお楽しみに！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">川犬</div>
+            <p class="footer-copy">&copy; 2026 川犬 All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
