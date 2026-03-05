@@ -2,10 +2,7 @@
 
 ## 優先タスク
 
-- [x] **Linksセクション パワーアップ** — 4カテゴリ（YouTube/X/TRPG Scenarios/Goods）分割、カルーセルUI、YouTube RSS + BOOTH OGP 自動取得、GitHub Actions 3時間ごと自動更新
-- [ ] **ナビバー改修** — ACHIEVEMENTSをプルダウン化（20XX年のリスト表示）、YouTube～GamesをCONTENTSプルダウンに集約
-- [ ] **お問い合わせフォームの設置** — コンタクトフォームをページに追加
-- [ ] **ゲームカードにリンク設定** — 「お祓いシミュレーター」カードを `<a>` タグに変更
+- [ ] **お祓いシミュレーター統合** — 別ワークスペースから `games/oharai/` にコピー → Gamesカードからリンク
 - [ ] **OGPメタタグ追加** — SNS共有時のプレビュー表示用
 - [ ] **OGP用画像の生成・設置**
 - [ ] **Git初期化 + GitHub リポジトリ作成**
@@ -13,6 +10,7 @@
 - [ ] **アバター画像の差し替え**
 - [ ] **About セクションの文章確定**
 - [ ] **将来的: 独自ドメイン取得 + Cloudflare Pages 移行**
+- [ ] **将来的: Cloudflare Turnstile 導入** — ハニーポットから Turnstile（無料）に切り替え、より強力なボット対策
 - [ ] **将来的: Google AdSense 申請・広告挿入**
 
 ## 完了済み
@@ -38,3 +36,6 @@
 - [x] プロフィール更新（KAWAKEN、Virtual YouTuber | Scenario Writer）
 - [x] ナビバーをYouTube/Scenarios/Goods/X/Gamesに分割
 - [x] ページ読み込み時スクロール位置を最上部にリセット
+- [x] ナビバー改修（About / Achievements▾ / Contents▾ / Contact のドロップダウン化、実績年リスト動的生成）
+- [x] お問い合わせフォーム設置（Formspree対応、カスタムセレクト、ハニーポット、送信完了UI）
+- [x] Linksセクション パワーアップ（4カテゴリ分割、カルーセルUI、YouTube RSS + BOOTH OGP 自動取得）

@@ -79,6 +79,7 @@ body {
 .nav-links {
     display: flex;
     gap: 32px;
+    align-items: center;
 }
 
 .nav-links a {
@@ -91,6 +92,8 @@ body {
     text-transform: uppercase;
     transition: color 0.3s ease;
     position: relative;
+    line-height: 1;
+    padding-bottom: 2px;
 }
 
 .nav-links a::after {
@@ -111,6 +114,117 @@ body {
 
 .nav-links a:hover::after {
     width: 100%;
+}
+
+/* --- ナビ ドロップダウン --- */
+.nav-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.nav-dropdown-toggle {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    padding-bottom: 2px;
+    margin: 0;
+    position: relative;
+    transition: color 0.3s ease;
+    line-height: 1;
+    vertical-align: baseline;
+}
+
+.nav-dropdown-toggle::after {
+    content: ' ▾';
+    font-size: 0.7em;
+    opacity: 0.5;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    display: inline-block;
+}
+
+.nav-dropdown.open .nav-dropdown-toggle::after {
+    transform: rotate(180deg);
+    opacity: 0.8;
+}
+
+.nav-dropdown-toggle::before {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #00ff6a;
+    box-shadow: 0 0 8px rgba(0, 255, 106, 0.5);
+    transition: width 0.3s ease;
+}
+
+.nav-dropdown:hover .nav-dropdown-toggle,
+.nav-dropdown.open .nav-dropdown-toggle {
+    color: #00ff6a;
+}
+
+.nav-dropdown:hover .nav-dropdown-toggle::before,
+.nav-dropdown.open .nav-dropdown-toggle::before {
+    width: 100%;
+}
+
+.nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 16px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    min-width: 160px;
+    background: rgba(10, 10, 14, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 255, 106, 0.12);
+    border-radius: 14px;
+    padding: 8px 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 255, 106, 0.04);
+    z-index: 1001;
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown-menu a {
+    display: block;
+    padding: 10px 22px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.nav-dropdown-menu a:hover {
+    color: #00ff6a;
+    background: rgba(0, 255, 106, 0.06);
+    padding-left: 26px;
+}
+
+.nav-dropdown-menu a::after {
+    display: none;
 }
 
 /* --- Section 共通 --- */
@@ -345,6 +459,7 @@ section {
     background: rgba(255, 255, 255, 0.02);
     overflow: hidden;
     transition: border-color 0.4s ease;
+    scroll-margin-top: 100px;
 }
 
 .link-category:hover {
@@ -741,6 +856,7 @@ section {
     position: relative;
     display: flow-root;
     /* マージン折り畳み防止→縦線の途切れを解消 */
+    scroll-margin-top: 100px;
 }
 
 .timeline-group.tl-left {
@@ -1074,6 +1190,292 @@ section {
     transform: translateY(0);
 }
 
+/* --- Contact Section --- */
+#contact {
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 255, 106, 0.02) 50%, transparent 100%);
+}
+
+.contact-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(0, 255, 106, 0.1);
+    border-radius: 20px;
+    padding: 48px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-label {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+}
+
+.form-required {
+    color: #00ff6a;
+    font-weight: 700;
+}
+
+.form-input {
+    width: 100%;
+    padding: 14px 18px;
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    font-size: 0.92rem;
+    color: #e0e0e0;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.form-input::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.form-input:focus {
+    border-color: rgba(0, 255, 106, 0.5);
+    background: rgba(0, 255, 106, 0.03);
+    box-shadow: 0 0 20px rgba(0, 255, 106, 0.08), inset 0 0 20px rgba(0, 255, 106, 0.02);
+}
+
+/* カスタムセレクト（ナビバー風） */
+.form-custom-select {
+    position: relative;
+}
+
+.form-custom-select-toggle {
+    width: 100%;
+    padding: 14px 18px;
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    font-size: 0.92rem;
+    color: #e0e0e0;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.form-custom-select-toggle:hover {
+    border-color: rgba(0, 255, 106, 0.3);
+}
+
+.form-custom-select.open .form-custom-select-toggle {
+    border-color: rgba(0, 255, 106, 0.5);
+    background: rgba(0, 255, 106, 0.03);
+    box-shadow: 0 0 20px rgba(0, 255, 106, 0.08);
+}
+
+.form-custom-select-arrow {
+    font-size: 1.1em;
+    color: rgba(0, 255, 106, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.form-custom-select.open .form-custom-select-arrow {
+    transform: rotate(180deg);
+}
+
+.form-custom-select-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: rgba(10, 10, 14, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 255, 106, 0.12);
+    border-radius: 12px;
+    padding: 6px 0;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 255, 106, 0.04);
+}
+
+.form-custom-select.open .form-custom-select-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.form-custom-select-option {
+    padding: 12px 18px;
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.form-custom-select-option:hover {
+    color: #00ff6a;
+    background: rgba(0, 255, 106, 0.06);
+    padding-left: 22px;
+}
+
+.form-custom-select-option.selected {
+    color: #00ff6a;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.7;
+}
+
+.form-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 32px;
+    margin-top: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #050508;
+    background: linear-gradient(135deg, #00ff6a 0%, #00cc55 100%);
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    letter-spacing: 0.04em;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-submit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 255, 106, 0.3), 0 0 40px rgba(0, 255, 106, 0.15);
+}
+
+.form-submit:hover::before {
+    opacity: 1;
+}
+
+.form-submit:active {
+    transform: translateY(0);
+}
+
+.form-submit-icon {
+    transition: transform 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.form-submit:hover .form-submit-icon {
+    transform: translateX(4px);
+}
+
+.form-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 送信完了 */
+.contact-success {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.contact-success.show {
+    display: block;
+    animation: successFade 0.5s ease;
+}
+
+@keyframes successFade {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.success-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: rgba(0, 255, 106, 0.1);
+    border: 2px solid #00ff6a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: #00ff6a;
+    text-shadow: 0 0 20px rgba(0, 255, 106, 0.5);
+}
+
+.success-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.success-message {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.8;
+}
+
+.contact-note {
+    margin-top: 20px;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.25);
+    text-align: center;
+    font-style: italic;
+}
+
+/* ハニーポット（ボット対策） */
+.form-hp {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    opacity: 0;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
 /* --- Footer --- */
 #footer {
     position: relative;
@@ -1122,11 +1524,19 @@ section {
     }
 
     .nav-links {
-        gap: 20px;
+        gap: 18px;
     }
 
     .nav-links a {
         font-size: 0.75rem;
+    }
+
+    .nav-dropdown-toggle {
+        font-size: 0.75rem;
+    }
+
+    .nav-dropdown-menu {
+        min-width: 140px;
     }
 
     .games-grid {
@@ -1154,9 +1564,10 @@ section {
         height: 56px;
     }
 
-    .nav-links {
-        gap: 16px;
+    .contact-card {
+        padding: 32px 24px;
     }
+
 }
 
 @media (max-width: 480px) {
@@ -1175,7 +1586,21 @@ section {
     }
 
     .nav-links {
-        gap: 14px;
+        gap: 12px;
+    }
+
+    .nav-dropdown-toggle {
+        font-size: 0.7rem;
+    }
+
+    .nav-dropdown-menu {
+        min-width: 120px;
+        left: 0;
+        transform: translateX(0) translateY(-8px);
+    }
+
+    .nav-dropdown.open .nav-dropdown-menu {
+        transform: translateX(0) translateY(0);
     }
 
     .content-card {

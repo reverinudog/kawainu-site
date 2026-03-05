@@ -312,6 +312,44 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// --- ドロップダウン制御 ---
+const dropdowns = document.querySelectorAll('.nav-dropdown');
+
+dropdowns.forEach(dd => {
+    const toggle = dd.querySelector('.nav-dropdown-toggle');
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dd.classList.contains('open');
+        // 他のドロップダウンを閉じる
+        dropdowns.forEach(d => {
+            d.classList.remove('open');
+            d.querySelector('.nav-dropdown-toggle').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+            dd.classList.add('open');
+            toggle.setAttribute('aria-expanded', 'true');
+        }
+    });
+});
+
+// 外部クリックでドロップダウンを閉じる
+document.addEventListener('click', () => {
+    dropdowns.forEach(d => {
+        d.classList.remove('open');
+        d.querySelector('.nav-dropdown-toggle').setAttribute('aria-expanded', 'false');
+    });
+});
+
+// ESCキーでドロップダウンを閉じる
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        dropdowns.forEach(d => {
+            d.classList.remove('open');
+            d.querySelector('.nav-dropdown-toggle').setAttribute('aria-expanded', 'false');
+        });
+    }
+});
+
 // --- リンクセクション（カルーセル） ---
 const LINKS_CATEGORY_ORDER = ['youtube', 'booth_trpg', 'booth_goods', 'x'];
 const LINKS_NAV_IDS = {
@@ -547,6 +585,7 @@ function renderAchievements(ACHIEVEMENTS_DATA) {
         // グループコンテナ
         const group = document.createElement('div');
         group.className = `timeline-group ${side}`;
+        group.id = `year-${yearGroup.year}`;
 
         // 年マーカー
         const yearDiv = document.createElement('div');
@@ -603,6 +642,24 @@ function renderAchievements(ACHIEVEMENTS_DATA) {
     // タイムライン要素をスクロールリビールに登録
     const timelineRevealEls = container.querySelectorAll('.timeline-year, .timeline-item, .timeline-end, .timeline-connector');
     timelineRevealEls.forEach(el => revealObserver.observe(el));
+
+    // Achievements ドロップダウンに年リストを動的注入
+    const yearMenu = document.getElementById('achievements-year-menu');
+    if (yearMenu && ACHIEVEMENTS_DATA.length > 0) {
+        yearMenu.innerHTML = '';
+        // 「全体を見る」リンク
+        const allLink = document.createElement('a');
+        allLink.href = '#achievements';
+        allLink.textContent = 'All';
+        yearMenu.appendChild(allLink);
+        // 各年リンク
+        ACHIEVEMENTS_DATA.forEach(yg => {
+            const a = document.createElement('a');
+            a.href = `#year-${yg.year}`;
+            a.textContent = yg.year;
+            yearMenu.appendChild(a);
+        });
+    }
 }
 
 // --- スクロールリビール ---
@@ -619,16 +676,29 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
 
-// --- スムーズスクロール（ナビリンク） ---
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.querySelector(link.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-        }
+// --- スムーズスクロール（ナビリンク + ドロップダウンリンク） ---
+function setupSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            const target = document.querySelector(link.getAttribute('href'));
+            if (target) {
+                // ドロップダウンを閉じる
+                dropdowns.forEach(d => {
+                    d.classList.remove('open');
+                    d.querySelector('.nav-dropdown-toggle').setAttribute('aria-expanded', 'false');
+                });
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
     });
-});
+}
+setupSmoothScroll();
+
+// ドロップダウン内のリンクが動的に追加された場合に再バインド
+const smoothScrollObserver = new MutationObserver(() => setupSmoothScroll());
+const yearMenuEl = document.getElementById('achievements-year-menu');
+if (yearMenuEl) smoothScrollObserver.observe(yearMenuEl, { childList: true });
 
 // --- アバターホバーエフェクト ---
 const avatar = document.getElementById('hero-avatar');
@@ -639,5 +709,90 @@ if (avatar) {
     });
     avatar.addEventListener('mouseleave', () => {
         avatar.style.transform = 'scale(1)';
+    });
+}
+
+// --- カスタムカテゴリセレクト ---
+const customSelect = document.getElementById('category-select');
+if (customSelect) {
+    const toggle = customSelect.querySelector('.form-custom-select-toggle');
+    const textEl = customSelect.querySelector('.form-custom-select-text');
+    const hiddenInput = document.getElementById('contact-category');
+    const options = customSelect.querySelectorAll('.form-custom-select-option');
+
+    // トグル開閉
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        customSelect.classList.toggle('open');
+    });
+
+    // 選択肢クリック
+    options.forEach(opt => {
+        opt.addEventListener('click', () => {
+            options.forEach(o => o.classList.remove('selected'));
+            opt.classList.add('selected');
+            textEl.textContent = opt.textContent;
+            hiddenInput.value = opt.dataset.value;
+            customSelect.classList.remove('open');
+        });
+    });
+
+    // 外部クリックで閉じる
+    document.addEventListener('click', () => customSelect.classList.remove('open'));
+    customSelect.addEventListener('click', (e) => e.stopPropagation());
+}
+
+// --- お問い合わせフォーム ---
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // ハニーポットチェック（ボットが隠しフィールドに入力していたら静かにブロック）
+        const honeypot = document.getElementById('contact-website');
+        if (honeypot && honeypot.value) {
+            // ボットには成功したように見せる（再試行を防止）
+            contactForm.style.display = 'none';
+            const note = contactForm.parentElement.querySelector('.contact-note');
+            if (note) note.style.display = 'none';
+            document.getElementById('contact-success').classList.add('show');
+            return;
+        }
+
+        const submitBtn = document.getElementById('contact-submit');
+        const submitText = submitBtn.querySelector('.form-submit-text');
+        const originalText = submitText.textContent;
+
+        // 送信中の状態
+        submitBtn.disabled = true;
+        submitText.textContent = '送信中...';
+
+        const action = contactForm.getAttribute('action');
+        const formData = new FormData(contactForm);
+
+        try {
+            // Formspree が設定されている場合は実際に送信
+            if (action && action !== '#') {
+                const res = await fetch(action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' },
+                });
+                if (!res.ok) throw new Error('送信エラー');
+            }
+
+            // 送信完了UI
+            contactForm.style.display = 'none';
+            const note = contactForm.parentElement.querySelector('.contact-note');
+            if (note) note.style.display = 'none';
+            document.getElementById('contact-success').classList.add('show');
+        } catch (err) {
+            console.error('フォーム送信エラー:', err);
+            submitText.textContent = 'エラー — もう一度お試しください';
+            setTimeout(() => {
+                submitText.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 3000);
+        }
     });
 }

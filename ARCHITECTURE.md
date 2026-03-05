@@ -4,9 +4,9 @@
 
 ```
 個人サイト/
-├── index.html      # メインHTML（5セクション構成）
+├── index.html      # メインHTML（6セクション構成）
 ├── style.css       # 全スタイル（ダークテーマ、レスポンシブ）
-├── main.js         # ブート演出、パーティクル背景、スクロール制御、実績JSON読み込み、リンクカルーセル
+├── main.js         # ブート演出、パーティクル背景、スクロール制御、実績JSON読み込み、リンクカルーセル、ナビドロップダウン制御
 ├── start.bat       # ローカルHTTPサーバー起動（ポート8090）
 ├── assets/
 │   ├── avatar.png  # アバター画像（仮置き）
@@ -19,6 +19,8 @@
 │   ├── link-editor.html         # リンク管理GUI（YouTube RSS + BOOTH OGP 自動取得）
 │   ├── editor-server.py         # カスタムサーバー（OGP取得・JSON保存・リンク自動取得API）
 │   └── start-editor.bat         # エディタ用サーバー起動（ポート8091）
+├── games/
+│   └── oharai/              # お祢いシミュレーター（別ワークスペースから統合予定）
 ├── ARCHITECTURE.md # 本ファイル
 ├── GEMINI.md       # AI向け行動ルール
 ├── README.md       # プロジェクト概要
@@ -35,6 +37,7 @@
 | `#achievements` | 年次タイムライン（JS動的描画）、年マーカー●、実績カード | 実績 |
 | `#links` | カテゴリ別ブロック（YouTube/BOOTH×2/X）、カルーセルUI（JS動的描画） | リンク |
 | `#games` | ゲームカード×2（お祓いシミュレーター + Coming Soon） | ミニゲーム |
+| `#contact` | お問い合わせフォーム（Formspree対応、送信完了UI） | コンタクト |
 | `#footer` | ロゴ、コピーライト | フッター |
 
 ## style.css 構造
@@ -43,7 +46,7 @@
 |------------|--------|------|
 | Reset & Base | 1-25 | リセット、body 基本設定 |
 | パーティクル背景 | 27-36 | Canvas 固定背景 |
-| ナビゲーション | 38-112 | 固定ナビ、スクロール時ブラー |
+| ナビゲーション | 38-112 | 固定ナビ、スクロール時ブラー、ドロップダウン（Achievements▾/Contents▾） |
 | Section 共通 | 114-155 | タイトル、リビールアニメ |
 | Hero | 157-286 | アバター・グロー・名前・スクロールヒント |
 | About | 288-328 | カード、glassmorphism |
@@ -62,10 +65,12 @@
 | renderAchievements(data) | タイムラインDOM動的生成（年マーカー●、アイテムカード、エンドマーカー） |
 | Particle (class) | Canvas パーティクル（60個、緑グロー、接続線） |
 | animateParticles() | rAF ループ |
-| ナビスクロール | 80px 超えで `.scrolled` 付与 |
+| ナビスクロール + ドロップダウン | 80px 超えで `.scrolled` 付与、ドロップダウン開閉制御（クリック/ESC/外部クリック） |
 | スクロールリビール | IntersectionObserver で `[data-reveal]` + タイムライン要素 → `.revealed` |
 | スムーズスクロール | ナビリンククリック時 |
 | アバターホバー | スケール 1.05 エフェクト |
+| カスタムカテゴリセレクト | ナビバー風ドロップダウン、クリックトグル/外部クリック閉じ |
+| お問い合わせフォーム | Formspree対応送信、ハニーポットチェック、送信完了UI |
 
 ## 依存関係（CDN）
 

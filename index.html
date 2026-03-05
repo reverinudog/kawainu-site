@@ -74,12 +74,23 @@
             <a href="#hero" class="nav-logo">川犬</a>
             <div class="nav-links">
                 <a href="#about">About</a>
-                <a href="#achievements">Achievements</a>
-                <a href="#youtube">YouTube</a>
-                <a href="#scenarios">Scenarios</a>
-                <a href="#goods">Goods</a>
-                <a href="#x">X</a>
-                <a href="#games">Games</a>
+                <div class="nav-dropdown" id="nav-achievements-dropdown">
+                    <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Achievements</button>
+                    <div class="nav-dropdown-menu" id="achievements-year-menu">
+                        <!-- JSで年リストを動的生成 -->
+                    </div>
+                </div>
+                <div class="nav-dropdown" id="nav-contents-dropdown">
+                    <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Contents</button>
+                    <div class="nav-dropdown-menu">
+                        <a href="#youtube">YouTube</a>
+                        <a href="#scenarios">Scenarios</a>
+                        <a href="#goods">Goods</a>
+                        <a href="#x">X</a>
+                        <a href="#games">Games</a>
+                    </div>
+                </div>
+                <a href="#contact">Contact</a>
             </div>
         </div>
     </nav>
@@ -163,6 +174,65 @@
                         <p class="game-desc">次のミニゲームをお楽しみに！</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-inner">
+            <h2 class="section-title" data-reveal>Contact</h2>
+            <p class="section-subtitle" data-reveal>お気軽にご連絡ください</p>
+            <div class="contact-card" data-reveal>
+                <form id="contact-form" action="#" method="POST">
+                    <!-- ハニーポット（ボット対策：人間には見えない入力欄） -->
+                    <div class="form-hp" aria-hidden="true">
+                        <label for="contact-website">Website</label>
+                        <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-name" class="form-label">お名前 <span class="form-required">*</span></label>
+                        <input type="text" id="contact-name" name="name" class="form-input" required
+                            placeholder="お名前を入力">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email" class="form-label">メールアドレス <span
+                                class="form-required">*</span></label>
+                        <input type="email" id="contact-email" name="email" class="form-input" required
+                            placeholder="example@mail.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">カテゴリ</label>
+                        <input type="hidden" id="contact-category" name="category" value="collab">
+                        <div class="form-custom-select" id="category-select">
+                            <button type="button" class="form-custom-select-toggle">
+                                <span class="form-custom-select-text">コラボ・依頼</span>
+                                <span class="form-custom-select-arrow">▾</span>
+                            </button>
+                            <div class="form-custom-select-menu">
+                                <div class="form-custom-select-option selected" data-value="collab">コラボ・依頼</div>
+                                <div class="form-custom-select-option" data-value="scenario">シナリオについて</div>
+                                <div class="form-custom-select-option" data-value="other">その他</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-message" class="form-label">メッセージ <span
+                                class="form-required">*</span></label>
+                        <textarea id="contact-message" name="message" class="form-input form-textarea" required
+                            placeholder="メッセージを入力" rows="5"></textarea>
+                    </div>
+                    <button type="submit" class="form-submit" id="contact-submit">
+                        <span class="form-submit-text">送信する</span>
+                        <span class="form-submit-icon">→</span>
+                    </button>
+                </form>
+                <div class="contact-success" id="contact-success">
+                    <div class="success-icon">✓</div>
+                    <h3 class="success-title">送信完了！</h3>
+                    <p class="success-message">お問い合わせありがとうございます。<br>できるだけ早くご返信いたします。</p>
+                </div>
+                <p class="contact-note">※ 現在フォーム送信先は未設定です。Formspree 登録後に有効化されます。</p>
             </div>
         </div>
     </section>
