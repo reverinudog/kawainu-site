@@ -2,6 +2,8 @@
 //  川犬 — VTuber Official Site
 //  Interactions & Particle Background
 // =============================================
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
 
 // --- モニター電源ON → ズームイン演出 ---
 (function monitorBootSequence() {
@@ -137,65 +139,76 @@
     adaptMonitorToViewport();
     window.addEventListener('resize', adaptMonitorToViewport);
 
-    // タイムライン（ms）
-    const PHASE = {
-        APPEAR: 200,
-        POWER_ON: 1600,
-        SCREEN_ON: 2300,
-        ZOOM_IN: 2900,
-        FADE_OUT: 4000,
-        CLEANUP: 4500,
-    };
+    // タイムライン — iframe 読み込み完了後に電源ON以降を開始
+    // Phase 1: モニター登場（即時、まだ暗い）
+    // ... → iframe 読み込み完了を待つ
+    // Phase 2〜: 電源ON → 画面表示 → ズームイン → フェードアウト
 
-    // Phase 2: 電源ON
-    setTimeout(() => {
-        overlay.classList.add('phase-power-on');
-    }, PHASE.POWER_ON);
+    function startBootAnimation() {
+        const DELAY = {
+            POWER_ON: 200,      // iframe読み込み完了から
+            SCREEN_ON: 900,
+            ZOOM_IN: 1500,
+            FADE_OUT: 2600,
+            CLEANUP: 3100,
+        };
 
-    // Phase 3: 画面表示
-    setTimeout(() => {
-        overlay.classList.add('phase-screen-on');
-    }, PHASE.SCREEN_ON);
+        setTimeout(() => {
+            overlay.classList.add('phase-power-on');
+        }, DELAY.POWER_ON);
 
-    // Phase 4: ズームイン（位置・サイズ完全一致で計算）
-    setTimeout(() => {
-        if (screenContent && monitor) {
-            const screenW = screenContent.offsetWidth;
-            const screenH = screenContent.offsetHeight;
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
-            const Z = Math.max(vw / screenW, vh / screenH);
+        setTimeout(() => {
+            overlay.classList.add('phase-screen-on');
+        }, DELAY.SCREEN_ON);
 
-            // モニター内でのスクリーン位置（px）
-            const monitorRect = monitor.getBoundingClientRect();
-            const screenRect = screenContent.getBoundingClientRect();
-            const sx = screenRect.left - monitorRect.left;
-            const sy = screenRect.top - monitorRect.top;
-            // モニターのビューポート内位置
-            const mx = monitorRect.left;
-            const my = monitorRect.top;
+        // Phase 4: ズームイン
+        setTimeout(() => {
+            if (screenContent && monitor) {
+                const screenW = screenContent.offsetWidth;
+                const screenH = screenContent.offsetHeight;
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+                const Z = Math.max(vw / screenW, vh / screenH);
 
-            // ズーム後にスクリーン左上がビューポート(0,0)に来るtransform-origin
-            const ox = (-mx - sx * Z) / (1 - Z);
-            const oy = (-my - sy * Z) / (1 - Z);
-            monitor.style.transformOrigin = `${ox}px ${oy}px`;
+                const monitorRect = monitor.getBoundingClientRect();
+                const screenRect = screenContent.getBoundingClientRect();
+                const sx = screenRect.left - monitorRect.left;
+                const sy = screenRect.top - monitorRect.top;
+                const mx = monitorRect.left;
+                const my = monitorRect.top;
 
-            monitor.style.setProperty('--zoom-scale', Z.toFixed(4));
-        }
-        overlay.classList.add('phase-zoom-in');
-    }, PHASE.ZOOM_IN);
+                const ox = (-mx - sx * Z) / (1 - Z);
+                const oy = (-my - sy * Z) / (1 - Z);
+                monitor.style.transformOrigin = `${ox}px ${oy}px`;
 
-    // Phase 5: フェードアウト
-    setTimeout(() => {
-        overlay.classList.add('phase-fade-out');
-    }, PHASE.FADE_OUT);
+                monitor.style.setProperty('--zoom-scale', Z.toFixed(4));
+            }
+            overlay.classList.add('phase-zoom-in');
+        }, DELAY.ZOOM_IN);
 
-    // Cleanup: DOM除去＋スクロール解除
-    setTimeout(() => {
-        overlay.remove();
-        document.body.classList.remove('monitor-booting');
-        window.removeEventListener('resize', adaptMonitorToViewport);
-    }, PHASE.CLEANUP);
+        // Phase 5: フェードアウト
+        setTimeout(() => {
+            overlay.classList.add('phase-fade-out');
+        }, DELAY.FADE_OUT);
+
+        // Cleanup
+        setTimeout(() => {
+            overlay.remove();
+            document.body.classList.remove('monitor-booting');
+            window.removeEventListener('resize', adaptMonitorToViewport);
+        }, DELAY.CLEANUP);
+    }
+
+    // iframe 読み込み完了を待ってからアニメーション開始
+    if (iframe) {
+        let started = false;
+        const go = () => { if (!started) { started = true; startBootAnimation(); } };
+        iframe.addEventListener('load', go, { once: true });
+        // 安全タイムアウト（5秒で強制開始）
+        setTimeout(go, 5000);
+    } else {
+        startBootAnimation();
+    }
 })();
 
 // --- パーティクル背景 ---
@@ -299,8 +312,212 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// --- 実績タイムライン ---
-// 外部JSONから実績データを読み込み（キャッシュ防止）
+// --- リンクセクション（カルーセル） ---
+const LINKS_CATEGORY_ORDER = ['youtube', 'booth_trpg', 'booth_goods', 'x'];
+const LINKS_NAV_IDS = {
+    youtube: 'youtube',
+    booth_trpg: 'scenarios',
+    booth_goods: 'goods',
+    x: 'x',
+};
+const LINKS_DESCRIPTIONS = {
+    youtube: 'チャンネルを見る →',
+    booth_trpg: 'ショップを見る →',
+    booth_goods: 'ショップを見る →',
+    x: 'フォローする →',
+};
+
+// リンクデータ読み込み: API自動取得 → フォールバック links.json
+(async function loadLinks() {
+    let linksData = {};
+    try {
+        // まず API で最新データを自動取得（editor-server.py 稼働時）
+        const apiRes = await fetch('/api/fetch-links');
+        if (!apiRes.ok) throw new Error(`API ${apiRes.status}`);
+        const result = await apiRes.json();
+        if (result.ok && result.data) {
+            linksData = result.data;
+            console.log('Links: API から最新データを取得');
+            // キャッシュ保存（次回用、失敗しても無視）
+            fetch('/api/save-links', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(linksData),
+            }).catch(() => { });
+        } else {
+            throw new Error('API response not ok');
+        }
+    } catch {
+        // API 未対応（GitHub Pages 等）→ キャッシュ JSON にフォールバック
+        try {
+            const jsonRes = await fetch('data/links.json?t=' + Date.now());
+            if (jsonRes.ok) {
+                linksData = await jsonRes.json();
+                console.log('Links: キャッシュ JSON から読み込み');
+            }
+        } catch (e2) {
+            console.error('リンクデータの読み込みに失敗:', e2);
+        }
+    }
+    renderLinks(linksData);
+})();
+
+function renderLinks(linksData) {
+    const container = document.getElementById('links-container');
+    if (!container) return;
+
+    LINKS_CATEGORY_ORDER.forEach(key => {
+        const cat = linksData[key];
+        if (!cat) return;
+
+        const block = document.createElement('div');
+        block.className = 'link-category';
+        block.dataset.cat = key;
+        if (LINKS_NAV_IDS[key]) block.id = LINKS_NAV_IDS[key];
+
+        // ヘッダー
+        const header = document.createElement('div');
+        header.className = 'link-category-header';
+        header.innerHTML = `
+            <div class="link-category-icon">${cat.icon || ''}</div>
+            <div class="link-category-title">${cat.label || key}</div>
+            <a class="link-category-more" href="${cat.profileUrl || '#'}" target="_blank" rel="noopener">
+                ${LINKS_DESCRIPTIONS[key] || ''}
+            </a>
+        `;
+        block.appendChild(header);
+
+        // X はリンクのみ
+        if (key === 'x') {
+            const simple = document.createElement('a');
+            simple.className = 'link-card-simple';
+            simple.href = cat.profileUrl || '#';
+            simple.target = '_blank';
+            simple.rel = 'noopener';
+            simple.innerHTML = `
+                <div style="flex:1;font-size:0.9rem;color:rgba(255,255,255,0.5);">主にTRPGに関するネタポストや配信・シナリオリリースの告知を行います。</div>
+                <div class="link-arrow">→</div>
+            `;
+            block.appendChild(simple);
+        } else if (cat.items && cat.items.length > 0) {
+            // カルーセル
+            const wrapper = document.createElement('div');
+            wrapper.className = 'carousel-wrapper';
+
+            const btnLeft = document.createElement('button');
+            btnLeft.className = 'carousel-btn carousel-btn-left';
+            btnLeft.setAttribute('aria-label', '前へ');
+            btnLeft.textContent = '‹';
+
+            const btnRight = document.createElement('button');
+            btnRight.className = 'carousel-btn carousel-btn-right';
+            btnRight.setAttribute('aria-label', '次へ');
+            btnRight.textContent = '›';
+
+            const track = document.createElement('div');
+            track.className = 'carousel-track';
+
+            cat.items.forEach(item => {
+                const card = document.createElement('a');
+                card.className = 'content-card';
+                card.href = item.url || '#';
+                card.target = '_blank';
+                card.rel = 'noopener';
+
+                const thumbHtml = item.thumb
+                    ? `<div class="content-card-thumb"><img src="${item.thumb}" alt="" loading="lazy"></div>`
+                    : '';
+                const meta = item.date || item.description || '';
+
+                card.innerHTML = `
+                    ${thumbHtml}
+                    <div class="content-card-info">
+                        <div class="content-card-title">${item.title || ''}</div>
+                        <div class="content-card-meta">${meta}</div>
+                    </div>
+                `;
+                track.appendChild(card);
+            });
+
+            wrapper.appendChild(btnLeft);
+            wrapper.appendChild(track);
+            wrapper.appendChild(btnRight);
+            block.appendChild(wrapper);
+
+            // カルーセル操作
+            setupCarousel(track, btnLeft, btnRight);
+        }
+
+        container.appendChild(block);
+    });
+
+    // スクロールリビールに登録
+    container.querySelectorAll('.link-category').forEach(el => revealObserver.observe(el));
+}
+
+// --- カルーセル操作 ---
+function setupCarousel(track, btnLeft, btnRight) {
+    const scrollAmount = 234; // card width (220) + gap (14)
+
+    // 矢印ボタンクリック
+    btnLeft.addEventListener('click', () => {
+        track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+    btnRight.addEventListener('click', () => {
+        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+
+    // 矢印の表示/非表示 + 末端ハイライト
+    function updateArrows() {
+        const sl = track.scrollLeft;
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        const atEnd = sl >= maxScroll - 10;
+        btnLeft.classList.toggle('visible', sl > 30);
+        btnRight.classList.toggle('visible', !atEnd);
+
+        // 末端到達時: 「もっと見る」リンクを強調
+        const block = track.closest('.link-category');
+        const moreLink = block ? block.querySelector('.link-category-more') : null;
+        if (moreLink) moreLink.classList.toggle('highlight', atEnd);
+    }
+    track.addEventListener('scroll', updateArrows);
+    // 初回チェック（レンダリング後に実行）
+    requestAnimationFrame(() => requestAnimationFrame(updateArrows));
+
+    // ドラッグスクロール
+    let isDragging = false;
+    let startX = 0;
+    let scrollStart = 0;
+
+    track.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.pageX;
+        scrollStart = track.scrollLeft;
+        track.classList.add('dragging');
+    });
+
+    track.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const dx = e.pageX - startX;
+        track.scrollLeft = scrollStart - dx;
+    });
+
+    const stopDrag = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        track.classList.remove('dragging');
+    };
+    track.addEventListener('mouseup', stopDrag);
+    track.addEventListener('mouseleave', stopDrag);
+
+    // ドラッグ中のリンククリック防止
+    track.addEventListener('click', (e) => {
+        if (Math.abs(track.scrollLeft - scrollStart) > 5) {
+            e.preventDefault();
+        }
+    }, true);
+}
 fetch('data/achievements.json?t=' + Date.now())
     .then(res => res.json())
     .then(data => renderAchievements(data))

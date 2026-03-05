@@ -6,16 +6,18 @@
 個人サイト/
 ├── index.html      # メインHTML（5セクション構成）
 ├── style.css       # 全スタイル（ダークテーマ、レスポンシブ）
-├── main.js         # ブート演出、パーティクル背景、スクロール制御、実績JSON読み込み
+├── main.js         # ブート演出、パーティクル背景、スクロール制御、実績JSON読み込み、リンクカルーセル
 ├── start.bat       # ローカルHTTPサーバー起動（ポート8090）
 ├── assets/
 │   ├── avatar.png  # アバター画像（仮置き）
 │   └── monitor.svg # 起動演出用PCモニターSVG
 ├── data/
-│   └── achievements.json  # 実績データ（JSON、外部管理）
+│   ├── achievements.json  # 実績データ（JSON、外部管理）
+│   └── links.json         # リンクデータ（カテゴリ別、YouTube/BOOTH/X）
 ├── tools/
 │   ├── achievement-editor.html  # 実績登録GUI（ブラウザベース）
-│   ├── editor-server.py         # カスタムサーバー（OGP取得・JSON保存API）
+│   ├── link-editor.html         # リンク管理GUI（YouTube RSS + BOOTH OGP 自動取得）
+│   ├── editor-server.py         # カスタムサーバー（OGP取得・JSON保存・リンク自動取得API）
 │   └── start-editor.bat         # エディタ用サーバー起動（ポート8091）
 ├── ARCHITECTURE.md # 本ファイル
 ├── GEMINI.md       # AI向け行動ルール
@@ -31,7 +33,7 @@
 | `#hero` | アバター、名前（川犬/KAWAINU）、タグライン、スクロールヒント | ファーストビュー |
 | `#about` | 自己紹介カード（about-card） | プロフィール |
 | `#achievements` | 年次タイムライン（JS動的描画）、年マーカー●、実績カード | 実績 |
-| `#links` | リンクカード×4（YouTube/X/BOOTH×2） | SNS・販売 |
+| `#links` | カテゴリ別ブロック（YouTube/BOOTH×2/X）、カルーセルUI（JS動的描画） | リンク |
 | `#games` | ゲームカード×2（お祓いシミュレーター + Coming Soon） | ミニゲーム |
 | `#footer` | ロゴ、コピーライト | フッター |
 

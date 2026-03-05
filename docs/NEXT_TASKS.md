@@ -2,15 +2,16 @@
 
 ## 優先タスク
 
-- [ ] **Linksセクション パワーアップ** — 4カテゴリ（YouTube/X/BOOTH TRPGシナリオ/BOOTHグッズ）を大きく分割し、各カテゴリ内で直近コンテンツをサムネイル付き横一覧表示。リッチなカルーセルUI（スムーススクロール・スワイプ対応等）でページング。YouTube API / X埋め込み / BOOTHスクレイピング等の連携が必要
-- [ ] **ゲームカードにリンク設定** — 「お祓いシミュレーター」カードを `<a>` タグに変更し、ダイスお祓いページへのリンクを設定（デプロイ後のURLに合わせて設定）
-- [ ] **OGPメタタグ追加** — SNS共有時のプレビュー表示用（og:title, og:description, og:image）
-- [ ] **OGP用画像の生成・設置** — SNS共有時に表示されるサムネイル画像
-- [ ] **ゲームカード用サムネイル画像** — 絵文字(🎲)の代わりにリッチなサムネ画像を設定
+- [x] **Linksセクション パワーアップ** — 4カテゴリ（YouTube/X/TRPG Scenarios/Goods）分割、カルーセルUI、YouTube RSS + BOOTH OGP 自動取得、GitHub Actions 3時間ごと自動更新
+- [ ] **ナビバー改修** — ACHIEVEMENTSをプルダウン化（20XX年のリスト表示）、YouTube～GamesをCONTENTSプルダウンに集約
+- [ ] **お問い合わせフォームの設置** — コンタクトフォームをページに追加
+- [ ] **ゲームカードにリンク設定** — 「お祓いシミュレーター」カードを `<a>` タグに変更
+- [ ] **OGPメタタグ追加** — SNS共有時のプレビュー表示用
+- [ ] **OGP用画像の生成・設置**
 - [ ] **Git初期化 + GitHub リポジトリ作成**
-- [ ] **GitHub Pages でのデプロイ** — 無料で即日公開可能
-- [ ] **アバター画像の差し替え** — ユーザーから正式画像を受け取った後に差し替え
-- [ ] **About セクションの文章確定** — 仮テキストを正式プロフィールに更新
+- [ ] **GitHub Pages でのデプロイ**
+- [ ] **アバター画像の差し替え**
+- [ ] **About セクションの文章確定**
 - [ ] **将来的: 独自ドメイン取得 + Cloudflare Pages 移行**
 - [ ] **将来的: Google AdSense 申請・広告挿入**
 
@@ -29,3 +30,11 @@
 - [x] 実績セクション追加（ジグザグタイムライン、年グループ、スクロールリビール対応）
 - [x] 実績登録ツール作成（`tools/achievement-editor.html` GUI + `tools/editor-server.py` カスタムサーバー、JSON直接保存・OGPサムネイル自動取得対応）
 - [x] 実績データ外部JSON化（`data/achievements.json`、`main.js` は fetch ベースで読み込み）
+- [x] LinksセクションカルーセルUI（`data/links.json` + 動的描画、YouTube RSS自動取得、BOOTH OGPスクレイピング）
+- [x] リンクエディタ作成（`tools/link-editor.html` GUI + `editor-server.py` API拡張）
+- [x] `start.bat` を `editor-server.py` ベースに切り替え（API対応、ページ読み込み時自動取得）
+- [x] GitHub Actions ワークフロー（`.github/workflows/update-links.yml` 3時間ごと定期実行）
+- [x] モニターブート演出改良（iframe読み込み完了待ち、nobootインラインスクリプト）
+- [x] プロフィール更新（KAWAKEN、Virtual YouTuber | Scenario Writer）
+- [x] ナビバーをYouTube/Scenarios/Goods/X/Gamesに分割
+- [x] ページ読み込み時スクロール位置を最上部にリセット

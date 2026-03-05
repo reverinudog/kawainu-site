@@ -7,12 +7,20 @@
     <title>川犬 — VTuber Official Site</title>
     <meta name="description" content="VTuber 川犬の公式サイト。配信情報、SNSリンク、ミニゲームなど。">
     <link rel="stylesheet" href="style.css">
+    <link rel="preload" href="assets/avatar.png" as="image">
     <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700;900&family=Inter:wght@300;400;600;700&display=swap"
         rel="stylesheet">
 </head>
 
 <body class="monitor-booting">
+    <!-- iframe内（?noboot=1）では即座にブート演出を非表示（main.js読み込み前の対策） -->
+    <script>
+        if (location.search.includes('noboot=1')) {
+            document.body.classList.remove('monitor-booting');
+            document.write('<style>#boot-overlay{display:none!important}</style>');
+        }
+    </script>
     <!-- モニター電源ON → ズームイン演出 -->
     <div id="boot-overlay">
         <div class="boot-monitor">
@@ -67,7 +75,10 @@
             <div class="nav-links">
                 <a href="#about">About</a>
                 <a href="#achievements">Achievements</a>
-                <a href="#links">Links</a>
+                <a href="#youtube">YouTube</a>
+                <a href="#scenarios">Scenarios</a>
+                <a href="#goods">Goods</a>
+                <a href="#x">X</a>
                 <a href="#games">Games</a>
             </div>
         </div>
@@ -82,9 +93,9 @@
             </div>
             <h1 class="hero-name">
                 <span class="hero-name-jp">川犬</span>
-                <span class="hero-name-en">KAWAINU</span>
+                <span class="hero-name-en">KAWAKEN</span>
             </h1>
-            <p class="hero-tagline">Virtual Streamer</p>
+            <p class="hero-tagline">Virtual YouTuber | Scenario Writer</p>
             <div class="hero-scroll-hint">
                 <span>Scroll</span>
                 <div class="scroll-arrow"></div>
@@ -121,44 +132,8 @@
     <!-- Links Section -->
     <section id="links">
         <div class="section-inner">
-            <h2 class="section-title" data-reveal>Links</h2>
-            <div class="links-grid">
-                <a href="https://www.youtube.com/c/KawakenChannel?sub_confirmation=1" target="_blank" rel="noopener"
-                    class="link-card" data-reveal data-type="youtube">
-                    <div class="link-icon">▶</div>
-                    <div class="link-info">
-                        <div class="link-name">YouTube</div>
-                        <div class="link-desc">配信・動画はこちら</div>
-                    </div>
-                    <div class="link-arrow">→</div>
-                </a>
-                <a href="https://x.com/reverinu_vtuber" target="_blank" rel="noopener" class="link-card" data-reveal
-                    data-type="x">
-                    <div class="link-icon">𝕏</div>
-                    <div class="link-info">
-                        <div class="link-name">X (Twitter)</div>
-                        <div class="link-desc">日常・告知をチェック</div>
-                    </div>
-                    <div class="link-arrow">→</div>
-                </a>
-                <a href="https://reverinu.booth.pm/" target="_blank" rel="noopener" class="link-card" data-reveal
-                    data-type="booth">
-                    <div class="link-icon">📖</div>
-                    <div class="link-info">
-                        <div class="link-name">BOOTH — TRPGシナリオ</div>
-                        <div class="link-desc">オリジナルシナリオ販売中</div>
-                    </div>
-                    <div class="link-arrow">→</div>
-                </a>
-                <a href="https://reverinu-vtuber.booth.pm/" target="_blank" rel="noopener" class="link-card" data-reveal
-                    data-type="booth">
-                    <div class="link-icon">🛍️</div>
-                    <div class="link-info">
-                        <div class="link-name">BOOTH — グッズ</div>
-                        <div class="link-desc">オリジナルグッズ販売中</div>
-                    </div>
-                    <div class="link-arrow">→</div>
-                </a>
+            <div id="links-container">
+                <!-- JS で data/links.json から動的に描画 -->
             </div>
         </div>
     </section>

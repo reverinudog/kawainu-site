@@ -1,0 +1,149 @@
+{
+    "youtube": {
+        "label": "YouTube",
+        "icon": "▶",
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
+        "items": [
+            {
+                "title": "#8 【完全初見】TRPG配信者が全力セリフ読みで『都市伝説解体センター』【 川犬 】※ネタバレ注意",
+                "url": "https://www.youtube.com/watch?v=4bnWHvxByG0",
+                "thumb": "https://i1.ytimg.com/vi/4bnWHvxByG0/hqdefault.jpg",
+                "date": "2026-02-28"
+            },
+            {
+                "title": "【 CoC 】遺魂ポスト #いおエルポスト #遺魂ポスト01 【 クトゥルフ神話TRPG 】KP 川犬  PL 松永依織/エルセ",
+                "url": "https://www.youtube.com/watch?v=QOXS47l76ps",
+                "thumb": "https://i2.ytimg.com/vi/QOXS47l76ps/hqdefault.jpg",
+                "date": "2026-02-25"
+            },
+            {
+                "title": "【 CoC / 本編③ 】この命が燃え尽き果てるまで #わっしょいこの燃え 【 クトゥルフ神話TRPG 】KPひげさん PL鍵宮シエル/緋衣/きつねさん/川犬",
+                "url": "https://www.youtube.com/watch?v=1axMyp2t5Xg",
+                "thumb": "https://i2.ytimg.com/vi/1axMyp2t5Xg/hqdefault.jpg",
+                "date": "2026-02-24"
+            },
+            {
+                "title": "【限界作業】確定申告、急襲【川犬】",
+                "url": "https://www.youtube.com/watch?v=NuOFiVE0BQM",
+                "thumb": "https://i3.ytimg.com/vi/NuOFiVE0BQM/hqdefault.jpg",
+                "date": "2026-02-21"
+            },
+            {
+                "title": "【 CoC / 後編 】AI KILLED YOU #うえなかAIキル #AIキル18 【 クトゥルフ神話TRPG 】KP川犬 PL 上田悠介/中舘早紀",
+                "url": "https://www.youtube.com/watch?v=pFaGzsN3NN4",
+                "thumb": "https://i1.ytimg.com/vi/pFaGzsN3NN4/hqdefault.jpg",
+                "date": "2026-02-18"
+            },
+            {
+                "title": "【 CoC / 前編 】AI KILLED YOU #うえなかAIキル #AIキル18 【 クトゥルフ神話TRPG 】KP川犬 PL 上田悠介/中舘早紀",
+                "url": "https://www.youtube.com/watch?v=wKqEcKZR5MA",
+                "thumb": "https://i4.ytimg.com/vi/wKqEcKZR5MA/hqdefault.jpg",
+                "date": "2026-02-17"
+            },
+            {
+                "title": "【ネタバレあり】CoCシナリオ『近くて遠きは終着点』の作者の回し方【川犬】",
+                "url": "https://www.youtube.com/watch?v=fvBBXJJg_Wg",
+                "thumb": "https://i3.ytimg.com/vi/fvBBXJJg_Wg/hqdefault.jpg",
+                "date": "2026-02-16"
+            },
+            {
+                "title": "【 CoC/後編 】天獄 #みこいちかんな天獄 #天獄03 【 クトゥルフ神話TRPG 】KP川犬 PL堰代ミコ/宗谷いちか/茜音カンナ",
+                "url": "https://www.youtube.com/watch?v=QMpBvmY3GL0",
+                "thumb": "https://i2.ytimg.com/vi/QMpBvmY3GL0/hqdefault.jpg",
+                "date": "2026-02-13"
+            }
+        ]
+    },
+    "booth_trpg": {
+        "label": "BOOTH — TRPGシナリオ",
+        "icon": "📖",
+        "profileUrl": "https://reverinu.booth.pm",
+        "items": [
+            {
+                "title": "【新作 CoC6th/エモクロア】遺魂ポスト SPLL:E189174",
+                "url": "https://reverinu.booth.pm/items/7912143",
+                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/7912143/1d533b5f-a5f6-4e7c-9edc-616a7d9a2184_base_resized.jpg",
+                "description": "投函したら、届くらしい。 ──あなたの死後に。 ▼遺魂ポストHO診断 https://kuizy.net/analysis/30002 （Xにてポストしてくださると嬉しいです！目指せトレンド入りー！）"
+            },
+            {
+                "title": "【豪華書籍版 / CoC6th】ハートフルワンダーランド",
+                "url": "https://reverinu.booth.pm/items/7546868",
+                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/7546868/83b66c61-7eab-42bb-8a9d-0c80d91b782a_base_resized.jpg",
+                "description": "※在庫には限りがございます。なるべく入手したいと考えている方は「入荷お知らせメールを受け取る」をぜひご利用ください。"
+            },
+            {
+                "title": "【本文無料 / 超絶アップデート】ハートフルワンダーランド【CoC6th】",
+                "url": "https://reverinu.booth.pm/items/3709312",
+                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/3709312/0a22e679-0065-4b7b-ba01-d9aaa99c4dc8_base_resized.jpg",
+                "description": "「セッションで使える豪華素材集」に新たに豪華追加素材集が追加されました！！ すでに「セッションで使える豪華素材集」を購入済みの方は追加料金なしでDLすることが出来ます。詳細は概要欄下部をご確認ください"
+            },
+            {
+                "title": "【CoC6th】天獄 SPLL:E192831",
+                "url": "https://reverinu.booth.pm/items/7204923",
+                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/7204923/97421336-3bf9-4ceb-a123-f0b17003ebf1_base_resized.jpg",
+                "description": "仰げば尊し、わが師の恩 少年少女は天国を卒業する ▼天獄NPC相性診断 https://kuizy.net/analysis/28711 （Xにてポストしてくださると嬉しいです！目指せトレンド入りー！"
+            },
+            {
+                "title": "【CoC6thシナリオ集】404街のタクシー SPLL:E192114",
+                "url": "https://reverinu.booth.pm/items/6842172",
+                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/6842172/970005a4-6b70-4de9-9bfb-16dd298326ba_base_resized.jpg",
+                "description": "検索しても見つからず、地図にも載っていない。 どこにも存在しないはずの街、404街。 あなたは、この不思議な街の新米タクシードライバーだ。 #一晩で遊べるシナリオ企画 参加作品。 ショップをフォローす"
+            },
+            {
+                "title": "【CoC6th】わたしたちは石油王 SPLL:E195594",
+                "url": "https://reverinu.booth.pm/items/5935789",
+                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/5935789/8f57d999-19c3-41f7-b289-d53be00bf7c2_base_resized.jpg",
+                "description": "――散財せよ、湯水の如く。 ▼石油王適性診断 https://kuizy.net/analysis/26049 ポットラックパーティ2024参加作品。 性癖は【散財】 ショップをフォローすれば大きなア"
+            }
+        ]
+    },
+    "booth_goods": {
+        "label": "BOOTH — グッズ",
+        "icon": "🛍️",
+        "profileUrl": "https://reverinu-vtuber.booth.pm",
+        "items": [
+            {
+                "title": "新しい一歩記念グッズ『リリエル＆ルルハリル 二人でお散歩 スペシャルクリアファイル』 - Kawaken Official Shop",
+                "url": "https://reverinu-vtuber.booth.pm/items/5466851",
+                "thumb": "https://booth.pximg.net/c/620x620/aef2db3d-a2ef-4597-8dfe-90761542ec5a/i/5466851/9b8b0d13-ef47-436a-9de8-29485028b621_base_resized.jpg",
+                "description": "「新たな門出に幸があらんことを。」 川犬オフィシャルグッズ第二弾！ エモクロアTRPGの共鳴者で新たにスタートを切ったルルハリルとリリエルとなります！ ●配信はこちら https://www.yout"
+            },
+            {
+                "title": "新しい一歩記念グッズ『お散歩リリエル＆お散歩ルルハリル アクリルフィギュア』 - Kawaken Official Shop",
+                "url": "https://reverinu-vtuber.booth.pm/items/5466810",
+                "thumb": "https://booth.pximg.net/c/620x620/aef2db3d-a2ef-4597-8dfe-90761542ec5a/i/5466810/0a3775ad-0bbe-4348-99f6-6e470824ac91_base_resized.jpg",
+                "description": "川犬オフィシャルグッズ第二弾！ エモクロアTRPGの共鳴者で新たにスタートを切ったルルハリルとリリエルとなります！ ●配信はこちら https://www.youtube.com/watch?v=yv"
+            },
+            {
+                "title": "TRPG等で使える！川犬ボイス素材 - Kawaken Official Shop",
+                "url": "https://reverinu-vtuber.booth.pm/items/5373874",
+                "thumb": "https://booth.pximg.net/c/620x620/aef2db3d-a2ef-4597-8dfe-90761542ec5a/i/5373874/24d48809-b24b-4d25-a309-9fb359a99316_base_resized.jpg",
+                "description": "川犬チャンネル登録者数2万人記念の―― ――初オフィシャルグッズ！ ■収録ボイス 「成功」 「失敗」 「スペシャル」 「イクストリーム」 「クリティカル」 「１クリ」 「ファンブル」 「１００ファン」"
+            },
+            {
+                "title": "1st official goods『川犬＆ルルハリル スペシャルクリアファイル』 - Kawaken Official Shop",
+                "url": "https://reverinu-vtuber.booth.pm/items/5370943",
+                "thumb": "https://booth.pximg.net/c/620x620/aef2db3d-a2ef-4597-8dfe-90761542ec5a/i/5370943/8e6c3523-4f05-4317-bb6b-f1d50c3623a8_base_resized.jpg",
+                "description": "川犬チャンネル登録者数2万人記念の―― ――初オフィシャルグッズ！ イラスト：すみれ くし様 【仕様】 サイズ:A4 印刷方式：デジタル印刷（全面白引きあり） 外装：個別 PP 袋"
+            },
+            {
+                "title": "1st official goods『川犬＆ルルハリル スペシャルタペストリー』 - Kawaken Official Shop",
+                "url": "https://reverinu-vtuber.booth.pm/items/5315757",
+                "thumb": "https://booth.pximg.net/c/620x620/aef2db3d-a2ef-4597-8dfe-90761542ec5a/i/5315757/abc2b09b-cb5b-4eb0-8609-8ddf6b7df33d_base_resized.jpg",
+                "description": "川犬チャンネル登録者数2万人記念の—― —―初オフィシャルグッズ！ イラスト：すみれ くし様 【仕様】 サイズ:B2 印刷方式：昇華転写方式 生地：スエード"
+            },
+            {
+                "title": "1st official goods『ダイス投げ川犬 アクリルキーホルダー』 - Kawaken Official Shop",
+                "url": "https://reverinu-vtuber.booth.pm/items/5315656",
+                "thumb": "https://booth.pximg.net/c/620x620/aef2db3d-a2ef-4597-8dfe-90761542ec5a/i/5315656/04c4ac0b-4dec-464b-b86c-c3e86e7230e2_base_resized.jpg",
+                "description": "川犬チャンネル登録者数2万人記念の—― —―初オフィシャルグッズ！ イラスト：すみれ くし様 【仕様】 サイズ:50x50(mm) 素材：アクリル"
+            }
+        ]
+    },
+    "x": {
+        "label": "X (Twitter)",
+        "icon": "𝕏",
+        "profileUrl": "https://x.com/reverinu_vtuber",
+        "items": []
+    }
+}

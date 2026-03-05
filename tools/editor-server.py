@@ -1,9 +1,11 @@
 """
-Achievement Editor — Custom Server
+Editor Server — Custom Server
 ====================================
 - 静的ファイル配信（プロジェクトルートから）
-- POST /api/save   → data/achievements.json に直接保存
-- GET  /api/ogp    → 指定URLからOGPメタデータ(og:image等)を取得して返す
+- POST /api/save        → data/achievements.json に直接保存
+- GET  /api/ogp         → 指定URLからOGPメタデータ(og:image等)を取得して返す
+- GET  /api/fetch-links → YouTube(RSS) + BOOTH(スクレイピング+OGP)で最新コンテンツ自動取得
+- POST /api/save-links  → data/links.json に保存
 """
 
 import http.server
@@ -11,6 +13,7 @@ import json
 import os
 import sys
 import re
+import xml.etree.ElementTree as ET
 import urllib.request
 import urllib.parse
 import urllib.error
@@ -46,8 +49,27 @@ class OGPParser(HTMLParser):
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
 ACHIEVEMENTS_PATH = os.path.join(PROJECT_ROOT, 'data', 'achievements.json')
+LINKS_PATH = os.path.join(PROJECT_ROOT, 'data', 'links.json')
 
-PORT = 8091
+# デフォルトポート（start.batからは8090、start-editor.batからは8091で起動）
+PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8090
+
+# --- Links設定 ---
+YOUTUBE_CHANNEL_ID = 'UC1B8BqE9nhTIVh-egZPGZbA'
+BOOTH_SHOPS = {
+    'booth_trpg': {
+        'label': 'BOOTH — TRPGシナリオ',
+        'icon': '📖',
+        'shop_url': 'https://reverinu.booth.pm',
+        'items_url': 'https://reverinu.booth.pm/items',
+    },
+    'booth_goods': {
+        'label': 'BOOTH — グッズ',
+        'icon': '🛍️',
+        'shop_url': 'https://reverinu-vtuber.booth.pm',
+        'items_url': 'https://reverinu-vtuber.booth.pm/items',
+    },
+}
 
 
 class EditorHandler(http.server.BaseHTTPRequestHandler):
@@ -59,6 +81,8 @@ class EditorHandler(http.server.BaseHTTPRequestHandler):
 
         if parsed.path == '/api/ogp':
             self._handle_ogp(parsed.query)
+        elif parsed.path == '/api/fetch-links':
+            self._handle_fetch_links()
         else:
             self._serve_static(parsed.path)
 
@@ -69,6 +93,8 @@ class EditorHandler(http.server.BaseHTTPRequestHandler):
 
         if parsed.path == '/api/save':
             self._handle_save()
+        elif parsed.path == '/api/save-links':
+            self._handle_save_links()
         else:
             self.send_error(404, 'Not Found')
 
@@ -222,6 +248,191 @@ class EditorHandler(http.server.BaseHTTPRequestHandler):
         except Exception as e:
             self._json_response(500, {'ok': False, 'error': str(e)})
 
+    # --- Links: 自動取得 ---
+    def _handle_fetch_links(self):
+        """YouTube(RSS) + BOOTH(スクレイピング+OGP) で最新コンテンツを取得"""
+        print('[FETCH-LINKS] 開始...')
+        result = {}
+
+        # YouTube
+        try:
+            yt_items = self._fetch_youtube_rss(YOUTUBE_CHANNEL_ID, max_items=8)
+            result['youtube'] = {
+                'label': 'YouTube',
+                'icon': '▶',
+                'profileUrl': f'https://www.youtube.com/channel/{YOUTUBE_CHANNEL_ID}?sub_confirmation=1',
+                'items': yt_items,
+            }
+            print(f'[FETCH-LINKS] YouTube: {len(yt_items)} 件取得')
+        except Exception as e:
+            print(f'[FETCH-LINKS] YouTube エラー: {e}')
+            result['youtube'] = {'label': 'YouTube', 'icon': '▶',
+                                 'profileUrl': f'https://www.youtube.com/channel/{YOUTUBE_CHANNEL_ID}',
+                                 'items': [], 'error': str(e)}
+
+        # BOOTH shops
+        for key, shop in BOOTH_SHOPS.items():
+            try:
+                booth_items = self._fetch_booth_items(shop['items_url'], max_items=6)
+                result[key] = {
+                    'label': shop['label'],
+                    'icon': shop['icon'],
+                    'profileUrl': shop['shop_url'],
+                    'items': booth_items,
+                }
+                print(f'[FETCH-LINKS] {shop["label"]}: {len(booth_items)} 件取得')
+            except Exception as e:
+                print(f'[FETCH-LINKS] {shop["label"]} エラー: {e}')
+                result[key] = {'label': shop['label'], 'icon': shop['icon'],
+                               'profileUrl': shop['shop_url'],
+                               'items': [], 'error': str(e)}
+
+        # X (リンクのみ)
+        result['x'] = {
+            'label': 'X (Twitter)',
+            'icon': '𝕏',
+            'profileUrl': 'https://x.com/reverinu_vtuber',
+            'items': [],
+        }
+
+        self._json_response(200, {'ok': True, 'data': result})
+        print('[FETCH-LINKS] 完了')
+
+    def _fetch_youtube_rss(self, channel_id, max_items=8):
+        """YouTube RSS フィードから最新動画を取得"""
+        rss_url = f'https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}'
+        req = urllib.request.Request(rss_url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            xml_data = resp.read().decode('utf-8', errors='replace')
+
+        ns = {
+            'atom': 'http://www.w3.org/2005/Atom',
+            'yt': 'http://www.youtube.com/xml/schemas/2015',
+            'media': 'http://search.yahoo.com/mrss/',
+        }
+        root = ET.fromstring(xml_data)
+        entries = root.findall('atom:entry', ns)
+
+        items = []
+        for entry in entries[:max_items]:
+            title_el = entry.find('atom:title', ns)
+            video_id_el = entry.find('yt:videoId', ns)
+            published_el = entry.find('atom:published', ns)
+            thumb_el = entry.find('media:group/media:thumbnail', ns)
+
+            if title_el is None or video_id_el is None:
+                continue
+
+            video_id = video_id_el.text
+            published = published_el.text[:10] if published_el is not None else ''
+
+            items.append({
+                'title': title_el.text,
+                'url': f'https://www.youtube.com/watch?v={video_id}',
+                'thumb': thumb_el.get('url') if thumb_el is not None else f'https://i.ytimg.com/vi/{video_id}/hqdefault.jpg',
+                'date': published,
+            })
+        return items
+
+    def _fetch_booth_items(self, items_url, max_items=6):
+        """BOOTHショップページから商品URL一覧を取得し、各商品のOGPを取得"""
+        # Step 1: ショップページから商品IDを抽出
+        shop_domain = urllib.parse.urlparse(items_url).netloc
+        req = urllib.request.Request(items_url, headers={
+            'User-Agent': 'Mozilla/5.0 (compatible; OGP-Fetcher/1.0)',
+            'Accept': 'text/html',
+        })
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            html = resp.read().decode('utf-8', errors='replace')
+
+        pattern = rf'https://{re.escape(shop_domain)}/items/(\d+)'
+        item_ids = list(dict.fromkeys(re.findall(pattern, html)))
+        print(f'[BOOTH] {shop_domain}: {len(item_ids)} 件の商品IDを検出')
+
+        # Step 2: 各商品のOGPを取得
+        items = []
+        for item_id in item_ids[:max_items]:
+            url = f'https://{shop_domain}/items/{item_id}'
+            try:
+                ogp = self._fetch_ogp_data(url)
+                # タイトルからショップ名サフィックスを除去
+                title = ogp.get('og:title', '')
+                for suffix in [' - Kawaken\'s TRPG World - BOOTH',
+                               ' - BOOTH']:
+                    if title.endswith(suffix):
+                        title = title[:-len(suffix)]
+                        break
+
+                items.append({
+                    'title': title,
+                    'url': url,
+                    'thumb': ogp.get('og:image', ''),
+                    'description': ogp.get('og:description', '')[:100],
+                })
+            except Exception as e:
+                print(f'[BOOTH] OGP取得失敗 {url}: {e}')
+        return items
+
+    def _fetch_ogp_data(self, url):
+        """指定URLのOGPメタデータを取得して辞書で返す"""
+        req = urllib.request.Request(url, headers={
+            'User-Agent': 'Mozilla/5.0 (compatible; OGP-Fetcher/1.0)',
+            'Accept': 'text/html',
+        })
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            content_type = resp.headers.get('Content-Type', '')
+            charset = 'utf-8'
+            match = re.search(r'charset=([^\s;]+)', content_type)
+            if match:
+                charset = match.group(1)
+            raw = resp.read(65536)
+            try:
+                html = raw.decode(charset, errors='replace')
+            except (LookupError, UnicodeDecodeError):
+                html = raw.decode('utf-8', errors='replace')
+
+        parser = OGPParser()
+        parser.feed(html)
+        return parser.og
+
+    # --- Links: 保存 ---
+    def _handle_save_links(self):
+        """data/links.json に JSON を保存"""
+        try:
+            content_length = self.headers.get('Content-Length')
+            if not content_length:
+                self._json_response(400, {'ok': False, 'error': 'Content-Length ヘッダーがありません'})
+                return
+
+            length = int(content_length)
+            body = self.rfile.read(length)
+            data = json.loads(body.decode('utf-8'))
+
+            if not isinstance(data, dict):
+                raise ValueError('データはオブジェクトである必要があります')
+
+            os.makedirs(os.path.dirname(LINKS_PATH), exist_ok=True)
+
+            print(f'[SAVE-LINKS] Writing to: {LINKS_PATH}')
+            with open(LINKS_PATH, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
+                f.write('\n')
+
+            # 検証
+            with open(LINKS_PATH, 'r', encoding='utf-8') as f:
+                verify = json.load(f)
+            total = sum(len(v.get('items', [])) for v in verify.values() if isinstance(v, dict))
+            print(f'[SAVE-LINKS] 検証OK: {len(verify)} カテゴリ, {total} アイテム')
+
+            self._json_response(200, {'ok': True, 'categories': len(verify), 'items': total})
+
+        except json.JSONDecodeError as e:
+            print(f'[SAVE-LINKS ERROR] JSON解析エラー: {e}')
+            self._json_response(400, {'ok': False, 'error': f'JSON解析エラー: {e}'})
+        except Exception as e:
+            print(f'[SAVE-LINKS ERROR] {e}')
+            self._json_response(500, {'ok': False, 'error': str(e)})
+
     def _json_response(self, status, data):
         """JSON レスポンスを返す"""
         body = json.dumps(data, ensure_ascii=False).encode('utf-8')
@@ -245,14 +456,15 @@ class EditorHandler(http.server.BaseHTTPRequestHandler):
 
 def main():
     os.chdir(PROJECT_ROOT)
-    print(f'=== Achievement Editor Server ===')
+    print(f'=== Editor Server ===')
     print(f'Python: {sys.version}')
     print(f'プロジェクトルート: {PROJECT_ROOT}')
     print(f'実績データ: {ACHIEVEMENTS_PATH}')
-    print(f'ファイル存在: {os.path.exists(ACHIEVEMENTS_PATH)}')
+    print(f'リンクデータ: {LINKS_PATH}')
     print(f'ポート: {PORT}')
-    print(f'エディタ: http://localhost:{PORT}/tools/achievement-editor.html')
-    print(f'================================')
+    print(f'実績エディタ: http://localhost:{PORT}/tools/achievement-editor.html')
+    print(f'リンクエディタ: http://localhost:{PORT}/tools/link-editor.html')
+    print(f'========================')
     print()
 
     with http.server.HTTPServer(('', PORT), EditorHandler) as httpd:

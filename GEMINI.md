@@ -4,13 +4,15 @@
 
 - **テスト目的でも HTTP サーバーを勝手に起動しないこと**
 - ユーザーは必ず `start.bat` を手動で実行してサーバーを起動する
+- `start.bat` は `editor-server.py`（ポート8090）を使用。ページ読み込み時にYouTube RSS + BOOTH OGPを自動取得
 - AI がサーバーを起動すると、ユーザーの `start.bat` とポートが競合し 404 エラーの原因になる
 - 動作確認が必要な場合は、ユーザーに `start.bat` の実行を依頼すること
 
 ## デザイン仕様
 
 - テーマカラー: **黒 (`#050508`) × ネオングリーン (`#00ff6a`)**
-- VTuber名: **川犬**（英字表記: KAWAINU）
+- VTuber名: **川犬**（英字表記: KAWAKEN）
+- タグライン: Virtual YouTuber | Scenario Writer
 - アバター画像: `assets/avatar.png`（仮置き、ユーザーが後で差し替え予定）
 
 ## コンテンツ編集ルール

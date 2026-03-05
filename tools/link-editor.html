@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>リンクエディタ — 川犬</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700;900&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* === Reset & Base === */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            background: #050508;
+            color: #e0e0e0;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* === Header === */
+        .editor-header {
+            background: rgba(0, 255, 106, 0.03);
+            border-bottom: 1px solid rgba(0, 255, 106, 0.15);
+            padding: 20px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .editor-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #00ff6a;
+            text-shadow: 0 0 20px rgba(0, 255, 106, 0.4);
+            letter-spacing: 0.05em;
+        }
+
+        .editor-title span {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-left: 12px;
+            font-weight: 400;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* === Buttons === */
+        .btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 106, 0.3);
+            background: rgba(0, 255, 106, 0.08);
+            color: #00ff6a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.03em;
+        }
+
+        .btn:hover {
+            background: rgba(0, 255, 106, 0.18);
+            box-shadow: 0 0 20px rgba(0, 255, 106, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .btn-primary {
+            background: #00ff6a;
+            color: #050508;
+            border-color: #00ff6a;
+            font-weight: 700;
+        }
+
+        .btn-primary:hover {
+            background: #33ff88;
+            box-shadow: 0 0 30px rgba(0, 255, 106, 0.3);
+        }
+
+        .btn-danger {
+            border-color: rgba(255, 80, 80, 0.4);
+            background: rgba(255, 80, 80, 0.08);
+            color: #ff6666;
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 80, 80, 0.2);
+            box-shadow: 0 0 20px rgba(255, 80, 80, 0.15);
+        }
+
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: 0.75rem;
+        }
+
+        .btn-lg {
+            padding: 12px 32px;
+            font-size: 0.95rem;
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            border-radius: 6px;
+        }
+
+        /* === Main Layout === */
+        .editor-main {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 32px 24px 100px;
+        }
+
+        /* === Fetch Panel === */
+        .fetch-panel {
+            text-align: center;
+            padding: 40px;
+            border: 2px dashed rgba(0, 255, 106, 0.15);
+            border-radius: 20px;
+            margin-bottom: 32px;
+            background: rgba(0, 255, 106, 0.02);
+        }
+
+        .fetch-panel p {
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .fetch-status {
+            font-size: 0.8rem;
+            color: rgba(0, 255, 106, 0.6);
+            margin-top: 16px;
+            min-height: 1.5em;
+        }
+
+        /* === Category Block === */
+        .category-block {
+            margin-bottom: 24px;
+            border: 1px solid rgba(0, 255, 106, 0.1);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .category-block:hover {
+            border-color: rgba(0, 255, 106, 0.2);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            background: rgba(0, 255, 106, 0.04);
+            border-bottom: 1px solid rgba(0, 255, 106, 0.08);
+            gap: 12px;
+        }
+
+        .category-icon {
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .cat-youtube .category-icon {
+            background: rgba(255, 0, 0, 0.15);
+        }
+
+        .cat-x .category-icon {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .cat-booth_trpg .category-icon {
+            background: rgba(252, 77, 80, 0.12);
+        }
+
+        .cat-booth_goods .category-icon {
+            background: rgba(252, 77, 80, 0.12);
+        }
+
+        .category-label {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+            flex: 1;
+        }
+
+        .category-count {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+
+        .category-link {
+            font-size: 0.75rem;
+            color: rgba(0, 255, 106, 0.6);
+            text-decoration: none;
+        }
+
+        .category-link:hover {
+            color: #00ff6a;
+        }
+
+        /* === Item Cards in Editor === */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            padding: 16px;
+        }
+
+        .items-grid:empty::after {
+            content: 'アイテムなし';
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 32px;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.85rem;
+        }
+
+        .item-card {
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .item-card:hover {
+            border-color: rgba(0, 255, 106, 0.2);
+            background: rgba(0, 255, 106, 0.03);
+        }
+
+        .item-card-thumb {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            display: block;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .item-card-body {
+            padding: 10px 12px;
+        }
+
+        .item-card-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #fff;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+
+        .item-card-meta {
+            font-size: 0.7rem;
+            color: rgba(0, 255, 106, 0.5);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .item-card-delete {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 80, 80, 0.4);
+            color: #ff6666;
+            font-size: 0.7rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .item-card:hover .item-card-delete {
+            opacity: 1;
+        }
+
+        .item-card-delete:hover {
+            background: rgba(255, 80, 80, 0.3);
+        }
+
+        /* X link-only notice */
+        .x-notice {
+            padding: 24px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.85rem;
+        }
+
+        /* === Toast === */
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: rgba(0, 255, 106, 0.15);
+            border: 1px solid rgba(0, 255, 106, 0.3);
+            color: #00ff6a;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 300;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background: rgba(255, 80, 80, 0.15);
+            border-color: rgba(255, 80, 80, 0.3);
+            color: #ff6666;
+        }
+
+        /* === Responsive === */
+        @media (max-width: 600px) {
+            .editor-header {
+                flex-direction: column;
+                gap: 12px;
+                padding: 16px;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .editor-main {
+                padding: 20px 12px 80px;
+            }
+
+            .items-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="editor-header">
+        <div class="editor-title">
+            LINK EDITOR
+            <span>— 川犬 リンク管理ツール</span>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-sm" id="btn-download">💾 JSONバックアップ</button>
+            <button class="btn btn-primary btn-sm" id="btn-save" disabled>⚡ 保存して反映</button>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="editor-main">
+        <!-- Fetch Panel -->
+        <div class="fetch-panel">
+            <p>YouTube（RSS）と BOOTH（スクレイピング+OGP）から最新コンテンツを自動取得します</p>
+            <button class="btn btn-lg btn-primary" id="btn-fetch">🔄 最新データを取得</button>
+            <div class="fetch-status" id="fetch-status"></div>
+        </div>
+
+        <!-- Categories Container -->
+        <div id="categories-container"></div>
+    </main>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // =============================================
+        //  Link Editor — Core Logic
+        // =============================================
+
+        let linksData = {};
+        let isDirty = false;
+
+        // Category display order
+        const CATEGORY_ORDER = ['youtube', 'booth_trpg', 'booth_goods', 'x'];
+
+        // --- Init ---
+        async function init() {
+            try {
+                const res = await fetch('/data/links.json?t=' + Date.now());
+                if (res.ok) {
+                    linksData = await res.json();
+                    console.log('links.json loaded');
+                }
+            } catch (e) {
+                console.warn('links.json 読み込み失敗:', e);
+            }
+            render();
+        }
+
+        // --- Fetch Latest Data ---
+        document.getElementById('btn-fetch').addEventListener('click', async () => {
+            const btn = document.getElementById('btn-fetch');
+            const status = document.getElementById('fetch-status');
+
+            btn.disabled = true;
+            btn.textContent = '取得中...';
+            status.textContent = 'YouTube RSS + BOOTH OGP を取得中。しばらくお待ちください...';
+
+            try {
+                const res = await fetch('/api/fetch-links');
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const result = await res.json();
+
+                if (!result.ok) throw new Error(result.error || '取得に失敗しました');
+
+                linksData = result.data;
+                isDirty = true;
+                updateSaveBtn();
+                render();
+
+                const totalItems = Object.values(linksData)
+                    .reduce((sum, cat) => sum + (cat.items?.length || 0), 0);
+                status.textContent = `✅ 取得完了！合計 ${totalItems} 件のコンテンツを取得しました`;
+                showToast(`${totalItems} 件のコンテンツを取得しました`);
+            } catch (e) {
+                console.error('fetch error:', e);
+                status.textContent = `❌ エラー: ${e.message}`;
+                showToast(`エラー: ${e.message}`, true);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🔄 最新データを取得';
+            }
+        });
+
+        // --- Render ---
+        function render() {
+            const container = document.getElementById('categories-container');
+            container.innerHTML = '';
+
+            CATEGORY_ORDER.forEach(key => {
+                const cat = linksData[key];
+                if (!cat) return;
+
+                const block = document.createElement('div');
+                block.className = `category-block cat-${key}`;
+
+                // Header
+                const header = document.createElement('div');
+                header.className = 'category-header';
+                header.innerHTML = `
+                    <div class="category-icon">${escHtml(cat.icon)}</div>
+                    <div class="category-label">${escHtml(cat.label)}</div>
+                    <span class="category-count">${cat.items?.length || 0} 件</span>
+                    <a class="category-link" href="${escHtml(cat.profileUrl)}" target="_blank" rel="noopener">
+                        プロフィール →
+                    </a>
+                `;
+                block.appendChild(header);
+
+                // Items
+                if (key === 'x') {
+                    const notice = document.createElement('div');
+                    notice.className = 'x-notice';
+                    notice.textContent = 'X はリンクのみ（自動取得非対応）';
+                    block.appendChild(notice);
+                } else {
+                    const grid = document.createElement('div');
+                    grid.className = 'items-grid';
+
+                    (cat.items || []).forEach((item, idx) => {
+                        const card = createItemCard(item, key, idx);
+                        grid.appendChild(card);
+                    });
+
+                    block.appendChild(grid);
+                }
+
+                container.appendChild(block);
+            });
+        }
+
+        // --- Create Item Card ---
+        function createItemCard(item, catKey, idx) {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+
+            const thumbSrc = item.thumb || '';
+            const title = item.title || '(無題)';
+            const meta = item.date || item.description?.slice(0, 30) || '';
+
+            card.innerHTML = `
+                ${thumbSrc
+                    ? `<img class="item-card-thumb" src="${escHtml(thumbSrc)}" alt="" loading="lazy"
+                           onerror="this.style.display='none'">`
+                    : `<div class="item-card-thumb" style="display:flex;align-items:center;justify-content:center;
+                       color:rgba(255,255,255,0.15);font-size:2rem;">🖼️</div>`
+                }
+                <div class="item-card-body">
+                    <div class="item-card-title" title="${escHtml(title)}">${escHtml(title)}</div>
+                    <div class="item-card-meta">${escHtml(meta)}</div>
+                </div>
+                <button class="item-card-delete" onclick="deleteItem('${catKey}', ${idx})" title="削除">✕</button>
+            `;
+
+            // Click to open URL
+            card.addEventListener('click', (e) => {
+                if (e.target.closest('.item-card-delete')) return;
+                if (item.url) window.open(item.url, '_blank');
+            });
+            card.style.cursor = item.url ? 'pointer' : 'default';
+
+            return card;
+        }
+
+        // --- Delete Item ---
+        function deleteItem(catKey, idx) {
+            if (!confirm('このアイテムを削除しますか？')) return;
+            linksData[catKey].items.splice(idx, 1);
+            isDirty = true;
+            updateSaveBtn();
+            render();
+            showToast('アイテムを削除しました');
+        }
+
+        // --- Save ---
+        document.getElementById('btn-save').addEventListener('click', async () => {
+            const btn = document.getElementById('btn-save');
+            btn.disabled = true;
+            btn.textContent = '保存中...';
+
+            try {
+                const res = await fetch('/api/save-links', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(linksData),
+                });
+                const result = await res.json();
+                if (!result.ok) throw new Error(result.error);
+
+                isDirty = false;
+                updateSaveBtn();
+                showToast(`保存完了！${result.categories} カテゴリ, ${result.items} アイテム`);
+            } catch (e) {
+                showToast(`保存エラー: ${e.message}`, true);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '⚡ 保存して反映';
+            }
+        });
+
+        // --- Download JSON ---
+        document.getElementById('btn-download').addEventListener('click', () => {
+            const blob = new Blob([JSON.stringify(linksData, null, 4)], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'links-backup.json';
+            a.click();
+            URL.revokeObjectURL(a.href);
+            showToast('JSONバックアップをダウンロードしました');
+        });
+
+        // --- Utils ---
+        function updateSaveBtn() {
+            document.getElementById('btn-save').disabled = !isDirty;
+        }
+
+        function escHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        let toastTimer = null;
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast show' + (isError ? ' error' : '');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => { toast.className = 'toast'; }, 3000);
+        }
+
+        // --- Start ---
+        init();
+    </script>
+</body>
+
+</html>

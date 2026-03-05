@@ -9,8 +9,8 @@ for /f "tokens=5" %%a in ('netstat -ano ^| findstr :8091 ^| findstr LISTENING') 
 REM バッチファイルのあるディレクトリに移動（日本語パス対応）
 cd /d "%~dp0"
 
-REM カスタムサーバーをバックグラウンドで起動
-start "" /B python editor-server.py
+REM カスタムサーバーをバックグラウンドで起動（ポート8091）
+start "" /B python editor-server.py 8091
 
 REM サーバー起動を待ってからブラウザを開く
 timeout /t 3 /nobreak >nul
