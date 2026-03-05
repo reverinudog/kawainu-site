@@ -1,0 +1,93 @@
+[
+    {
+        "year": 2022,
+        "items": [
+            {
+                "title": "初配信",
+                "description": "YouTubeにて初めてのライブ配信を実施",
+                "icon": "🎙️",
+                "date": "2022年4月",
+                "url": "https://www.youtube.com/c/KawakenChannel"
+            },
+            {
+                "title": "VTuber活動開始",
+                "description": "川犬としての活動をスタート",
+                "icon": "🎬",
+                "date": "2022年春"
+            },
+            {
+                "title": "初配信 (コピー)",
+                "description": "YouTubeにて初めてのライブ配信を実施",
+                "icon": "🎙️",
+                "date": "2022年4月",
+                "url": "https://www.youtube.com/c/KawakenChannel"
+            },
+            {
+                "title": "TRPGシナリオ第1弾リリース",
+                "description": "BOOTHにてオリジナルTRPGシナリオの販売を開始",
+                "icon": "📖",
+                "date": "2022年8月",
+                "url": "https://reverinu.booth.pm/"
+            }
+        ]
+    },
+    {
+        "year": 2023,
+        "items": [
+            {
+                "title": "チャンネル登録者数 増加",
+                "description": "YouTubeチャンネルが成長し、視聴者コミュニティが拡大",
+                "icon": "📈",
+                "date": "2023年"
+            },
+            {
+                "title": "コラボ配信実施",
+                "description": "他VTuberとのコラボレーション配信を複数回実施",
+                "icon": "🤝",
+                "date": "2023年"
+            },
+            {
+                "title": "BOOTHグッズショップ開設",
+                "description": "オリジナルグッズの販売を開始",
+                "icon": "🛍️",
+                "date": "2023年",
+                "url": "https://reverinu-vtuber.booth.pm/"
+            }
+        ]
+    },
+    {
+        "year": 2024,
+        "items": [
+            {
+                "title": "TRPGシナリオ新作リリース",
+                "description": "新作シナリオを複数リリース",
+                "icon": "📚",
+                "date": "2024年",
+                "url": "https://reverinu.booth.pm/"
+            },
+            {
+                "title": "ツール開発開始",
+                "description": "配信・TRPG関連のオリジナルツール開発に着手",
+                "icon": "🛠️",
+                "date": "2024年"
+            }
+        ]
+    },
+    {
+        "year": 2025,
+        "items": [
+            {
+                "title": "公式サイト公開",
+                "description": "川犬の公式Webサイトをリリース",
+                "icon": "🌐",
+                "date": "2025年"
+            },
+            {
+                "title": "お祓いシミュレーター公開",
+                "description": "100面ダイス×100個のブラウザゲームを制作・公開",
+                "icon": "🎲",
+                "date": "2025年"
+            }
+        ]
+    }
+]

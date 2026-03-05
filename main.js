@@ -299,9 +299,96 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// --- スクロールリビール ---
-const revealElements = document.querySelectorAll('[data-reveal]');
+// --- 実績タイムライン ---
+// 外部JSONから実績データを読み込み（キャッシュ防止）
+fetch('data/achievements.json?t=' + Date.now())
+    .then(res => res.json())
+    .then(data => renderAchievements(data))
+    .catch(err => {
+        console.error('実績データの読み込みに失敗:', err);
+        renderAchievements([]);
+    });
 
+function renderAchievements(ACHIEVEMENTS_DATA) {
+    const container = document.getElementById('timeline-container');
+    if (!container) return;
+
+    const totalGroups = ACHIEVEMENTS_DATA.length;
+
+    ACHIEVEMENTS_DATA.forEach((yearGroup, index) => {
+        const isLeft = index % 2 === 0;
+        const side = isLeft ? 'tl-left' : 'tl-right';
+
+        // グループ間コネクタ（最初のグループ以外）
+        if (index > 0) {
+            const prevIsLeft = (index - 1) % 2 === 0;
+            const connector = document.createElement('div');
+            connector.className = `timeline-connector ${prevIsLeft ? 'timeline-connector-lr' : 'timeline-connector-rl'}`;
+            container.appendChild(connector);
+        }
+
+        // グループコンテナ
+        const group = document.createElement('div');
+        group.className = `timeline-group ${side}`;
+
+        // 年マーカー
+        const yearDiv = document.createElement('div');
+        yearDiv.className = 'timeline-year';
+        yearDiv.innerHTML = `<span class="timeline-year-label">${yearGroup.year}</span>`;
+        group.appendChild(yearDiv);
+
+        // 各アイテム
+        yearGroup.items.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'timeline-item';
+
+            const isLink = !!item.url;
+            const tag = isLink ? 'a' : 'div';
+            const linkAttrs = isLink
+                ? ` href="${item.url}" target="_blank" rel="noopener"`
+                : '';
+            const arrowHtml = isLink
+                ? '<div class="link-arrow">→</div>'
+                : '';
+
+            let visualHtml;
+            if (item.thumb) {
+                visualHtml = `<img class="timeline-thumb" src="${item.thumb}" alt="" loading="lazy">`;
+            } else {
+                visualHtml = `<div class="timeline-icon">${item.icon || '📌'}</div>`;
+            }
+
+            itemDiv.innerHTML = `
+                <${tag} class="timeline-card"${linkAttrs}>
+                    ${visualHtml}
+                    <div class="timeline-body">
+                        <div class="timeline-title">${item.title}</div>
+                        <div class="timeline-desc">${item.description}</div>
+                        <div class="timeline-date">${item.date}</div>
+                    </div>
+                    ${arrowHtml}
+                </${tag}>
+            `;
+            group.appendChild(itemDiv);
+        });
+
+        // 最後のグループにエンドマーカーを追加
+        if (index === totalGroups - 1) {
+            const endDiv = document.createElement('div');
+            endDiv.className = 'timeline-end';
+            endDiv.innerHTML = '<span class="timeline-end-label">— 現在に至る</span>';
+            group.appendChild(endDiv);
+        }
+
+        container.appendChild(group);
+    });
+
+    // タイムライン要素をスクロールリビールに登録
+    const timelineRevealEls = container.querySelectorAll('.timeline-year, .timeline-item, .timeline-end, .timeline-connector');
+    timelineRevealEls.forEach(el => revealObserver.observe(el));
+}
+
+// --- スクロールリビール ---
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -313,7 +400,7 @@ const revealObserver = new IntersectionObserver((entries) => {
     rootMargin: '0px 0px -50px 0px',
 });
 
-revealElements.forEach(el => revealObserver.observe(el));
+document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
 
 // --- スムーズスクロール（ナビリンク） ---
 document.querySelectorAll('a[href^="#"]').forEach(link => {

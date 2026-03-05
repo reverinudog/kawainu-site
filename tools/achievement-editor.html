@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>実績エディタ — 川犬</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700;900&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* === Reset & Base === */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            background: #050508;
+            color: #e0e0e0;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* === Header === */
+        .editor-header {
+            background: rgba(0, 255, 106, 0.03);
+            border-bottom: 1px solid rgba(0, 255, 106, 0.15);
+            padding: 20px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .editor-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #00ff6a;
+            text-shadow: 0 0 20px rgba(0, 255, 106, 0.4);
+            letter-spacing: 0.05em;
+        }
+
+        .editor-title span {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-left: 12px;
+            font-weight: 400;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* === Buttons === */
+        .btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 106, 0.3);
+            background: rgba(0, 255, 106, 0.08);
+            color: #00ff6a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.03em;
+        }
+
+        .btn:hover {
+            background: rgba(0, 255, 106, 0.18);
+            box-shadow: 0 0 20px rgba(0, 255, 106, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: #00ff6a;
+            color: #050508;
+            border-color: #00ff6a;
+            font-weight: 700;
+        }
+
+        .btn-primary:hover {
+            background: #33ff88;
+            box-shadow: 0 0 30px rgba(0, 255, 106, 0.3);
+        }
+
+        .btn-danger {
+            border-color: rgba(255, 80, 80, 0.4);
+            background: rgba(255, 80, 80, 0.08);
+            color: #ff6666;
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 80, 80, 0.2);
+            box-shadow: 0 0 20px rgba(255, 80, 80, 0.15);
+        }
+
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: 0.75rem;
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            border-radius: 6px;
+        }
+
+        .btn-secondary {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+        }
+
+        /* === Main Layout === */
+        .editor-main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 24px 100px;
+        }
+
+        /* === Toolbar === */
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .toolbar-spacer {
+            flex: 1;
+        }
+
+        /* === Year Group === */
+        .year-group {
+            margin-bottom: 32px;
+            border: 1px solid rgba(0, 255, 106, 0.1);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .year-group:hover {
+            border-color: rgba(0, 255, 106, 0.2);
+        }
+
+        .year-group-header {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            background: rgba(0, 255, 106, 0.04);
+            border-bottom: 1px solid rgba(0, 255, 106, 0.08);
+            gap: 12px;
+        }
+
+        .year-input {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #00ff6a;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 106, 0.3);
+            border-radius: 6px;
+            padding: 4px 12px;
+            width: 130px;
+            text-align: center;
+            outline: none;
+        }
+
+        .year-input:focus {
+            border-color: #00ff6a;
+            box-shadow: 0 0 12px rgba(0, 255, 106, 0.2);
+        }
+
+        .year-item-count {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+
+        .year-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 6px;
+        }
+
+        /* === Item List === */
+        .item-list {
+            padding: 12px;
+            min-height: 60px;
+        }
+
+        .item-list-empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60px;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.85rem;
+            border: 2px dashed rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            margin: 4px;
+        }
+
+        /* === Item Card === */
+        .item-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 8px;
+            transition: all 0.25s ease;
+            cursor: grab;
+        }
+
+        .item-card:hover {
+            background: rgba(0, 255, 106, 0.03);
+            border-color: rgba(0, 255, 106, 0.15);
+        }
+
+        .item-card.dragging {
+            opacity: 0.4;
+            transform: scale(0.98);
+        }
+
+        .item-card.drag-over {
+            border-color: #00ff6a;
+            box-shadow: 0 0 15px rgba(0, 255, 106, 0.15);
+        }
+
+        .item-drag-handle {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 1rem;
+            cursor: grab;
+            user-select: none;
+            flex-shrink: 0;
+        }
+
+        .item-icon-display {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            background: rgba(0, 255, 106, 0.06);
+            border: 1px solid rgba(0, 255, 106, 0.1);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .item-icon-display img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .item-title-display {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-date-display {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            color: rgba(0, 255, 106, 0.5);
+            margin-top: 2px;
+        }
+
+        .item-url-badge {
+            font-size: 0.65rem;
+            padding: 1px 6px;
+            border-radius: 4px;
+            background: rgba(0, 255, 106, 0.1);
+            color: rgba(0, 255, 106, 0.6);
+            margin-left: 8px;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        /* === Modal === */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-backdrop.active {
+            display: flex;
+        }
+
+        .modal {
+            background: #0a0a0e;
+            border: 1px solid rgba(0, 255, 106, 0.2);
+            border-radius: 20px;
+            padding: 32px;
+            width: 90%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(0, 255, 106, 0.05);
+            animation: modalIn 0.25s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #00ff6a;
+            margin-bottom: 24px;
+            letter-spacing: 0.05em;
+        }
+
+        /* === Form === */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 6px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            color: #e0e0e0;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: rgba(0, 255, 106, 0.4);
+            box-shadow: 0 0 12px rgba(0, 255, 106, 0.1);
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-hint {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.25);
+            margin-top: 4px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        /* === URL入力行 === */
+        .url-row {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .url-row .form-input {
+            flex: 1;
+        }
+
+        .btn-ogp {
+            margin-top: 0;
+            flex-shrink: 0;
+            height: 40px;
+            padding: 0 14px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+
+        /* OGPプレビュー */
+        .ogp-preview {
+            display: none;
+            margin-top: 8px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(0, 255, 106, 0.04);
+            border: 1px solid rgba(0, 255, 106, 0.1);
+            gap: 10px;
+            align-items: center;
+        }
+
+        .ogp-preview.visible {
+            display: flex;
+        }
+
+        .ogp-preview img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .ogp-preview-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .ogp-preview-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .ogp-preview-desc {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.35);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .ogp-preview .btn-sm {
+            flex-shrink: 0;
+        }
+
+        /* === Toast Notification === */
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: rgba(0, 255, 106, 0.15);
+            border: 1px solid rgba(0, 255, 106, 0.3);
+            color: #00ff6a;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 300;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* === File Import === */
+        .file-import-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .file-import-label input[type="file"] {
+            display: none;
+        }
+
+        /* === Responsive === */
+        @media (max-width: 600px) {
+            .editor-header {
+                flex-direction: column;
+                gap: 12px;
+                padding: 16px;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .editor-main {
+                padding: 20px 12px 80px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .modal {
+                padding: 24px 20px;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="editor-header">
+        <div class="editor-title">
+            ACHIEVEMENT EDITOR
+            <span>— 川犬 実績管理ツール</span>
+        </div>
+        <div class="header-actions">
+            <label class="file-import-label btn btn-sm btn-secondary" id="import-label">
+                📂 インポート
+                <input type="file" id="import-file" accept=".json">
+            </label>
+            <button class="btn btn-sm" id="btn-download">💾 JSONバックアップ</button>
+            <button class="btn btn-primary btn-sm" id="btn-save">⚡ 直接反映</button>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="editor-main">
+        <div class="toolbar">
+            <button class="btn" id="btn-add-year">＋ 年グループ追加</button>
+            <div class="toolbar-spacer"></div>
+            <span id="stats" style="font-size:0.75rem; color:rgba(255,255,255,0.35);"></span>
+        </div>
+        <div id="year-groups-container"></div>
+    </main>
+
+    <!-- Item Edit Modal -->
+    <div class="modal-backdrop" id="item-modal">
+        <div class="modal">
+            <div class="modal-title" id="modal-title">実績を編集</div>
+            <div class="form-group">
+                <label class="form-label">タイトル *</label>
+                <input type="text" class="form-input" id="f-title" placeholder="例: VTuber活動開始">
+            </div>
+            <div class="form-group">
+                <label class="form-label">説明</label>
+                <textarea class="form-input" id="f-desc" placeholder="例: 川犬としての活動をスタート"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">アイコン (絵文字)</label>
+                    <input type="text" class="form-input" id="f-icon" placeholder="例: 🎬" maxlength="4">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">日付</label>
+                    <input type="text" class="form-input" id="f-date" placeholder="例: 2025年4月">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">URL (任意)</label>
+                <div class="url-row">
+                    <input type="url" class="form-input" id="f-url" placeholder="https://...">
+                    <button class="btn btn-sm btn-ogp" id="btn-fetch-ogp" type="button">🔍 OGP取得</button>
+                </div>
+                <div class="form-hint">URLを入力して OGP取得 ボタンでサムネイルを自動設定</div>
+                <!-- OGP Preview -->
+                <div class="ogp-preview" id="ogp-preview">
+                    <img id="ogp-preview-img" src="" alt="">
+                    <div class="ogp-preview-info">
+                        <div class="ogp-preview-title" id="ogp-preview-title"></div>
+                        <div class="ogp-preview-desc" id="ogp-preview-desc"></div>
+                    </div>
+                    <button class="btn btn-sm" id="btn-use-ogp" type="button">採用</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">サムネイル画像URL (任意)</label>
+                <input type="text" class="form-input" id="f-thumb" placeholder="OGP取得で自動入力 or 手動入力">
+                <div class="form-hint">アイコンの代わりに画像を表示します</div>
+            </div>
+            <input type="hidden" id="f-year-index">
+            <input type="hidden" id="f-item-index">
+            <div class="modal-actions">
+                <button class="btn" id="btn-modal-cancel">キャンセル</button>
+                <button class="btn btn-primary" id="btn-modal-save">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // =============================================
+        //  Achievement Editor — Core Logic v2
+        // =============================================
+
+        let data = [];
+        let lastOgpData = null;  // 最後に取得したOGPデータ
+
+        // --- Init: Load JSON ---
+        async function init() {
+            try {
+                const res = await fetch('/data/achievements.json?t=' + Date.now());
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                data = await res.json();
+                console.log('JSON loaded:', data.length, 'groups');
+            } catch (e) {
+                console.warn('JSONの自動読み込みに失敗:', e);
+                data = [];
+            }
+            render();
+            updateStats();
+        }
+
+        // --- Render all year groups ---
+        function render() {
+            const container = document.getElementById('year-groups-container');
+            container.innerHTML = '';
+
+            data.forEach((yearGroup, yi) => {
+                const groupEl = document.createElement('div');
+                groupEl.className = 'year-group';
+                groupEl.dataset.yearIndex = yi;
+
+                // Header
+                const header = document.createElement('div');
+                header.className = 'year-group-header';
+                header.innerHTML = `
+                <input type="number" class="year-input" value="${yearGroup.year}"
+                       onchange="updateYear(${yi}, this.value)">
+                <span class="year-item-count">${yearGroup.items.length}件</span>
+                <div class="year-actions">
+                    <button class="btn btn-sm" onclick="addItem(${yi})" title="実績を追加">＋ 追加</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteYearGroup(${yi})" title="年グループを削除">✕</button>
+                </div>
+            `;
+                groupEl.appendChild(header);
+
+                // Item list
+                const listEl = document.createElement('div');
+                listEl.className = 'item-list';
+                listEl.dataset.yearIndex = yi;
+
+                if (yearGroup.items.length === 0) {
+                    listEl.innerHTML = '<div class="item-list-empty">ドラッグまたは「＋ 追加」で実績を追加</div>';
+                } else {
+                    yearGroup.items.forEach((item, ii) => {
+                        const card = createItemCard(item, yi, ii);
+                        listEl.appendChild(card);
+                    });
+                }
+                groupEl.appendChild(listEl);
+                container.appendChild(groupEl);
+            });
+
+            // Set up drag & drop
+            setupDragDrop();
+        }
+
+        // --- Create item card element ---
+        function createItemCard(item, yi, ii) {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            card.draggable = true;
+            card.dataset.yearIndex = yi;
+            card.dataset.itemIndex = ii;
+
+            const urlBadge = item.url ? '<span class="item-url-badge">🔗 Link</span>' : '';
+
+            // アイコン表示: サムネイル > 絵文字
+            let iconHtml;
+            if (item.thumb) {
+                iconHtml = `<div class="item-icon-display"><img src="${escHtml(item.thumb)}" alt="" onerror="this.parentElement.textContent='🖼️'"></div>`;
+            } else {
+                iconHtml = `<div class="item-icon-display">${item.icon || '📌'}</div>`;
+            }
+
+            card.innerHTML = `
+            <div class="item-drag-handle" title="ドラッグで並べ替え">⠿</div>
+            ${iconHtml}
+            <div class="item-info">
+                <div class="item-title-display">${escHtml(item.title || '(無題)')}${urlBadge}</div>
+                <div class="item-date-display">${escHtml(item.date || '')}</div>
+            </div>
+            <div class="item-actions">
+                <button class="btn btn-icon btn-sm" onclick="editItem(${yi}, ${ii})" title="編集">✏️</button>
+                <button class="btn btn-icon btn-sm" onclick="copyItem(${yi}, ${ii})" title="コピー">📋</button>
+                <button class="btn btn-icon btn-danger btn-sm" onclick="deleteItem(${yi}, ${ii})" title="削除">✕</button>
+            </div>
+        `;
+            return card;
+        }
+
+        // --- Drag & Drop ---
+        let dragSrcYi = null, dragSrcIi = null;
+
+        function setupDragDrop() {
+            document.querySelectorAll('.item-card').forEach(card => {
+                card.addEventListener('dragstart', (e) => {
+                    dragSrcYi = +card.dataset.yearIndex;
+                    dragSrcIi = +card.dataset.itemIndex;
+                    card.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                });
+                card.addEventListener('dragend', () => {
+                    card.classList.remove('dragging');
+                    document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+                });
+                card.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    card.classList.add('drag-over');
+                });
+                card.addEventListener('dragleave', () => {
+                    card.classList.remove('drag-over');
+                });
+                card.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    card.classList.remove('drag-over');
+                    const destYi = +card.dataset.yearIndex;
+                    const destIi = +card.dataset.itemIndex;
+                    if (dragSrcYi === destYi && dragSrcIi !== destIi) {
+                        const items = data[dragSrcYi].items;
+                        const [moved] = items.splice(dragSrcIi, 1);
+                        items.splice(destIi, 0, moved);
+                        render();
+                        updateStats();
+                        showToast('並べ替えました');
+                    } else if (dragSrcYi !== destYi) {
+                        const item = data[dragSrcYi].items.splice(dragSrcIi, 1)[0];
+                        data[destYi].items.splice(destIi, 0, item);
+                        render();
+                        updateStats();
+                        showToast('移動しました');
+                    }
+                });
+            });
+
+            // Drop on empty lists
+            document.querySelectorAll('.item-list').forEach(list => {
+                list.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                });
+                list.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    if (e.target.closest('.item-card')) return;
+                    const destYi = +list.dataset.yearIndex;
+                    if (dragSrcYi !== null) {
+                        const item = data[dragSrcYi].items.splice(dragSrcIi, 1)[0];
+                        data[destYi].items.push(item);
+                        render();
+                        updateStats();
+                        showToast('移動しました');
+                    }
+                });
+            });
+        }
+
+        // --- Year Group Actions ---
+        function addYearGroup() {
+            const maxYear = data.reduce((m, g) => Math.max(m, g.year), new Date().getFullYear());
+            data.push({ year: maxYear + 1, items: [] });
+            render();
+            updateStats();
+            showToast(`${maxYear + 1}年 を追加しました`);
+        }
+
+        function updateYear(yi, val) {
+            data[yi].year = parseInt(val, 10) || data[yi].year;
+            updateStats();
+        }
+
+        function deleteYearGroup(yi) {
+            const yr = data[yi].year;
+            if (!confirm(`${yr}年グループを削除しますか？\nアイテム ${data[yi].items.length} 件も削除されます。`)) return;
+            data.splice(yi, 1);
+            render();
+            updateStats();
+            showToast(`${yr}年 を削除しました`);
+        }
+
+        // --- Item CRUD ---
+        function addItem(yi) {
+            openModal('実績を追加', yi, -1, {});
+        }
+
+        function editItem(yi, ii) {
+            openModal('実績を編集', yi, ii, { ...data[yi].items[ii] });
+        }
+
+        function copyItem(yi, ii) {
+            const original = data[yi].items[ii];
+            const clone = JSON.parse(JSON.stringify(original));
+            clone.title = clone.title + ' (コピー)';
+            data[yi].items.splice(ii + 1, 0, clone);
+            render();
+            updateStats();
+            showToast('コピーしました');
+        }
+
+        function deleteItem(yi, ii) {
+            const title = data[yi].items[ii].title || '(無題)';
+            if (!confirm(`「${title}」を削除しますか？`)) return;
+            data[yi].items.splice(ii, 1);
+            render();
+            updateStats();
+            showToast('削除しました');
+        }
+
+        // --- Modal ---
+        function openModal(title, yi, ii, item) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('f-title').value = item.title || '';
+            document.getElementById('f-desc').value = item.description || '';
+            document.getElementById('f-icon').value = item.icon || '';
+            document.getElementById('f-date').value = item.date || '';
+            document.getElementById('f-url').value = item.url || '';
+            document.getElementById('f-thumb').value = item.thumb || '';
+            document.getElementById('f-year-index').value = yi;
+            document.getElementById('f-item-index').value = ii;
+            document.getElementById('f-title').style.borderColor = '';
+            // OGPプレビューをリセット
+            document.getElementById('ogp-preview').classList.remove('visible');
+            lastOgpData = null;
+            document.getElementById('item-modal').classList.add('active');
+            document.getElementById('f-title').focus();
+        }
+
+        function closeModal() {
+            document.getElementById('item-modal').classList.remove('active');
+        }
+
+        function saveModal() {
+            const yi = +document.getElementById('f-year-index').value;
+            const ii = +document.getElementById('f-item-index').value;
+            const title = document.getElementById('f-title').value.trim();
+            if (!title) {
+                document.getElementById('f-title').style.borderColor = '#ff4444';
+                return;
+            }
+
+            const item = { title };
+            const desc = document.getElementById('f-desc').value.trim();
+            const icon = document.getElementById('f-icon').value.trim();
+            const date = document.getElementById('f-date').value.trim();
+            const url = document.getElementById('f-url').value.trim();
+            const thumb = document.getElementById('f-thumb').value.trim();
+
+            if (desc) item.description = desc;
+            if (icon) item.icon = icon;
+            if (date) item.date = date;
+            if (url) item.url = url;
+            if (thumb) item.thumb = thumb;
+
+            if (ii === -1) {
+                data[yi].items.push(item);
+            } else {
+                data[yi].items[ii] = item;
+            }
+
+            closeModal();
+            render();
+            updateStats();
+            showToast(ii === -1 ? '追加しました' : '更新しました');
+        }
+
+        // --- OGP Fetch ---
+        async function fetchOGP() {
+            const url = document.getElementById('f-url').value.trim();
+            if (!url) {
+                showToast('URLを入力してください');
+                return;
+            }
+
+            const btn = document.getElementById('btn-fetch-ogp');
+            const origText = btn.textContent;
+            btn.textContent = '取得中...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch(`/api/ogp?url=${encodeURIComponent(url)}`);
+                const result = await res.json();
+
+                if (result.ok && result.og) {
+                    lastOgpData = result.og;
+                    const preview = document.getElementById('ogp-preview');
+                    const img = document.getElementById('ogp-preview-img');
+                    const titleEl = document.getElementById('ogp-preview-title');
+                    const descEl = document.getElementById('ogp-preview-desc');
+
+                    const ogImage = result.og['og:image'] || '';
+                    const ogTitle = result.og['og:title'] || '';
+                    const ogDesc = result.og['og:description'] || '';
+
+                    if (ogImage) {
+                        img.src = ogImage;
+                        img.style.display = 'block';
+                    } else {
+                        img.style.display = 'none';
+                    }
+                    titleEl.textContent = ogTitle || '(タイトルなし)';
+                    descEl.textContent = ogDesc || '(説明なし)';
+                    preview.classList.add('visible');
+
+                    showToast('OGP情報を取得しました');
+                } else {
+                    showToast('OGP情報が見つかりませんでした');
+                }
+            } catch (e) {
+                console.error('OGP取得エラー:', e);
+                showToast('OGP取得に失敗しました');
+            } finally {
+                btn.textContent = origText;
+                btn.disabled = false;
+            }
+        }
+
+        function useOGP() {
+            if (!lastOgpData) return;
+            const ogImage = lastOgpData['og:image'] || '';
+            if (ogImage) {
+                document.getElementById('f-thumb').value = ogImage;
+                showToast('サムネイルを設定しました');
+            } else {
+                showToast('画像が見つかりませんでした');
+            }
+        }
+
+        // --- Direct Save ---
+        async function directSave() {
+            const btn = document.getElementById('btn-save');
+            const origHtml = btn.innerHTML;
+            btn.textContent = '保存中...';
+            btn.disabled = true;
+
+            try {
+                const body = JSON.stringify(data);
+                console.log('[SAVE] Sending', body.length, 'bytes');
+
+                const res = await fetch('/api/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: body,
+                });
+
+                console.log('[SAVE] Response status:', res.status);
+                const text = await res.text();
+                console.log('[SAVE] Response body:', text);
+
+                let result;
+                try {
+                    result = JSON.parse(text);
+                } catch (parseErr) {
+                    showToast(`⚠️ サーバーからの応答が不正です (HTTP ${res.status})`);
+                    console.error('Response parse error:', parseErr, 'Raw:', text);
+                    return;
+                }
+
+                if (result.ok) {
+                    showToast(`✅ 保存完了！ ${result.groups}グループ / ${result.items}件`);
+                } else {
+                    showToast('⚠️ 保存失敗: ' + (result.error || '不明なエラー'));
+                }
+            } catch (e) {
+                console.error('保存エラー:', e);
+                showToast('⚠️ サーバーに接続できません（start-editor.bat で起動してください）');
+            } finally {
+                btn.innerHTML = origHtml;
+                btn.disabled = false;
+            }
+        }
+
+        // --- Import / Export ---
+        function downloadJSON() {
+            const json = JSON.stringify(data, null, 4) + '\n';
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'achievements.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('achievements.json をダウンロードしました');
+        }
+
+        function importJSON(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (!Array.isArray(imported)) throw new Error('配列ではありません');
+                    data = imported;
+                    render();
+                    updateStats();
+                    showToast('インポートしました');
+                } catch (err) {
+                    alert('JSONの読み込みに失敗しました:\n' + err.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // --- Utilities ---
+        function updateStats() {
+            const totalItems = data.reduce((sum, g) => sum + g.items.length, 0);
+            document.getElementById('stats').textContent =
+                `${data.length} グループ ・ ${totalItems} 件`;
+        }
+
+        function escHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // --- Event Listeners ---
+        document.getElementById('btn-add-year').addEventListener('click', addYearGroup);
+        document.getElementById('btn-download').addEventListener('click', downloadJSON);
+        document.getElementById('btn-save').addEventListener('click', directSave);
+        document.getElementById('btn-modal-cancel').addEventListener('click', closeModal);
+        document.getElementById('btn-modal-save').addEventListener('click', saveModal);
+        document.getElementById('btn-fetch-ogp').addEventListener('click', fetchOGP);
+        document.getElementById('btn-use-ogp').addEventListener('click', useOGP);
+        document.getElementById('import-file').addEventListener('change', (e) => {
+            if (e.target.files[0]) importJSON(e.target.files[0]);
+            e.target.value = '';
+        });
+
+        // Close modal on backdrop click
+        document.getElementById('item-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'Enter' && document.getElementById('item-modal').classList.contains('active')) {
+                if (e.target.tagName !== 'TEXTAREA') {
+                    e.preventDefault();
+                    saveModal();
+                }
+            }
+        });
+
+        // --- Start ---
+        init();
+    </script>
+</body>
+
+</html>

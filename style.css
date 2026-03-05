@@ -513,6 +513,355 @@ section {
     border-color: rgba(0, 255, 106, 0.1);
 }
 
+/* --- Achievements / Timeline (Zigzag) --- */
+#achievements {
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 255, 106, 0.02) 50%, transparent 100%);
+}
+
+.timeline {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* --- Timeline Group (左右交互) --- */
+.timeline-group {
+    position: relative;
+    display: flow-root;
+    /* マージン折り畳み防止→縦線の途切れを解消 */
+}
+
+.timeline-group.tl-left {
+    padding-left: 40px;
+}
+
+.timeline-group.tl-right {
+    padding-right: 40px;
+}
+
+/* 縦ライン (グループ別) */
+.timeline-group::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(0, 255, 106, 0.35);
+    box-shadow: 0 0 8px rgba(0, 255, 106, 0.15);
+}
+
+.timeline-group.tl-left::before {
+    left: 12px;
+}
+
+.timeline-group.tl-right::before {
+    right: 12px;
+}
+
+/* --- コネクタ (グループ間の橋渡し) --- */
+.timeline-connector {
+    position: relative;
+    height: 50px;
+    /* 不透明等価色: rgba(0,255,106,0.35) on #050508 → 重なっても色が濃くならない */
+    --conn-line: #035d2a;
+}
+
+/* 左→右 コネクタ */
+.timeline-connector-lr::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 12px;
+    width: calc(50% - 12px + 2px);
+    height: calc(50% + 1px);
+    border-left: 2px solid var(--conn-line);
+    border-bottom: 2px solid var(--conn-line);
+    border-bottom-left-radius: 18px;
+    border-right: none;
+    border-top: none;
+}
+
+.timeline-connector-lr::after {
+    content: '';
+    position: absolute;
+    top: calc(50% - 1px);
+    right: 12px;
+    width: calc(50% - 12px + 2px);
+    height: calc(50% + 1px);
+    border-right: 2px solid var(--conn-line);
+    border-top: 2px solid var(--conn-line);
+    border-top-right-radius: 18px;
+    border-left: none;
+    border-bottom: none;
+}
+
+/* 右→左 コネクタ */
+.timeline-connector-rl::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 12px;
+    width: calc(50% - 12px + 2px);
+    height: calc(50% + 1px);
+    border-right: 2px solid var(--conn-line);
+    border-bottom: 2px solid var(--conn-line);
+    border-bottom-right-radius: 18px;
+    border-left: none;
+    border-top: none;
+}
+
+.timeline-connector-rl::after {
+    content: '';
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 12px;
+    width: calc(50% - 12px + 2px);
+    height: calc(50% + 1px);
+    border-left: 2px solid var(--conn-line);
+    border-top: 2px solid var(--conn-line);
+    border-top-left-radius: 18px;
+    border-right: none;
+    border-bottom: none;
+}
+
+/* --- 年マーカー --- */
+.timeline-year {
+    position: relative;
+    margin-bottom: 24px;
+    padding-top: 16px;
+}
+
+.timeline-year-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #00ff6a;
+    text-shadow: 0 0 16px rgba(0, 255, 106, 0.4);
+    letter-spacing: 0.1em;
+    line-height: 1;
+}
+
+.tl-right .timeline-year-label {
+    text-align: right;
+    display: block;
+}
+
+/* 年の●ドット — テキストの垂直中央に動的配置 */
+.timeline-year::before {
+    content: '';
+    position: absolute;
+    /* padding-top(16px) + テキスト高さの半分をターゲット */
+    top: 16px;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    background: #00ff6a;
+    box-shadow: 0 0 12px rgba(0, 255, 106, 0.6), 0 0 24px rgba(0, 255, 106, 0.3);
+    border: 2px solid #050508;
+    z-index: 2;
+}
+
+.tl-left .timeline-year::before {
+    left: -34px;
+}
+
+.tl-right .timeline-year::before {
+    right: -34px;
+    left: auto;
+}
+
+/* --- 実績アイテム --- */
+.timeline-item {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.tl-left .timeline-item {
+    margin-left: 4px;
+}
+
+.tl-right .timeline-item {
+    margin-right: 4px;
+}
+
+/* アイテムの小●ドット — カードの垂直中央に配置 */
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(0, 255, 106, 0.35);
+    border: 1.5px solid rgba(0, 255, 106, 0.5);
+    z-index: 2;
+}
+
+.tl-left .timeline-item::before {
+    left: -35px;
+}
+
+.tl-right .timeline-item::before {
+    right: -35px;
+    left: auto;
+}
+
+/* --- カード --- */
+.timeline-card {
+    display: flex;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    text-decoration: none;
+    color: #e0e0e0;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.tl-left .timeline-card:hover {
+    border-color: rgba(0, 255, 106, 0.25);
+    background: rgba(0, 255, 106, 0.04);
+    box-shadow: 0 4px 24px rgba(0, 255, 106, 0.08);
+    transform: translateX(6px);
+}
+
+.tl-right .timeline-card:hover {
+    border-color: rgba(0, 255, 106, 0.25);
+    background: rgba(0, 255, 106, 0.04);
+    box-shadow: 0 4px 24px rgba(0, 255, 106, 0.08);
+    transform: translateX(-6px);
+}
+
+/* サムネイル */
+.timeline-thumb {
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: rgba(0, 255, 106, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* アイコンフォールバック */
+.timeline-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    background: rgba(0, 255, 106, 0.06);
+    border: 1px solid rgba(0, 255, 106, 0.1);
+}
+
+.timeline-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.timeline-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.timeline-desc {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.5;
+}
+
+.timeline-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    color: rgba(0, 255, 106, 0.5);
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+}
+
+.timeline-card .link-arrow {
+    align-self: center;
+    flex-shrink: 0;
+}
+
+/* --- 現在に至る エンドマーカー --- */
+.timeline-end {
+    position: relative;
+    padding-top: 16px;
+    padding-bottom: 8px;
+}
+
+.timeline-end::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #050508;
+    border: 3px solid #00ff6a;
+    box-shadow: 0 0 12px rgba(0, 255, 106, 0.5), 0 0 24px rgba(0, 255, 106, 0.2);
+    z-index: 2;
+}
+
+.tl-left .timeline-end::before {
+    left: -34px;
+}
+
+.tl-right .timeline-end::before {
+    right: -34px;
+    left: auto;
+}
+
+.tl-right .timeline-end-label {
+    text-align: right;
+    display: block;
+}
+
+.timeline-end-label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: rgba(0, 255, 106, 0.6);
+    letter-spacing: 0.1em;
+}
+
+/* --- リビールアニメ --- */
+.timeline-year,
+.timeline-item,
+.timeline-end,
+.timeline-connector {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.timeline-year.revealed,
+.timeline-item.revealed,
+.timeline-end.revealed,
+.timeline-connector.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* --- Footer --- */
 #footer {
     position: relative;
@@ -571,6 +920,19 @@ section {
     .games-grid {
         grid-template-columns: 1fr;
     }
+
+    .timeline-card {
+        padding: 12px 14px;
+    }
+
+    .timeline-thumb {
+        width: 56px;
+        height: 56px;
+    }
+
+    .nav-links {
+        gap: 16px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -590,6 +952,96 @@ section {
 
     .nav-links {
         gap: 14px;
+    }
+
+    /* 480px以下: ジグザグ無効→左直線に統一 */
+    .timeline-group.tl-right {
+        padding-right: 0;
+        padding-left: 28px;
+    }
+
+    .timeline-group.tl-left {
+        padding-left: 28px;
+    }
+
+    .timeline-group.tl-right::before {
+        right: auto;
+        left: 8px;
+    }
+
+    .timeline-group.tl-left::before {
+        left: 8px;
+    }
+
+    .tl-right .timeline-year-label,
+    .tl-right .timeline-end-label {
+        text-align: left;
+    }
+
+    .tl-right .timeline-year::before,
+    .tl-right .timeline-end::before {
+        right: auto;
+        left: -25px;
+    }
+
+    .tl-left .timeline-year::before,
+    .tl-left .timeline-end::before {
+        left: -25px;
+        width: 12px;
+        height: 12px;
+    }
+
+    .tl-right .timeline-item::before {
+        right: auto;
+        left: -25px;
+    }
+
+    .tl-left .timeline-item::before {
+        left: -25px;
+        width: 6px;
+        height: 6px;
+    }
+
+    .tl-right .timeline-item {
+        margin-right: 0;
+        margin-left: 4px;
+    }
+
+    .tl-right .timeline-card:hover {
+        transform: translateX(6px);
+    }
+
+    .timeline-connector {
+        height: 20px;
+    }
+
+    .timeline-connector-lr::before,
+    .timeline-connector-lr::after,
+    .timeline-connector-rl::before,
+    .timeline-connector-rl::after {
+        display: none;
+    }
+
+    .timeline-connector::before {
+        display: block !important;
+        content: '';
+        position: absolute;
+        left: 8px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: rgba(0, 255, 106, 0.35);
+        border: none;
+        border-radius: 0;
+    }
+
+    .timeline-year-label {
+        font-size: 1.2rem;
+    }
+
+    .timeline-thumb {
+        width: 48px;
+        height: 48px;
     }
 }
 
