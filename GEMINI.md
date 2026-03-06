@@ -40,3 +40,16 @@
 - **カウンターAPI**: `src/worker.js`（Cloudflare Workers、同一ドメイン `/api/count`）
 - **KV ストレージ**: `VISITOR_KV`（訪問者カウント保存）
 - **設定ファイル**: `wrangler.toml`（KVバインディング、アセットディレクトリ）
+
+## お祓いシミュレーター モバイルレイアウト知見
+
+- **リザルトメッセージとstats枠は固定%ではなく動的配置**: `requestAnimationFrame` + `getBoundingClientRect()` で「ボタン行の下端」と「ダイスグリッドの上端」を取得し、px単位で配置する
+- **`applyMobileMsgStyle(msg)`を全演出関数で呼ぶ**: `showCelebration`, `showDisappointment`, `showNeutral`, `showDiceFallen`, `showExplosion` の全5関数で必須
+- **results-panelの縮小**: モバイル時は `48vh` に縮小して上部に演出用スペースを確保（`displayResults`で設定、`hideResults`でリセット）
+- **safe-area未解決**: `env(safe-area-inset-top)` + `viewport-fit=cover` を追加済みだが、CSSの競合でUI全体が下にずれていない→次チャットで調査・修正が必要
+
+## 現在のブランチ状態
+
+- `feature/debug-result-check` ← **現在地**（デバッグパネル常時表示 + モバイル修正）
+- `develop` ← リザルト修正はコミット済み（a3fe7d2）。feature/debug-result-checkの追加修正はまだマージされていない
+- safe-area修正・動的配置・フォントサイズ統一の変更は `feature/debug-result-check` にのみ存在
