@@ -319,13 +319,23 @@ function spawnDice() {
   }
 }
 
-// --- Check if all dice have settled ---
-function allDiceSleeping() {
-  return diceData.every(d => d.body.sleepState === CANNON.Body.SLEEPING);
+// --- 落下閾値 ---
+const FALL_THRESHOLD = -20;
+
+// --- Check if all dice have settled (sleeping or fallen off) ---
+function allDiceSettled() {
+  return diceData.every(d =>
+    d.body.sleepState === CANNON.Body.SLEEPING || d.body.position.y < FALL_THRESHOLD
+  );
+}
+
+// --- Check if any dice fell off the board ---
+function checkDiceFallen() {
+  return diceData.some(d => d.body.position.y < FALL_THRESHOLD);
 }
 
 // --- Generate Results ---
-let debugMode = null; // null | 'crit' | 'fumble' | 'explosion' | 'neutral'
+let debugMode = null; // null | 'crit' | 'fumble' | 'explosion' | 'neutral' | 'fallen'
 
 function generateResults() {
   const results = [];
@@ -390,7 +400,7 @@ function hideResults() {
   resultsGrid.innerHTML = '';
   actionBtns.classList.remove('visible');
   // 演出オーバーレイをクリア
-  document.querySelectorAll('.celebration-overlay, .disappointment-overlay, .neutral-overlay, .stats-overlay, .explosion-overlay, .explosion-flash').forEach(el => el.remove());
+  document.querySelectorAll('.celebration-overlay, .disappointment-overlay, .neutral-overlay, .stats-overlay, .explosion-overlay, .explosion-flash, .fallen-overlay').forEach(el => el.remove());
 }
 
 // --- 最終結果を保持（共有用） ---
@@ -398,7 +408,7 @@ let lastCritCount = 0;
 let lastFumbleCount = 0;
 let lastAvg = '0';
 let lastResults = [];
-let lastResultType = 'neutral'; // 'celebration' | 'disappointment' | 'neutral' | 'explosion'
+let lastResultType = 'neutral'; // 'celebration' | 'disappointment' | 'neutral' | 'explosion' | 'fallen'
 
 // --- スクリーンショット撮影 ---
 async function takeScreenshot() {
@@ -456,17 +466,28 @@ async function takeScreenshot() {
 
 // --- X(Twitter)共有 ---
 function shareToX() {
-  const text = [
-    '🎲 お祓いシミュレーター 結果',
-    `✨ クリティカル(1-5): ${lastCritCount}個`,
-    `💀 ファンブル(96-100): ${lastFumbleCount}個`,
-    `📊 平均値: ${lastAvg}`,
-    '',
-    lastCritCount > lastFumbleCount ? '🎉 お祓い成功！' :
-      lastFumbleCount > lastCritCount ? '💀 お祓い失敗…' : '🤷 まあまあやね',
-    '',
-    '#お祓いシミュレーター',
-  ].join('\n');
+  let text;
+  if (lastResultType === 'fallen') {
+    text = [
+      '🎲 お祓いシミュレーター 結果',
+      '',
+      '🎲⬇️ ダイス落ちた・・・',
+      '',
+      '#お祓いシミュレーター',
+    ].join('\n');
+  } else {
+    text = [
+      '🎲 お祓いシミュレーター 結果',
+      `✨ クリティカル(1-5): ${lastCritCount}個`,
+      `💀 ファンブル(96-100): ${lastFumbleCount}個`,
+      `📊 平均値: ${lastAvg}`,
+      '',
+      lastCritCount > lastFumbleCount ? '🎉 お祓い成功！' :
+        lastFumbleCount > lastCritCount ? '💀 お祓い失敗…' : '🤷 まあまあやね',
+      '',
+      '#お祓いシミュレーター',
+    ].join('\n');
+  }
 
   const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
   window.open(url, '_blank');
@@ -623,6 +644,43 @@ function showNeutral() {
   const msg = document.createElement('div');
   msg.className = 'result-message neutral-message';
   msg.textContent = '🤷 まあまあやね 🤷';
+  overlay.appendChild(msg);
+}
+
+// --- ダイス落下演出 ---
+function showDiceFallen() {
+  const overlay = document.createElement('div');
+  overlay.className = 'fallen-overlay';
+  document.getElementById('app').appendChild(overlay);
+
+  // 落下パーティクル（ダイスが転がり落ちるイメージ）
+  for (let i = 0; i < 35; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'fallen-particle';
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.animationDelay = `${Math.random() * 3}s`;
+    particle.style.animationDuration = `${2 + Math.random() * 2}s`;
+    particle.style.opacity = 0.3 + Math.random() * 0.5;
+    overlay.appendChild(particle);
+  }
+
+  // 絵文字
+  const emojis = ['🎲', '⬇️', '💨', '😅', '🫠'];
+  for (let i = 0; i < 8; i++) {
+    const emoji = document.createElement('div');
+    emoji.className = 'fallen-emoji';
+    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.left = `${10 + Math.random() * 80}%`;
+    emoji.style.top = `${20 + Math.random() * 40}%`;
+    emoji.style.animationDelay = `${Math.random() * 1.5}s`;
+    emoji.style.fontSize = `${2 + Math.random() * 2}rem`;
+    overlay.appendChild(emoji);
+  }
+
+  // メッセージ
+  const msg = document.createElement('div');
+  msg.className = 'result-message fallen-message';
+  msg.textContent = 'ごめん、ダイス落ちた・・・';
   overlay.appendChild(msg);
 }
 
@@ -798,7 +856,7 @@ async function roll() {
   // Wait for all dice to settle
   await new Promise(resolve => {
     function check() {
-      if (allDiceSleeping()) {
+      if (allDiceSettled()) {
         resolve();
       } else {
         setTimeout(check, 300);
@@ -806,6 +864,29 @@ async function roll() {
     }
     setTimeout(check, 1500); // minimum roll time
   });
+
+  // --- ダイス落下チェック ---
+  const diceFell = debugMode === 'fallen' ? true : checkDiceFallen();
+  if (debugMode === 'fallen') debugMode = null;
+
+  if (diceFell) {
+    // 落下時: 結果を出さず落下演出のみ
+    statusText.textContent = '';
+    lastResultType = 'fallen';
+    lastCritCount = 0;
+    lastFumbleCount = 0;
+    lastAvg = '0';
+    lastResults = [];
+
+    await sleep(500);
+    showDiceFallen();
+
+    // アクションボタン表示
+    actionBtns.classList.add('visible');
+    rolling = false;
+    rollBtn.disabled = false;
+    return;
+  }
 
   // Generate and display results
   statusText.textContent = '結果を集計中...';
@@ -911,3 +992,4 @@ document.getElementById('debug-fumble')?.addEventListener('click', () => debugRo
 document.getElementById('debug-explosion')?.addEventListener('click', () => debugRoll('explosion'));
 document.getElementById('debug-neutral')?.addEventListener('click', () => debugRoll('neutral'));
 document.getElementById('debug-normal')?.addEventListener('click', () => debugRoll(null));
+document.getElementById('debug-fallen')?.addEventListener('click', () => debugRoll('fallen'));

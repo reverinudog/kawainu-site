@@ -37,6 +37,21 @@
       <div id="results-grid"></div>
     </div>
 
+    <!-- Debug Panel (show with ?debug=1) -->
+    <div id="debug-panel" style="display:none">
+      <div id="debug-title">DEBUG</div>
+      <button class="debug-btn" id="debug-normal">通常</button>
+      <button class="debug-btn" id="debug-crit">クリ多め</button>
+      <button class="debug-btn" id="debug-fumble">ファン多め</button>
+      <button class="debug-btn" id="debug-neutral">同数</button>
+      <button class="debug-btn" id="debug-explosion">爆発</button>
+      <button class="debug-btn" id="debug-fallen">落下</button>
+    </div>
+    <script>
+      if (new URLSearchParams(location.search).has('debug')) {
+        document.getElementById('debug-panel').style.display = '';
+      }
+    </script>
 
   </div>
 

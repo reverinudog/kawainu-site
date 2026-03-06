@@ -760,6 +760,95 @@ body {
 }
 
 /* ========================================
+   ダイス落下演出
+   ======================================== */
+.fallen-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+/* 落下パーティクル（角ばったダイス風の小片が落ちる） */
+.fallen-particle {
+  position: absolute;
+  top: -10%;
+  width: 6px;
+  height: 6px;
+  background: #00bcd4;
+  border-radius: 1px;
+  animation: fallenDrop linear infinite;
+  box-shadow: 0 0 6px rgba(0, 188, 212, 0.6);
+  will-change: transform, opacity;
+}
+
+@keyframes fallenDrop {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translateY(130vh) rotate(540deg);
+    opacity: 0;
+  }
+}
+
+/* 落下絵文字 */
+.fallen-emoji {
+  position: absolute;
+  animation: fallenSink 3s ease-in-out infinite;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px rgba(0, 188, 212, 0.5));
+  will-change: transform, opacity;
+}
+
+@keyframes fallenSink {
+  0% {
+    opacity: 0;
+    transform: scale(0) translateY(-20px);
+  }
+
+  15% {
+    opacity: 0.9;
+    transform: scale(1.2) translateY(0);
+  }
+
+  40% {
+    opacity: 0.7;
+    transform: scale(1) translateY(15px) rotate(-5deg);
+  }
+
+  70% {
+    opacity: 0.5;
+    transform: scale(0.9) translateY(30px) rotate(5deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.6) translateY(60px) rotate(-10deg);
+  }
+}
+
+/* 落下メッセージ */
+.fallen-message {
+  color: #00bcd4;
+  text-shadow:
+    0 0 15px rgba(0, 188, 212, 0.8),
+    0 0 30px rgba(0, 188, 212, 0.5),
+    0 0 60px rgba(0, 188, 212, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* ========================================
    爆発演出（ファンブル10超え）
    ======================================== */
 
@@ -1051,4 +1140,14 @@ body {
 .screenshot-mode .explosion-particle {
   opacity: 1 !important;
   animation: none !important;
+}
+
+.screenshot-mode .fallen-emoji {
+  opacity: 0.9 !important;
+  transform: scale(1) !important;
+  animation: none !important;
+}
+
+.screenshot-mode .fallen-particle {
+  opacity: 0.5 !important;
 }

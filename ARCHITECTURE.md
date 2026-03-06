@@ -88,8 +88,8 @@
 
 | ファイル | 概要 |
 |----------|------|
-| `index.html` | エントリHTML、Three.js / Cannon-es を ESM importmap で読み込み |
-| `main.js` | ゲームロジック（914行）: 3Dシーン・物理演算・ダイス生成/投擲・結果判定・演出 |
+| `index.html` | エントリHTML、Three.js / Cannon-es を ESM importmap で読み込み、デバッグパネル（`?debug=1`で表示） |
+| `main.js` | ゲームロジック（996行）: 3Dシーン・物理演算・ダイス生成/投擲・結果判定・演出 |
 | `style.css` | ゲームUI（HUD・ボタン・結果オーバーレイ・各種エフェクト） |
 
 ### main.js 主要機能
@@ -104,8 +104,10 @@
 | showDisappointment() | ファンブル優勢時の紫の雨💀演出 |
 | showNeutral() | 同数時のまあまあ演出 |
 | showExplosion() | ファンブル10超え時の爆発演出（UI破壊→復帰） |
-| takeScreenshot() / shareToX() | スクリーンショット撮影、X共有 |
-| roll() | ロール状態管理（投擲→安定待ち→結果判定→演出） |
+| showDiceFallen() | ダイス落下時の「ごめん、ダイス落ちた・・・」演出（シアン系テーマ） |
+| checkDiceFallen() / allDiceSettled() | ダイス落下検知（Y < -20）、安定判定（スリープ OR 落下） |
+| takeScreenshot() / shareToX() | スクリーンショット撮影、X共有（落下時テキスト対応） |
+| roll() | ロール状態管理（投擲→安定待ち→落下チェック→結果判定→演出） |
 
 ## 依存関係（CDN）
 
