@@ -378,6 +378,14 @@ function displayResults(results) {
   resultsGrid.innerHTML = '';
   resultsPanel.classList.add('visible');
 
+  // モバイル縦画面: results-panelを画面下部に押し込んで演出用スペースを確保
+  if (window.innerWidth <= 600) {
+    // ビューポートの上52%をメッセージ＋stats用に空ける
+    resultsPanel.style.height = '48vh';
+    resultsPanel.style.maxHeight = '48vh';
+    resultsPanel.style.overflowY = 'hidden';
+  }
+
   results.forEach((val, i) => {
     const cell = document.createElement('div');
     cell.className = 'dice-cell';
@@ -397,6 +405,10 @@ function displayResults(results) {
 // --- Hide Results ---
 function hideResults() {
   resultsPanel.classList.remove('visible');
+  // モバイル用スタイルリセット
+  resultsPanel.style.height = '';
+  resultsPanel.style.maxHeight = '';
+  resultsPanel.style.overflowY = '';
   resultsGrid.innerHTML = '';
   actionBtns.classList.remove('visible');
   // 演出オーバーレイをクリア
@@ -527,10 +539,29 @@ function showStatsOverlay(critCount, fumbleCount, avg) {
       borderRadius: '0',
       boxSizing: 'border-box',
     });
-    // overlayを上寄せにしてダイス目と被らない位置に
+    // overlay: flex-startにしてからrAFで動的paddingTopを設定
     Object.assign(overlay.style, {
       alignItems: 'flex-start',
-      paddingTop: '35%',
+      paddingTop: '0',    // rAFで上書き
+    });
+    // rAFで result-message の下端を取得してその直下にstatsを配置
+    requestAnimationFrame(() => {
+      const app = document.getElementById('app');
+      if (!app) return;
+      const appRect = app.getBoundingClientRect();
+      const msg = document.querySelector('.result-message');
+      let statsTop;
+      if (msg) {
+        const msgRect = msg.getBoundingClientRect();
+        // メッセージ下端 + 10px の余白
+        statsTop = msgRect.bottom - appRect.top + 10;
+      } else {
+        // メッセージがなければボタン下端 + 50px
+        const uiOverlay = document.getElementById('overlay');
+        const btnBottom = uiOverlay ? uiOverlay.getBoundingClientRect().bottom - appRect.top : 150;
+        statsTop = btnBottom + 50;
+      }
+      overlay.style.paddingTop = `${statsTop}px`;
     });
   }
   overlay.appendChild(container);
@@ -603,6 +634,8 @@ function applyMobileMsgStyle(msg) {
   const w = window.innerWidth;
   if (w > 600) return; // PCは何もしない
   const fs = w <= 480 ? `${w * 0.038}px` : `${w * 0.042}px`;
+
+  // まず基本スタイルを適用（top は rAF で動的に上書き）
   Object.assign(msg.style, {
     fontSize: fs,
     whiteSpace: 'normal',
@@ -612,13 +645,33 @@ function applyMobileMsgStyle(msg) {
     width: '100%',
     left: '0',
     right: '0',
-    // top + transform: translateY(-50%) の組み合わせを廃止し、固定 top だけで位置決め
-    top: '8%',
+    top: '20%', // fallback（rAF が失敗した場合のみ使われる）
     padding: '0 16px',
     letterSpacing: '0',
     boxSizing: 'border-box',
     transform: 'scale(0)',
     animation: 'messagePopInMobile 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards',
+  });
+
+  // DOMに追加された後、「ボタン行の下端」と「ダイス結果パネルの上端」の
+  // 中央にメッセージを動的配置する
+  requestAnimationFrame(() => {
+    const app = document.getElementById('app');
+    const uiOverlay = document.getElementById('overlay'); // タイトル＋ボタン行
+    const resultsPanel = document.getElementById('results-panel');
+    if (!app || !uiOverlay) return;
+
+    const appRect = app.getBoundingClientRect();
+    const btnBottom = uiOverlay.getBoundingClientRect().bottom - appRect.top;
+
+    let panelTop = appRect.height * 0.85; // fallback: 画面85%
+    if (resultsPanel) {
+      panelTop = resultsPanel.getBoundingClientRect().top - appRect.top;
+    }
+
+    // ボタン行の直下 + 少し余白に配置（stats-containerの上に被らないよう）
+    const msgTop = btnBottom + 12;
+    msg.style.top = `${msgTop}px`;
   });
 }
 
