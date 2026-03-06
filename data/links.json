@@ -55,7 +55,7 @@
         ]
     },
     "booth_trpg": {
-        "label": "TRPG Scenarios",
+        "label": "BOOTH — TRPGシナリオ",
         "icon": "📖",
         "profileUrl": "https://reverinu.booth.pm",
         "items": [
@@ -98,7 +98,7 @@
         ]
     },
     "booth_goods": {
-        "label": "Goods",
+        "label": "BOOTH — グッズ",
         "icon": "🛍️",
         "profileUrl": "https://reverinu-vtuber.booth.pm",
         "items": [

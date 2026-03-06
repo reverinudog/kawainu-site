@@ -403,6 +403,213 @@ section {
     }
 }
 
+/* --- Visitor Counter (Retro Odometer) --- */
+.visitor-counter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+}
+
+.visitor-counter-label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.1em;
+}
+
+.visitor-counter-digits {
+    display: flex;
+    gap: 3px;
+    perspective: 600px;
+}
+
+.visitor-digit {
+    width: 28px;
+    height: 40px;
+    background: #0a0a0f;
+    border: 1px solid rgba(0, 255, 106, 0.25);
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    box-shadow:
+        inset 0 1px 4px rgba(0, 0, 0, 0.8),
+        0 0 8px rgba(0, 255, 106, 0.06);
+}
+
+/* 桁の内部：数字ストリップ */
+.visitor-digit-inner {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+}
+
+.visitor-digit-char {
+    width: 28px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #00ff6a;
+    text-shadow: 0 0 8px rgba(0, 255, 106, 0.5);
+    flex-shrink: 0;
+}
+
+/* 上下のハイライトライン */
+.visitor-digit::before,
+.visitor-digit::after {
+    content: '';
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    height: 1px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.visitor-digit::before {
+    top: 0;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 106, 0.15), transparent);
+}
+
+.visitor-digit::after {
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 106, 0.1), transparent);
+}
+
+/* 3桁ごとのセパレーター（カンマ風） */
+.visitor-digit-sep {
+    width: 8px;
+    height: 40px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 4px;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem;
+    color: rgba(0, 255, 106, 0.3);
+}
+
+/* ロールアニメーション */
+@keyframes digitRoll {
+    0% {
+        transform: translateY(-400px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.visitor-digit-inner.rolling {
+    animation: digitRoll 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ローディング状態 */
+.visitor-digit.loading .visitor-digit-inner {
+    opacity: 0;
+}
+
+.visitor-digit.loading::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: linear-gradient(110deg,
+            rgba(0, 255, 106, 0.03) 30%,
+            rgba(0, 255, 106, 0.08) 50%,
+            rgba(0, 255, 106, 0.03) 70%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 3px;
+    z-index: 1;
+}
+
+@keyframes shimmer {
+    to {
+        background-position: -200% 0;
+    }
+}
+
+/* エラー状態 */
+.visitor-digit.error .visitor-digit-char {
+    color: rgba(255, 255, 255, 0.15);
+}
+
+/* カウンター全体のCRTグロー */
+.visitor-counter-digits::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 10px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.visitor-counter-digits.loaded::after {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(0, 255, 106, 0.08);
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+    .visitor-digit {
+        width: 24px;
+        height: 34px;
+    }
+
+    .visitor-digit-char {
+        width: 24px;
+        height: 34px;
+        font-size: 1rem;
+    }
+
+    .visitor-digit-sep {
+        height: 34px;
+        width: 6px;
+        font-size: 0.7rem;
+    }
+
+    .visitor-counter-label {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .visitor-digit {
+        width: 20px;
+        height: 30px;
+    }
+
+    .visitor-digit-char {
+        width: 20px;
+        height: 30px;
+        font-size: 0.85rem;
+    }
+
+    .visitor-digit-sep {
+        height: 30px;
+        width: 5px;
+        font-size: 0.65rem;
+    }
+
+    .visitor-counter-digits {
+        gap: 2px;
+    }
+
+    .visitor-counter-label {
+        font-size: 0.78rem;
+    }
+}
+
 /* --- About Section --- */
 #about {
     background: linear-gradient(180deg, transparent 0%, rgba(0, 255, 106, 0.02) 50%, transparent 100%);

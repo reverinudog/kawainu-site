@@ -1,0 +1,15 @@
+# ローカル一時ファイル
+.tmp/
+
+# Wrangler / Node.js
+.wrangler/
+node_modules/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# エディタ
+*.swp
+*.swo
+*~

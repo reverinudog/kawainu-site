@@ -6,7 +6,7 @@
 個人サイト/
 ├── index.html      # メインHTML（5セクション構成: Hero/About/Achievements/Contents/Contact）
 ├── style.css       # 全スタイル（ダークテーマ、レスポンシブ）
-├── main.js         # ブート演出、パーティクル背景、スクロール制御、実績JSON読み込み、リンクカルーセル、ナビドロップダウン制御
+├── main.js         # ブート演出、パーティクル背景、スクロール制御、実績JSON読み込み、リンクカルーセル、ナビドロップダウン制御、訪問者カウンター
 ├── start.bat       # ローカルHTTPサーバー起動（ポート8090）
 ├── assets/
 │   ├── avatar.png  # アバター画像（仮置き）
@@ -30,6 +30,10 @@
 │       ├── index.html       # エントリHTML（Three.js/Cannon-es ESM import）
 │       ├── main.js          # ゲームロジック（914行、3D物理シミュレーション）
 │       └── style.css        # ゲームUI・エフェクトスタイル
+├── functions/
+│   └── api/
+│       └── count.js         # Cloudflare Pages Functions（訪問者カウンターAPI）
+├── .gitignore      # Git除外設定
 ├── ARCHITECTURE.md # 本ファイル
 ├── GEMINI.md       # AI向け行動ルール
 ├── README.md       # プロジェクト概要
@@ -83,6 +87,7 @@
 | カスタムカテゴリセレクト | ナビバー風ドロップダウン、クリックトグル/外部クリック閉じ |
 | Aboutランダム一言 | ページ読み込みごとに10パターンからランダム表示 |
 | お問い合わせフォーム | Formspree対応送信、ハニーポットチェック、送信完了UI |
+| initVisitorCounter() | 訪問者カウンター（14桁オドメーターUI、Pages Functions API連携、F5連打対策localStorage、カウントアップアニメーション、スクロールトリガー、デモモード） |
 
 ## お祓いシミュレーター (`games/oharai/`)
 

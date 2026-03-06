@@ -922,3 +922,200 @@ if (contactForm) {
         }
     });
 }
+
+// --- 訪問者カウンター ---
+(function initVisitorCounter() {
+    const DIGIT_COUNT = 14;
+    const LS_KEY = 'kawaken_visitor';
+    // ローカル開発時はデモモード（API未稼働のため）
+    const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+
+    const container = document.getElementById('visitor-digits');
+    if (!container) return;
+
+    // --- 桁DOM生成 ---
+    function buildDigits() {
+        container.innerHTML = '';
+        for (let i = 0; i < DIGIT_COUNT; i++) {
+            // 3桁ごとにセパレーター（右から数えて3, 6, 9, 12桁目の前）
+            const posFromRight = DIGIT_COUNT - i;
+            if (posFromRight < DIGIT_COUNT && posFromRight % 3 === 0) {
+                const sep = document.createElement('div');
+                sep.className = 'visitor-digit-sep';
+                sep.textContent = ',';
+                container.appendChild(sep);
+            }
+
+            const digit = document.createElement('div');
+            digit.className = 'visitor-digit loading';
+
+            const inner = document.createElement('div');
+            inner.className = 'visitor-digit-inner';
+
+            // 0-9 のストリップ
+            for (let n = 0; n <= 9; n++) {
+                const ch = document.createElement('div');
+                ch.className = 'visitor-digit-char';
+                ch.textContent = n;
+                inner.appendChild(ch);
+            }
+
+            digit.appendChild(inner);
+            container.appendChild(digit);
+        }
+    }
+
+    // --- 数字をカウントアップアニメーションで表示 ---
+    function displayCount(count) {
+        const digits = container.querySelectorAll('.visitor-digit');
+
+        // ローディング状態を解除して0を表示
+        digits.forEach(digit => {
+            digit.classList.remove('loading', 'error');
+            const inner = digit.querySelector('.visitor-digit-inner');
+            inner.style.transition = 'none';
+            inner.style.transform = 'translateY(0)';
+        });
+
+        const duration = 1500; // 1.5秒
+        const startTime = performance.now();
+
+        function tick(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // ease-out: 最初が速くて最後がゆっくり
+            const eased = 1 - Math.pow(1 - progress, 3);
+
+            const currentVal = Math.round(eased * count);
+            const str = String(currentVal).padStart(DIGIT_COUNT, '0');
+
+            digits.forEach((digit, i) => {
+                const inner = digit.querySelector('.visitor-digit-inner');
+                const num = parseInt(str[i], 10);
+                const charH = digit.offsetHeight || 40;
+                inner.style.transform = `translateY(-${num * charH}px)`;
+            });
+
+            if (progress < 1) {
+                requestAnimationFrame(tick);
+            } else {
+                // 最終値を確定
+                const finalStr = String(count).padStart(DIGIT_COUNT, '0');
+                digits.forEach((digit, i) => {
+                    const inner = digit.querySelector('.visitor-digit-inner');
+                    const num = parseInt(finalStr[i], 10);
+                    const charH = digit.offsetHeight || 40;
+                    inner.style.transform = `translateY(-${num * charH}px)`;
+                });
+                container.classList.add('loaded');
+            }
+        }
+
+        requestAnimationFrame(tick);
+    }
+
+    // --- エラー表示 ---
+    function displayError() {
+        const digits = container.querySelectorAll('.visitor-digit');
+        digits.forEach(digit => {
+            digit.classList.remove('loading');
+            digit.classList.add('error');
+            const inner = digit.querySelector('.visitor-digit-inner');
+            // ダッシュ表示: 0の位置に留める
+            inner.style.transform = 'translateY(0)';
+            // 0 をダッシュに差し替え
+            const firstChar = inner.querySelector('.visitor-digit-char');
+            if (firstChar) firstChar.textContent = '-';
+        });
+    }
+
+    // --- F5対策: localStorage で1日1回チェック ---
+    function shouldCount() {
+        try {
+            const stored = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+            const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+            if (stored.date === today) {
+                return { count: false, cachedValue: stored.value };
+            }
+            return { count: true, cachedValue: null };
+        } catch {
+            return { count: true, cachedValue: null };
+        }
+    }
+
+    function saveCount(value) {
+        try {
+            const today = new Date().toISOString().slice(0, 10);
+            localStorage.setItem(LS_KEY, JSON.stringify({ date: today, value }));
+        } catch { /* ignore */ }
+    }
+
+    // --- APIコール（同一ドメイン、相対パス） ---
+    async function fetchCount(shouldIncrement) {
+        try {
+            const res = shouldIncrement
+                ? await fetch('/api/count', { method: 'POST' })
+                : await fetch('/api/count');
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+            return data.count;
+        } catch (err) {
+            console.error('訪問者カウンターAPI エラー:', err);
+            return null;
+        }
+    }
+
+    // --- メイン処理 ---
+    async function run() {
+        buildDigits();
+
+        const { count: shouldInc, cachedValue } = shouldCount();
+
+        let targetCount;
+
+        // ローカル開発時: デモモード
+        if (isLocal) {
+            try {
+                const stored = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+                targetCount = (stored.value || 0) + (shouldInc ? 1 : 0);
+            } catch {
+                targetCount = 1;
+            }
+            saveCount(targetCount);
+        } else if (!shouldInc && cachedValue != null) {
+            targetCount = cachedValue;
+        } else {
+            const count = await fetchCount(shouldInc);
+            if (count != null) {
+                saveCount(count);
+                targetCount = count;
+            } else if (cachedValue != null) {
+                targetCount = cachedValue;
+            } else {
+                displayError();
+                return;
+            }
+        }
+
+        // スクロールトリガー: 画面に入ったらカウントアップ開始
+        const counterEl = container.closest('.visitor-counter');
+        if (!counterEl) {
+            displayCount(targetCount);
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    observer.disconnect();
+                    displayCount(targetCount);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(counterEl);
+    }
+
+    run();
+})();
+
