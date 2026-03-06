@@ -1129,7 +1129,12 @@ animate();
 // Initial status
 statusText.textContent = 'ボタンを押してダイスを振ろう';
 
-// --- デバッグボタンハンドラ (developブランチ専用) ---
+// --- デバッグパネル (?debug=1 で表示) ---
+if (new URLSearchParams(location.search).has('debug')) {
+  const dp = document.getElementById('debug-panel');
+  if (dp) dp.style.display = '';
+}
+
 function debugRoll(mode) {
   if (rolling) return;
   debugMode = mode;
@@ -1142,3 +1147,4 @@ document.getElementById('debug-explosion')?.addEventListener('click', () => debu
 document.getElementById('debug-neutral')?.addEventListener('click', () => debugRoll('neutral'));
 document.getElementById('debug-normal')?.addEventListener('click', () => debugRoll(null));
 document.getElementById('debug-fallen')?.addEventListener('click', () => debugRoll('fallen'));
+
