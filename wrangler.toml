@@ -1,0 +1,6 @@
+name = "kawainu-site"
+pages_build_output_dir = "./"
+
+[[kv_namespaces]]
+binding = "VISITOR_KV"
+id = "486736b42f854db89c0a7836aff2f90a"
