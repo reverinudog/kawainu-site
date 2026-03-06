@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お祓いシミュレーター</title>
+  <meta name="description" content="3D物理演出で100面ダイスを100個転がすシミュレーター">
+  <link rel="stylesheet" href="style.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <a href="../../" id="back-to-site">← サイトに戻る</a>
+  <div id="app">
+    <!-- 3D Canvas -->
+    <canvas id="dice-canvas"></canvas>
+
+    <!-- Overlay UI -->
+    <div id="overlay">
+      <h1 id="title">お祓いシミュレーター</h1>
+      <p id="subtitle">100面ダイスを100個ふってお祓いをしよう！</p>
+      <div id="btn-row">
+        <button id="roll-btn">🎲 転がす</button>
+        <div id="action-btns">
+          <button id="screenshot-btn" class="action-btn">📸 スクショ</button>
+          <button id="share-btn" class="action-btn">𝕏 共有</button>
+        </div>
+      </div>
+      <div id="status-text"></div>
+    </div>
+
+    <!-- Results Panel -->
+    <div id="results-panel">
+      <div id="results-grid"></div>
+    </div>
+
+
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://esm.sh/three@0.162.0",
+      "three/addons/": "https://esm.sh/three@0.162.0/examples/jsm/",
+      "cannon-es": "https://esm.sh/cannon-es@0.20.0"
+    }
+  }
+  </script>
+  <script type="module" src="main.js"></script>
+</body>
+
+</html>

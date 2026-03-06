@@ -10,7 +10,8 @@
 ├── start.bat       # ローカルHTTPサーバー起動（ポート8090）
 ├── assets/
 │   ├── avatar.png  # アバター画像（仮置き）
-│   └── monitor.svg # 起動演出用PCモニターSVG
+│   ├── monitor.svg # 起動演出用PCモニターSVG
+│   └── ogp.png     # OGP用バナー画像（1200×630px）
 ├── data/
 │   ├── achievements.json  # 実績データ（JSON、外部管理）
 │   └── links.json         # リンクデータ（カテゴリ別、YouTube/BOOTH/X）
@@ -20,7 +21,7 @@
 │   ├── editor-server.py         # カスタムサーバー（OGP取得・JSON保存・リンク自動取得API）
 │   └── start-editor.bat         # エディタ用サーバー起動（ポート8091）
 ├── games/
-│   └── oharai/              # お祢いシミュレーター（別ワークスペースから統合予定）
+│   └── oharai/              # お祓いシミュレーター（統合済み、index.html/main.js/style.css）
 ├── ARCHITECTURE.md # 本ファイル
 ├── GEMINI.md       # AI向け行動ルール
 ├── README.md       # プロジェクト概要

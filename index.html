@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>川犬 — VTuber Official Site</title>
     <meta name="description" content="VTuber 川犬の公式サイト。配信情報、SNSリンク、ミニゲームなど。">
+    <!-- OGP (Open Graph) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="川犬 — VTuber Official Site">
+    <meta property="og:description" content="VTuber 川犬の公式サイト。配信情報、SNSリンク、ミニゲームなど。">
+    <meta property="og:image" content="assets/ogp.png">
+    <meta property="og:locale" content="ja_JP">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="川犬 — VTuber Official Site">
+    <meta name="twitter:description" content="VTuber 川犬の公式サイト。配信情報、SNSリンク、ミニゲームなど。">
+    <meta name="twitter:image" content="assets/ogp.png">
     <link rel="stylesheet" href="style.css">
     <link rel="preload" href="assets/avatar.png" as="image">
     <link
@@ -143,6 +154,8 @@
     <!-- Links Section -->
     <section id="links">
         <div class="section-inner">
+            <h2 class="section-title" data-reveal>Contents</h2>
+            <p class="section-subtitle" data-reveal>配信・作品・SNS</p>
             <div id="links-container">
                 <!-- JS で data/links.json から動的に描画 -->
             </div>
@@ -155,7 +168,7 @@
             <h2 class="section-title" data-reveal>Games</h2>
             <p class="section-subtitle" data-reveal>遊んでいってね！</p>
             <div class="games-grid">
-                <div class="game-card" data-reveal>
+                <a href="games/oharai/index.html" class="game-card" data-reveal>
                     <div class="game-visual">
                         <div class="game-emoji">🎲</div>
                     </div>
@@ -164,7 +177,7 @@
                         <p class="game-desc">100面ダイスを100個振って運試し！<br>クリティカル vs ファンブルの行方は…</p>
                         <span class="game-btn">遊ぶ →</span>
                     </div>
-                </div>
+                </a>
                 <div class="game-card game-card-coming" data-reveal>
                     <div class="game-visual">
                         <div class="game-emoji">🔮</div>

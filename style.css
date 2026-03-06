@@ -143,15 +143,17 @@ body {
 }
 
 .nav-dropdown-toggle::after {
-    content: ' ▾';
+    content: '▾';
     font-size: 0.7em;
     opacity: 0.5;
     transition: transform 0.3s ease, opacity 0.3s ease;
     display: inline-block;
+    margin-left: 4px;
+    transform-origin: center center;
 }
 
 .nav-dropdown.open .nav-dropdown-toggle::after {
-    transform: rotate(180deg);
+    transform: rotate(180deg) translateY(1px);
     opacity: 0.8;
 }
 
@@ -759,6 +761,9 @@ section {
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .game-card:hover {
