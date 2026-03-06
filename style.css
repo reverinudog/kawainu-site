@@ -445,6 +445,16 @@ section {
     font-style: italic;
 }
 
+
+
+.about-closing {
+    font-size: 1.1rem !important;
+    font-weight: 700;
+    color: #00ff6a !important;
+    text-shadow: 0 0 16px rgba(0, 255, 106, 0.3);
+    margin-top: 24px !important;
+}
+
 /* --- Links Section (Category + Carousel) --- */
 #links-container {
     display: flex;

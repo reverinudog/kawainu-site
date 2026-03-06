@@ -700,6 +700,24 @@ const smoothScrollObserver = new MutationObserver(() => setupSmoothScroll());
 const yearMenuEl = document.getElementById('achievements-year-menu');
 if (yearMenuEl) smoothScrollObserver.observe(yearMenuEl, { childList: true });
 
+// --- About ランダム一言 ---
+const aboutRandomEl = document.getElementById('about-random');
+if (aboutRandomEl) {
+    const randomPhrases = [
+        '苦手な食べ物は牡蠣。',
+        '得意料理はオムライス。',
+        '好きなお菓子はマカロン。',
+        '好きな食べ物はなす。',
+        '1d100で100を出すことに快感を覚える。',
+        '1d100で1を出すことに快感を覚える。',
+        'ここぞというダイスロールで「運命の、ダイスロール！」と叫ぶ。',
+        '毎日が楽しい。',
+        '川犬の正式名称は川出犬流（かわでけんる）。',
+        '最近はTRPG関連のミニゲームを作ったりするのにハマってるらしい。',
+    ];
+    aboutRandomEl.textContent = randomPhrases[Math.floor(Math.random() * randomPhrases.length)];
+}
+
 // --- アバターホバーエフェクト ---
 const avatar = document.getElementById('hero-avatar');
 if (avatar) {

@@ -6,14 +6,16 @@ VTuber「川犬」の個人サイト。黒×ネオングリーンのダークテ
 
 - **ブート演出** — PCモニターSVGが電源ON→サイトが画面に映る→ズームインでシームレスに遷移（iframe読み込み完了待ち）
 - **Hero** — アバター＋名前（川犬/KAWAKEN）＋Virtual YouTuber | Scenario Writer
-- **About** — 自己紹介カード（仮テキスト）
+- **About** — 自己紹介カード（ランダム一言10パターン付き）
 - **Achievements** — 年次タイムライン（ジグザグレイアウト、外部JSON読み込み）
 - **YouTube / TRPG Scenarios / Goods / X** — カルーセルUIでサムネイル付き横スクロール、ドラッグ・矢印操作対応
 - **リンク自動取得** — YouTube RSS + BOOTH OGPスクレイピング（ローカル: APIリアルタイム、本番: GitHub Actions 3時間ごと）
 - **Games** — ミニゲーム一覧（お祓いシミュレーターのカードあり）
+- **Contact** — お問い合わせフォーム（Formspree対応、ハニーポットスパム対策）
 - **パーティクル背景** — Canvas ベースの緑パーティクル＋接続線
 - **スクロールリビール** — IntersectionObserver による登場アニメーション
 - **レスポンシブ対応** — 768px / 480px ブレークポイント
+- **favicon** — SVG / ICO / apple-touch-icon 対応
 - **実績エディタ** — ブラウザGUIで実績データを管理（JSON直接保存、OGPサムネイル自動取得）
 - **リンクエディタ** — 手動でリンクデータを管理・API経由で自動取得
 
