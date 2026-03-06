@@ -30,9 +30,12 @@
 │       ├── index.html       # エントリHTML（Three.js/Cannon-es ESM import）
 │       ├── main.js          # ゲームロジック（914行、3D物理シミュレーション）
 │       └── style.css        # ゲームUI・エフェクトスタイル
+├── src/
+│   └── worker.js        # Cloudflare Worker エントリポイント（/api/count + 静的アセット配信）
 ├── functions/
 │   └── api/
-│       └── count.js         # Cloudflare Pages Functions（訪問者カウンターAPI）
+│       └── count.js         # （後方互換: Pages Functions形式、現在は src/worker.js を使用）
+├── wrangler.toml   # Cloudflare デプロイ設定（KVバインディング、アセットディレクトリ）
 ├── .gitignore      # Git除外設定
 ├── ARCHITECTURE.md # 本ファイル
 ├── GEMINI.md       # AI向け行動ルール
