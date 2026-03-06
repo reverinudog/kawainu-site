@@ -1,5 +1,9 @@
 name = "kawainu-site"
+compatibility_date = "2026-03-06"
 pages_build_output_dir = "./"
+
+[assets]
+directory = "./"
 
 [[kv_namespaces]]
 binding = "VISITOR_KV"
