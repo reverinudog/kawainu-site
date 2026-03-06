@@ -493,42 +493,133 @@ function shareToX() {
   window.open(url, '_blank');
 }
 
+// --- 絵文字サイズヘルパー（スマホでスケールダウン） ---
+function emojiScale(baseMin, baseMax) {
+  const w = window.innerWidth;
+  // 600px以下 → 0.55倍、480px以下 → 0.4倍
+  const factor = w <= 480 ? 0.40 : w <= 600 ? 0.55 : 1.0;
+  return `${(baseMin + Math.random() * (baseMax - baseMin)) * factor}rem`;
+}
+
 // --- 統計情報の派手なオーバーレイ表示 ---
 function showStatsOverlay(critCount, fumbleCount, avg) {
-  // 既存のオーバーレイを削除
   document.querySelectorAll('.stats-overlay').forEach(el => el.remove());
 
   const overlay = document.createElement('div');
   overlay.className = 'stats-overlay';
   document.getElementById('app').appendChild(overlay);
 
+  const isMobile = window.innerWidth <= 600;
+
   const container = document.createElement('div');
   container.className = 'stats-container';
+  if (isMobile) {
+    // gridで [クリティカル|VS|ファンブル] + [平均値] を強制制御
+    // flexWrap:nowrap でCSSの flex-wrap:wrap との競合を解消
+    Object.assign(container.style, {
+      display: 'grid',
+      flexWrap: 'nowrap',
+      gridTemplateColumns: '1fr auto 1fr',
+      gridTemplateRows: 'auto auto',
+      width: '100%',
+      padding: isMobile && window.innerWidth <= 480 ? '8px 4px' : '10px 8px',
+      gap: '4px 3px',
+      borderRadius: '0',
+      boxSizing: 'border-box',
+    });
+    // overlayを上寄せにしてダイス目と被らない位置に
+    Object.assign(overlay.style, {
+      alignItems: 'flex-start',
+      paddingTop: '35%',
+    });
+  }
   overlay.appendChild(container);
+
+  const boxPad = isMobile ? (window.innerWidth <= 480 ? '6px 4px' : '8px 6px') : null;
+  const countSize = isMobile ? (window.innerWidth <= 480 ? '1.5rem' : '1.8rem') : null;
+  const labelSize = isMobile ? (window.innerWidth <= 480 ? '0.52rem' : '0.6rem') : null;
+  const unitSize = isMobile ? (window.innerWidth <= 480 ? '0.58rem' : '0.65rem') : null;
 
   // クリティカル
   const critBox = document.createElement('div');
   critBox.className = 'stats-box stats-critical';
-  critBox.innerHTML = `<div class="stats-label">クリティカル (1-5)</div><div class="stats-count">${critCount}</div><div class="stats-unit">個</div>`;
+  critBox.innerHTML = `<div class="stats-label">✨ クリティカル<br><small>(1-5)</small></div><div class="stats-count">${critCount}</div><div class="stats-unit">個</div>`;
+  if (isMobile) {
+    Object.assign(critBox.style, { padding: boxPad, minWidth: '0' });
+    critBox.style.gridRow = '1';
+    critBox.querySelector('.stats-count').style.fontSize = countSize;
+    critBox.querySelector('.stats-label').style.fontSize = labelSize;
+    critBox.querySelector('.stats-unit').style.fontSize = unitSize;
+  }
   container.appendChild(critBox);
 
   // VS
   const vs = document.createElement('div');
   vs.className = 'stats-vs';
   vs.textContent = 'VS';
+  if (isMobile) {
+    Object.assign(vs.style, {
+      gridRow: '1',
+      alignSelf: 'center',
+      fontSize: window.innerWidth <= 480 ? '0.72rem' : '0.85rem',
+      padding: '0 2px',
+      textAlign: 'center',
+    });
+  }
   container.appendChild(vs);
 
   // ファンブル
   const fumbleBox = document.createElement('div');
   fumbleBox.className = 'stats-box stats-fumble';
-  fumbleBox.innerHTML = `<div class="stats-label">ファンブル (96-100)</div><div class="stats-count">${fumbleCount}</div><div class="stats-unit">個</div>`;
+  fumbleBox.innerHTML = `<div class="stats-label">💀 ファンブル<br><small>(96-100)</small></div><div class="stats-count">${fumbleCount}</div><div class="stats-unit">個</div>`;
+  if (isMobile) {
+    Object.assign(fumbleBox.style, { padding: boxPad, minWidth: '0' });
+    fumbleBox.style.gridRow = '1';
+    fumbleBox.querySelector('.stats-count').style.fontSize = countSize;
+    fumbleBox.querySelector('.stats-label').style.fontSize = labelSize;
+    fumbleBox.querySelector('.stats-unit').style.fontSize = unitSize;
+  }
   container.appendChild(fumbleBox);
 
   // 平均値
   const avgBox = document.createElement('div');
   avgBox.className = 'stats-avg';
   avgBox.innerHTML = `<span class="stats-avg-label">平均値</span><span class="stats-avg-value">${avg}</span>`;
+  if (isMobile) {
+    Object.assign(avgBox.style, {
+      gridColumn: '1 / -1',
+      gridRow: '2',
+      textAlign: 'center',
+      marginTop: '2px',
+    });
+    avgBox.querySelector('.stats-avg-value').style.fontSize = window.innerWidth <= 480 ? '1rem' : '1.2rem';
+    avgBox.querySelector('.stats-avg-label').style.fontSize = window.innerWidth <= 480 ? '0.62rem' : '0.72rem';
+  }
   container.appendChild(avgBox);
+}
+
+// --- モバイル用リザルトメッセージスタイル適用ヘルパー ---
+function applyMobileMsgStyle(msg) {
+  const w = window.innerWidth;
+  if (w > 600) return; // PCは何もしない
+  const fs = w <= 480 ? `${w * 0.038}px` : `${w * 0.042}px`;
+  Object.assign(msg.style, {
+    fontSize: fs,
+    whiteSpace: 'normal',
+    overflowWrap: 'break-word',
+    wordBreak: 'break-word',
+    textAlign: 'center',
+    width: '100%',
+    left: '0',
+    right: '0',
+    // top + transform: translateY(-50%) の組み合わせを廃止し、固定 top だけで位置決め
+    top: '8%',
+    padding: '0 16px',
+    letterSpacing: '0',
+    boxSizing: 'border-box',
+    transform: 'scale(0)',
+    animation: 'messagePopInMobile 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards',
+  });
 }
 
 // --- おめでとう演出（紙吹雪 + 🎉）---
@@ -560,7 +651,7 @@ function showCelebration() {
     emoji.style.left = `${10 + Math.random() * 80}%`;
     emoji.style.top = `${20 + Math.random() * 40}%`;
     emoji.style.animationDelay = `${Math.random() * 1}s`;
-    emoji.style.fontSize = `${2 + Math.random() * 3}rem`;
+    emoji.style.fontSize = emojiScale(2, 5);
     overlay.appendChild(emoji);
   }
 
@@ -568,6 +659,7 @@ function showCelebration() {
   const msg = document.createElement('div');
   msg.className = 'result-message celebration-message';
   msg.textContent = '🎉 クリティカルの方が多い！ 🎉';
+  applyMobileMsgStyle(msg);
   overlay.appendChild(msg);
 }
 
@@ -597,7 +689,7 @@ function showDisappointment() {
     emoji.style.left = `${10 + Math.random() * 80}%`;
     emoji.style.top = `${20 + Math.random() * 40}%`;
     emoji.style.animationDelay = `${Math.random() * 1.5}s`;
-    emoji.style.fontSize = `${2 + Math.random() * 2}rem`;
+    emoji.style.fontSize = emojiScale(2, 4);
     overlay.appendChild(emoji);
   }
 
@@ -605,6 +697,7 @@ function showDisappointment() {
   const msg = document.createElement('div');
   msg.className = 'result-message disappointment-message';
   msg.textContent = '💀 ファンブルの方が多い… 💀';
+  applyMobileMsgStyle(msg);
   overlay.appendChild(msg);
 }
 
@@ -622,7 +715,7 @@ function showNeutral() {
     star.style.left = `${Math.random() * 100}%`;
     star.style.animationDelay = `${Math.random() * 3}s`;
     star.style.animationDuration = `${3 + Math.random() * 3}s`;
-    star.style.fontSize = `${0.8 + Math.random() * 1.2}rem`;
+    star.style.fontSize = emojiScale(0.8, 2);
     star.style.opacity = 0.3 + Math.random() * 0.5;
     overlay.appendChild(star);
   }
@@ -636,7 +729,7 @@ function showNeutral() {
     emoji.style.left = `${15 + Math.random() * 70}%`;
     emoji.style.top = `${25 + Math.random() * 35}%`;
     emoji.style.animationDelay = `${Math.random() * 2}s`;
-    emoji.style.fontSize = `${2 + Math.random() * 2}rem`;
+    emoji.style.fontSize = emojiScale(2, 4);
     overlay.appendChild(emoji);
   }
 
@@ -644,6 +737,7 @@ function showNeutral() {
   const msg = document.createElement('div');
   msg.className = 'result-message neutral-message';
   msg.textContent = '🤷 まあまあやね 🤷';
+  applyMobileMsgStyle(msg);
   overlay.appendChild(msg);
 }
 
@@ -673,7 +767,7 @@ function showDiceFallen() {
     emoji.style.left = `${10 + Math.random() * 80}%`;
     emoji.style.top = `${20 + Math.random() * 40}%`;
     emoji.style.animationDelay = `${Math.random() * 1.5}s`;
-    emoji.style.fontSize = `${2 + Math.random() * 2}rem`;
+    emoji.style.fontSize = emojiScale(2, 4);
     overlay.appendChild(emoji);
   }
 
@@ -681,6 +775,7 @@ function showDiceFallen() {
   const msg = document.createElement('div');
   msg.className = 'result-message fallen-message';
   msg.textContent = 'ごめん、ダイス落ちた・・・';
+  applyMobileMsgStyle(msg);
   overlay.appendChild(msg);
 }
 
@@ -724,7 +819,7 @@ function showExplosion() {
     p.textContent = explosionEmojis[Math.floor(Math.random() * explosionEmojis.length)];
     p.style.left = `${30 + Math.random() * 40}%`;
     p.style.top = `${30 + Math.random() * 40}%`;
-    p.style.fontSize = `${2 + Math.random() * 4}rem`;
+    p.style.fontSize = emojiScale(2, 6);
     p.style.setProperty('--dx', `${(Math.random() - 0.5) * 800}px`);
     p.style.setProperty('--dy', `${(Math.random() - 0.5) * 800}px`);
     p.style.animationDelay = `${Math.random() * 0.3}s`;
@@ -735,6 +830,7 @@ function showExplosion() {
   const msg = document.createElement('div');
   msg.className = 'result-message explosion-message';
   msg.textContent = '💥 ファンブル多すぎ！💥';
+  applyMobileMsgStyle(msg);
   overlay.appendChild(msg);
 
   // UIを吹き飛ばす（段階的に）
