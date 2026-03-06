@@ -162,33 +162,35 @@
             <p class="section-subtitle" data-reveal>配信・作品・SNS</p>
             <div id="links-container">
                 <!-- JS で data/links.json から動的に描画 -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Games Section -->
-    <section id="games">
-        <div class="section-inner">
-            <h2 class="section-title" data-reveal>Games</h2>
-            <p class="section-subtitle" data-reveal>遊んでいってね！</p>
-            <div class="games-grid">
-                <a href="games/oharai/index.html" class="game-card" data-reveal>
-                    <div class="game-visual">
-                        <div class="game-emoji">🎲</div>
+                <!-- Games は JS で末尾に移動される -->
+                <div id="games" class="link-category" data-cat="games" data-reveal>
+                    <div class="link-category-header">
+                        <div class="link-category-icon">🎮</div>
+                        <div class="link-category-title">Games</div>
                     </div>
-                    <div class="game-info">
-                        <h3 class="game-title">お祓いシミュレーター</h3>
-                        <p class="game-desc">100面ダイスを100個振って運試し！<br>クリティカル vs ファンブルの行方は…</p>
-                        <span class="game-btn">遊ぶ →</span>
-                    </div>
-                </a>
-                <div class="game-card game-card-coming" data-reveal>
-                    <div class="game-visual">
-                        <div class="game-emoji">🔮</div>
-                    </div>
-                    <div class="game-info">
-                        <h3 class="game-title">Coming Soon...</h3>
-                        <p class="game-desc">次のミニゲームをお楽しみに！</p>
+                    <div class="carousel-wrapper">
+                        <button class="carousel-btn carousel-btn-left" aria-label="前へ">‹</button>
+                        <div class="carousel-track" id="games-track">
+                            <a href="games/oharai/index.html" class="content-card">
+                                <div class="content-card-thumb game-thumb-visual">
+                                    <span class="game-thumb-emoji">🎲</span>
+                                </div>
+                                <div class="content-card-info">
+                                    <div class="content-card-title">お祓いシミュレーター</div>
+                                    <div class="content-card-meta">100面ダイスを100個振って運試し！</div>
+                                </div>
+                            </a>
+                            <div class="content-card game-card-coming">
+                                <div class="content-card-thumb game-thumb-visual">
+                                    <span class="game-thumb-emoji">🔮</span>
+                                </div>
+                                <div class="content-card-info">
+                                    <div class="content-card-title">Coming Soon...</div>
+                                    <div class="content-card-meta">次のミニゲームをお楽しみに！</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-btn-right" aria-label="次へ">›</button>
                     </div>
                 </div>
             </div>

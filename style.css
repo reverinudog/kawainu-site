@@ -751,109 +751,32 @@ section {
     transform: translateY(0);
 }
 
-/* --- Games Section --- */
-#games {
-    background: linear-gradient(180deg, transparent 0%, rgba(0, 255, 106, 0.02) 50%, transparent 100%);
+/* --- Games (Contents内 link-category) --- */
+.link-category[data-cat="games"] .link-category-icon {
+    background: rgba(0, 255, 106, 0.12);
+    color: #00ff6a;
 }
 
-.games-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.game-card {
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(0, 255, 106, 0.1);
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.game-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(0, 255, 106, 0.35);
-    box-shadow: 0 20px 60px rgba(0, 255, 106, 0.1), 0 0 40px rgba(0, 255, 106, 0.05);
-}
-
-.game-visual {
-    height: 140px;
+/* ゲームサムネイル（絵文字ビジュアル） */
+.game-thumb-visual {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(0, 255, 106, 0.05) 0%, rgba(0, 80, 40, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(0, 255, 106, 0.08) 0%, rgba(0, 80, 40, 0.15) 100%) !important;
 }
 
-.game-emoji {
-    font-size: 4rem;
-    animation: gameBounce 3s ease-in-out infinite;
+.game-thumb-emoji {
+    font-size: 2.4rem;
 }
 
-@keyframes gameBounce {
-
-    0%,
-    100% {
-        transform: translateY(0) rotate(0deg);
-    }
-
-    25% {
-        transform: translateY(-8px) rotate(-5deg);
-    }
-
-    75% {
-        transform: translateY(-4px) rotate(3deg);
-    }
-}
-
-.game-info {
-    padding: 24px;
-}
-
-.game-title {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 8px;
-}
-
-.game-desc {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.5);
-    line-height: 1.6;
-    margin-bottom: 16px;
-}
-
-.game-btn {
-    display: inline-block;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #00ff6a;
-    letter-spacing: 0.05em;
-    transition: all 0.3s ease;
-}
-
-.game-card:hover .game-btn {
-    text-shadow: 0 0 12px rgba(0, 255, 106, 0.5);
-}
-
-.game-card-coming {
-    opacity: 0.5;
+/* Coming Soon カード */
+.content-card.game-card-coming {
+    opacity: 0.45;
     cursor: default;
+    pointer-events: none;
 }
 
-.game-card-coming:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: rgba(0, 255, 106, 0.1);
-}
+/* (旧 game-card スタイルは content-card に統一済み) */
 
 /* --- Achievements / Timeline (Zigzag) --- */
 #achievements {
@@ -1203,6 +1126,93 @@ section {
 .timeline-connector.revealed {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* --- タイムライン非表示（展開前） --- */
+.timeline-hidden {
+    display: none !important;
+}
+
+/* --- 展開アニメーション --- */
+.timeline-revealing {
+    animation: timelineRevealIn 0.5s ease-out forwards;
+}
+
+@keyframes timelineRevealIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- 「以前の歩みを見る」ボタン --- */
+.timeline-expand-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 320px;
+    margin: 16px auto 24px;
+    padding: 14px 28px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #00ff6a;
+    background: rgba(0, 255, 106, 0.06);
+    border: 1px solid rgba(0, 255, 106, 0.25);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    letter-spacing: 0.04em;
+    position: relative;
+    overflow: hidden;
+}
+
+.timeline-expand-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 255, 106, 0.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.timeline-expand-btn:hover {
+    background: rgba(0, 255, 106, 0.12);
+    border-color: rgba(0, 255, 106, 0.5);
+    box-shadow: 0 4px 24px rgba(0, 255, 106, 0.15), 0 0 30px rgba(0, 255, 106, 0.08);
+    transform: translateY(-2px);
+}
+
+.timeline-expand-btn:hover::before {
+    opacity: 1;
+}
+
+.timeline-expand-arrow {
+    font-size: 0.8em;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.timeline-expand-btn:hover .timeline-expand-arrow {
+    transform: translateY(3px);
+}
+
+.timeline-expand-btn-hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    max-height: 0;
+    margin: 0 auto;
+    padding: 0 28px;
+    overflow: hidden;
 }
 
 /* --- Contact Section --- */

@@ -172,13 +172,23 @@ window.scrollTo(0, 0);
 
                 const monitorRect = monitor.getBoundingClientRect();
                 const screenRect = screenContent.getBoundingClientRect();
-                const sx = screenRect.left - monitorRect.left;
-                const sy = screenRect.top - monitorRect.top;
-                const mx = monitorRect.left;
-                const my = monitorRect.top;
 
-                const ox = (-mx - sx * Z) / (1 - Z);
-                const oy = (-my - sy * Z) / (1 - Z);
+                // 画面中央（ビューポート座標）
+                const screenCX = screenRect.left + screenW / 2;
+                const screenCY = screenRect.top + screenH / 2;
+                // ビューポート中央
+                const vpCX = vw / 2;
+                const vpCY = vh / 2;
+
+                // monitor要素のローカル座標に変換
+                const scLocalX = screenCX - monitorRect.left;
+                const scLocalY = screenCY - monitorRect.top;
+
+                // transform-origin: ズーム後に画面中央がビューポート中央に来る点
+                // origin + (screenCenter - origin) * Z = vpCenter - monitorRect.topLeft
+                // → origin = (vpCenter - monitorRect.topLeft - screenCenter_local * Z) / (1 - Z)
+                const ox = (vpCX - monitorRect.left - scLocalX * Z) / (1 - Z) + 1; // 左ずれ補正
+                const oy = (vpCY - monitorRect.top - scLocalY * Z) / (1 - Z);
                 monitor.style.transformOrigin = `${ox}px ${oy}px`;
 
                 monitor.style.setProperty('--zoom-scale', Z.toFixed(4));
@@ -491,6 +501,35 @@ function renderLinks(linksData) {
 
     // スクロールリビールに登録
     container.querySelectorAll('.link-category').forEach(el => revealObserver.observe(el));
+
+    // Games ブロックを末尾に移動（JS動的カテゴリの後に表示）
+    const gamesBlock = document.getElementById('games');
+    if (gamesBlock && container.contains(gamesBlock)) {
+        container.appendChild(gamesBlock);
+    }
+
+    // Games カルーセル初期化（4つ以上でページングボタン表示）
+    setupGamesCarousel();
+}
+
+function setupGamesCarousel() {
+    const track = document.getElementById('games-track');
+    if (!track) return;
+    const wrapper = track.closest('.carousel-wrapper');
+    if (!wrapper) return;
+
+    const btnLeft = wrapper.querySelector('.carousel-btn-left');
+    const btnRight = wrapper.querySelector('.carousel-btn-right');
+    const cardCount = track.children.length;
+
+    if (cardCount >= 4) {
+        // 4つ以上: カルーセル操作を有効化
+        setupCarousel(track, btnLeft, btnRight);
+    } else {
+        // 4つ未満: ボタンを完全に非表示
+        if (btnLeft) btnLeft.style.display = 'none';
+        if (btnRight) btnRight.style.display = 'none';
+    }
 }
 
 // --- カルーセル操作 ---
@@ -570,22 +609,65 @@ function renderAchievements(ACHIEVEMENTS_DATA) {
 
     const totalGroups = ACHIEVEMENTS_DATA.length;
 
+    // 最新2年分を動的に判定（データ末尾が最新と仮定）
+    const VISIBLE_YEARS = 2;
+    const visibleStartIndex = Math.max(0, totalGroups - VISIBLE_YEARS);
+    const hasOlderGroups = visibleStartIndex > 0;
+
     ACHIEVEMENTS_DATA.forEach((yearGroup, index) => {
         const isLeft = index % 2 === 0;
         const side = isLeft ? 'tl-left' : 'tl-right';
+        const isHidden = index < visibleStartIndex;
 
         // グループ間コネクタ（最初のグループ以外）
         if (index > 0) {
             const prevIsLeft = (index - 1) % 2 === 0;
             const connector = document.createElement('div');
             connector.className = `timeline-connector ${prevIsLeft ? 'timeline-connector-lr' : 'timeline-connector-rl'}`;
+            if (index <= visibleStartIndex) connector.classList.add('timeline-hidden');
             container.appendChild(connector);
+        }
+
+        // 展開ボタン挿入（古いグループの直後、最初の表示グループの直前のコネクタの後）
+        if (hasOlderGroups && index === visibleStartIndex) {
+            const expandBtn = document.createElement('button');
+            expandBtn.className = 'timeline-expand-btn';
+            expandBtn.id = 'timeline-expand-btn';
+            expandBtn.innerHTML = '<span class="timeline-expand-text">以前の歩みを見る</span><span class="timeline-expand-arrow">▾</span>';
+            expandBtn.addEventListener('click', () => {
+                const hiddenEls = container.querySelectorAll('.timeline-hidden');
+                hiddenEls.forEach((el, i) => {
+                    // stagger animation
+                    setTimeout(() => {
+                        el.classList.remove('timeline-hidden');
+                        el.classList.add('timeline-revealing');
+                        // スクロールリビールに登録
+                        if (el.classList.contains('timeline-year') ||
+                            el.classList.contains('timeline-item') ||
+                            el.classList.contains('timeline-end') ||
+                            el.classList.contains('timeline-connector')) {
+                            revealObserver.observe(el);
+                        }
+                        el.querySelectorAll('.timeline-year, .timeline-item, .timeline-end, .timeline-connector').forEach(child => {
+                            revealObserver.observe(child);
+                        });
+                    }, i * 60);
+                });
+                expandBtn.classList.add('timeline-expand-btn-hidden');
+                // ナビバードロップダウンに全年を表示
+                updateAchievementsDropdown(ACHIEVEMENTS_DATA, false);
+            });
+            container.appendChild(expandBtn);
+
+            // 展開ボタン直後のコネクタ（最初の表示グループの前）はhiddenにしない
+            // （すでに上のコネクタ処理でisHiddenを判定済み）
         }
 
         // グループコンテナ
         const group = document.createElement('div');
         group.className = `timeline-group ${side}`;
         group.id = `year-${yearGroup.year}`;
+        if (isHidden) group.classList.add('timeline-hidden');
 
         // 年マーカー
         const yearDiv = document.createElement('div');
@@ -639,21 +721,47 @@ function renderAchievements(ACHIEVEMENTS_DATA) {
         container.appendChild(group);
     });
 
-    // タイムライン要素をスクロールリビールに登録
-    const timelineRevealEls = container.querySelectorAll('.timeline-year, .timeline-item, .timeline-end, .timeline-connector');
-    timelineRevealEls.forEach(el => revealObserver.observe(el));
+    // 表示中の要素のみスクロールリビールに登録（非表示は展開時に登録）
+    const visibleEls = container.querySelectorAll('.timeline-year:not(.timeline-hidden *), .timeline-item:not(.timeline-hidden *), .timeline-end:not(.timeline-hidden *), .timeline-connector:not(.timeline-hidden)');
+    visibleEls.forEach(el => {
+        if (!el.closest('.timeline-hidden')) {
+            revealObserver.observe(el);
+        }
+    });
 
-    // Achievements ドロップダウンに年リストを動的注入
+    // 非表示グループ内の要素もリビール用に個別チェック
+    container.querySelectorAll('.timeline-group:not(.timeline-hidden)').forEach(group => {
+        group.querySelectorAll('.timeline-year, .timeline-item, .timeline-end').forEach(el => {
+            revealObserver.observe(el);
+        });
+    });
+    container.querySelectorAll('.timeline-connector:not(.timeline-hidden)').forEach(el => {
+        revealObserver.observe(el);
+    });
+
+    // Achievements ドロップダウン初期化（最新2年のみ）
+    updateAchievementsDropdown(ACHIEVEMENTS_DATA, hasOlderGroups);
+}
+
+// Achievements ナビバードロップダウン更新
+function updateAchievementsDropdown(data, limitToRecent) {
     const yearMenu = document.getElementById('achievements-year-menu');
-    if (yearMenu && ACHIEVEMENTS_DATA.length > 0) {
-        yearMenu.innerHTML = '';
-        // 「全体を見る」リンク
-        const allLink = document.createElement('a');
-        allLink.href = '#achievements';
-        allLink.textContent = 'All';
-        yearMenu.appendChild(allLink);
-        // 各年リンク
-        ACHIEVEMENTS_DATA.forEach(yg => {
+    if (!yearMenu || data.length === 0) return;
+
+    yearMenu.innerHTML = '';
+
+    if (limitToRecent) {
+        // 最新2年のみ
+        const start = Math.max(0, data.length - 2);
+        for (let i = start; i < data.length; i++) {
+            const a = document.createElement('a');
+            a.href = `#year-${data[i].year}`;
+            a.textContent = data[i].year;
+            yearMenu.appendChild(a);
+        }
+    } else {
+        // 全年表示
+        data.forEach(yg => {
             const a = document.createElement('a');
             a.href = `#year-${yg.year}`;
             a.textContent = yg.year;
