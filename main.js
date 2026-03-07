@@ -322,6 +322,41 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// --- ハンバーガーメニュー ---
+const hamburger = document.getElementById('nav-hamburger');
+const navLinks = document.getElementById('nav-links');
+
+function closeHamburgerMenu() {
+    if (!hamburger || !navLinks) return;
+    hamburger.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
+    navLinks.classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+function openHamburgerMenu() {
+    if (!hamburger || !navLinks) return;
+    hamburger.classList.add('active');
+    hamburger.setAttribute('aria-expanded', 'true');
+    navLinks.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function toggleHamburgerMenu() {
+    if (navLinks.classList.contains('open')) {
+        closeHamburgerMenu();
+    } else {
+        openHamburgerMenu();
+    }
+}
+
+if (hamburger) {
+    hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleHamburgerMenu();
+    });
+}
+
 // --- ドロップダウン制御 ---
 const dropdowns = document.querySelectorAll('.nav-dropdown');
 
@@ -342,23 +377,40 @@ dropdowns.forEach(dd => {
     });
 });
 
-// 外部クリックでドロップダウンを閉じる
-document.addEventListener('click', () => {
+// 外部クリックでドロップダウン＋ハンバーガーを閉じる
+document.addEventListener('click', (e) => {
+    // ハンバーガーメニュー内のクリックでなければ閉じる
+    const isInsideNav = navLinks && navLinks.contains(e.target);
+    const isHamburger = hamburger && hamburger.contains(e.target);
+    if (!isInsideNav && !isHamburger) {
+        closeHamburgerMenu();
+    }
     dropdowns.forEach(d => {
         d.classList.remove('open');
         d.querySelector('.nav-dropdown-toggle').setAttribute('aria-expanded', 'false');
     });
 });
 
-// ESCキーでドロップダウンを閉じる
+// ESCキーでドロップダウン＋ハンバーガーを閉じる
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
+        closeHamburgerMenu();
         dropdowns.forEach(d => {
             d.classList.remove('open');
             d.querySelector('.nav-dropdown-toggle').setAttribute('aria-expanded', 'false');
         });
     }
 });
+
+// メニュー内のリンククリック時にハンバーガーを閉じる
+if (navLinks) {
+    navLinks.addEventListener('click', (e) => {
+        const link = e.target.closest('a[href^="#"]');
+        if (link) {
+            closeHamburgerMenu();
+        }
+    });
+}
 
 // --- リンクセクション（カルーセル） ---
 const LINKS_CATEGORY_ORDER = ['youtube', 'booth_trpg', 'booth_goods', 'x'];
