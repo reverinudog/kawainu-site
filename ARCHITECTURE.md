@@ -4,7 +4,7 @@
 
 ```
 個人サイト/
-├── index.html      # メインHTML（5セクション構成: Hero/About/Achievements/Contents/Contact）
+├── index.html      # メインHTML（5セクション構成: Hero/About/Achievements/Contents/Contact）── AdSense meta tag
 ├── style.css       # 全スタイル（ダークテーマ、レスポンシブ）
 ├── main.js         # ブート演出、パーティクル背景、スクロール制御、実績JSON読み込み、リンクカルーセル、ナビドロップダウン制御、訪問者カウンター
 ├── start.bat       # ローカルHTTPサーバー起動（ポート8090）
@@ -96,9 +96,9 @@
 
 | ファイル | 概要 |
 |----------|------|
-| `index.html` | エントリHTML、Three.js / Cannon-es を ESM importmap で読み込み、デバッグパネル（`?debug=1`で表示） |
-| `main.js` | ゲームロジック（1177行）: 3Dシーン・物理演算・ダイス生成/投擲・結果判定・演出・モバイルカメラ調整 |
-| `style.css` | ゲームUI（HUD・ボタン・結果オーバーレイ・各種エフェクト） |
+| `index.html` | エントリHTML、Three.js / Cannon-es を ESM importmap で読み込み、AdSenseスクリプト、インタースティシャル広告オーバーレイ、デバッグパネル（`?debug=1`で表示） |
+| `main.js` | ゲームロジック（1229行）: 3Dシーン・物理演算・ダイス生成/投擲・結果判定・演出・モバイルカメラ調整・広告管理 |
+| `style.css` | ゲームUI（HUD・ボタン・結果オーバーレイ・各種エフェクト・インタースティシャル広告スタイル） |
 
 ### main.js 主要機能
 
@@ -115,11 +115,13 @@
 | showExplosion() | ファンブル10超え時の爆発演出（UI破壊→復帰） |
 | showDiceFallen() | ダイス落下時の「ごめん、ダイス落ちた・・・」演出（シアン系テーマ） |
 | checkDiceFallen() / allDiceSettled() | ダイス落下検知（Y < -20）、安定判定（スリープ OR 落下） |
-| takeScreenshot() / shareToX() | スクリーンショット撮影、X共有（落下時テキスト対応） |
-| roll() | ロール状態管理（投擲→安定待ち→落下チェック→結果判定→演出） |
+| takeScreenshot() / shareToX() | スクリーンショット撮影（screenshot-mode で広告非表示）、X共有（落下時テキスト対応） |
+| roll() | ロール状態管理（インタースティシャル広告→投擲→安定待ち→落下チェック→結果判定→演出） |
+| showInterstitial() | インタースティシャル広告表示（3回に1回、Promise で閉じるまで待機） |
 
 ## 依存関係（CDN）
 
 - Google Fonts: Orbitron, Noto Sans JP, Inter
 - サードパーティライブラリ（メインサイト）: なし
 - お祓いシミュレーター: Three.js, Cannon-es（ESM importmap）
+- Google AdSense: `pagead2.googlesyndication.com`（パブリッシャーID: `ca-pub-2286415100906814`）
