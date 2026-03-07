@@ -1009,6 +1009,9 @@ async function roll() {
   rolling = true;
   hideResults();
 
+  // インタースティシャル広告（2回目以降、INTERSTITIAL_INTERVAL回ごと）
+  await showInterstitial();
+
   // 爆発後の環境復帰（ボード・壁がなければ復元）
   if (!scene.children.includes(boardMesh)) {
     scene.add(boardMesh);
@@ -1176,3 +1179,52 @@ document.getElementById('debug-neutral')?.addEventListener('click', () => debugR
 document.getElementById('debug-normal')?.addEventListener('click', () => debugRoll(null));
 document.getElementById('debug-fallen')?.addEventListener('click', () => debugRoll('fallen'));
 
+// =============================================
+//  広告管理
+// =============================================
+let rollCount = 0;
+const INTERSTITIAL_INTERVAL = 3; // 3回に1回インタースティシャル表示
+
+/**
+ * インタースティシャル広告を表示（Promiseで閉じるまで待機）
+ * - 初回はスキップ
+ * - INTERSTITIAL_INTERVAL回ごとに表示
+ */
+function showInterstitial() {
+  return new Promise((resolve) => {
+    rollCount++;
+    // 初回はスキップ、INTERSTITIAL_INTERVAL回ごとに表示
+    if (rollCount <= 1 || rollCount % INTERSTITIAL_INTERVAL !== 0) {
+      resolve();
+      return;
+    }
+
+    const overlay = document.getElementById('ad-interstitial');
+    const closeBtn = document.getElementById('ad-interstitial-close');
+    if (!overlay || !closeBtn) {
+      resolve();
+      return;
+    }
+
+    // AdSense広告をpush（表示ごとに1回）
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) { /* ignore */ }
+
+    // 表示
+    overlay.style.display = '';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => overlay.classList.add('visible'));
+    });
+
+    function close() {
+      overlay.classList.remove('visible');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        resolve();
+      }, 300);
+      closeBtn.removeEventListener('click', close);
+    }
+    closeBtn.addEventListener('click', close);
+  });
+}
