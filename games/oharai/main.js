@@ -42,6 +42,37 @@ const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerH
 camera.position.set(0, 55, 35);
 camera.lookAt(0, 0, 0);
 
+// カメラシェイク基準位置（updateCameraForViewport で更新される）
+let cameraBasePos = camera.position.clone();
+
+// --- ビューポートに応じたカメラ動的調整 ---
+// デスクトップ値
+const CAM_DESKTOP = { fov: 55, y: 55, z: 35 };
+// モバイル縦画面値（aspect < 0.6）
+const CAM_MOBILE = { fov: 65, y: 70, z: 50 };
+
+function updateCameraForViewport() {
+  const aspect = window.innerWidth / window.innerHeight;
+  // aspect >= 1.0 → デスクトップ値そのまま
+  // aspect <= 0.6 → モバイル値そのまま
+  // 中間は線形補間
+  const t = Math.max(0, Math.min(1, (aspect - 0.6) / (1.0 - 0.6)));
+  const fov = CAM_MOBILE.fov + (CAM_DESKTOP.fov - CAM_MOBILE.fov) * t;
+  const camY = CAM_MOBILE.y + (CAM_DESKTOP.y - CAM_MOBILE.y) * t;
+  const camZ = CAM_MOBILE.z + (CAM_DESKTOP.z - CAM_MOBILE.z) * t;
+
+  camera.fov = fov;
+  camera.position.set(0, camY, camZ);
+  camera.lookAt(0, 0, 0);
+  camera.updateProjectionMatrix();
+
+  // カメラシェイクの基準位置も更新
+  cameraBasePos.copy(camera.position);
+}
+
+// 初期適用
+updateCameraForViewport();
+
 // --- Lighting (盤面ライトアップ) ---
 const ambientLight = new THREE.AmbientLight(0x334455, 0.15);
 scene.add(ambientLight);
@@ -955,7 +986,6 @@ function showExplosion() {
 
 // --- Camera Shake ---
 let shakeIntensity = 0;
-const cameraBasePos = camera.position.clone();
 
 function updateCameraShake() {
   if (shakeIntensity > 0.01) {
@@ -1097,8 +1127,8 @@ shareBtn.addEventListener('click', () => {
 // --- Resize ---
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  updateCameraForViewport();
 });
 
 // --- Animation Loop ---

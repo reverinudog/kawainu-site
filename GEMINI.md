@@ -52,9 +52,10 @@
 - **リザルト動的配置は全サイズ対応**: `applyMobileMsgStyle` と `showStatsOverlay` の rAF 配置をデスクトップでも実行。CSS `.result-message` の `translateY(-50%)` は除去済み（`translateX(-50%)`のみ）
 - **絵文字のモバイル制御**: `emojiScale` 係数 0.22-0.30（大幅縮小）、個数半減、配置範囲を上部(5-25%)に制限。`stats-overlay` は z-index:110 で絵文字の上に表示
 - **iPhone比率テスト**: テスト時は iPhone 比率（例: 390×844 = iPhone 14）を使うこと。400×830 は iPhone 比率ではない
+- **モバイル盤面リサイズ**: `updateCameraForViewport()` でアスペクト比に応じて FOV/カメラY/Z を線形補間（モバイル: FOV65/Y70/Z50 ↔ デスク: FOV55/Y55/Z35）。`cameraBasePos` も同時更新すること（シェイク基準位置）
 
 ## 現在のブランチ状態
 
-- `develop` ← **現在地**（リザルト表示デスクトップ/モバイル両対応済み）
+- `develop` ← **現在地**（お祓いシミュレーター モバイル盤面リサイズ済み）
 - `master` ← developと同期未実施（次回マージ待ち）
 - `feature/debug-result-check` ← マージ済み（削除可）

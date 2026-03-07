@@ -97,7 +97,7 @@
 | ファイル | 概要 |
 |----------|------|
 | `index.html` | エントリHTML、Three.js / Cannon-es を ESM importmap で読み込み、デバッグパネル（`?debug=1`で表示） |
-| `main.js` | ゲームロジック（1149行）: 3Dシーン・物理演算・ダイス生成/投擲・結果判定・演出 |
+| `main.js` | ゲームロジック（1177行）: 3Dシーン・物理演算・ダイス生成/投擲・結果判定・演出・モバイルカメラ調整 |
 | `style.css` | ゲームUI（HUD・ボタン・結果オーバーレイ・各種エフェクト） |
 
 ### main.js 主要機能
@@ -105,6 +105,7 @@
 | 関数/セクション | 概要 |
 |----------------|------|
 | シーン初期化 | Three.js レンダラー/カメラ/ライト（スポット/リム/コーナー）、CANNON.js 物理ワールド |
+| updateCameraForViewport() | アスペクト比に応じたFOV/カメラY/Z動的調整（モバイル: FOV65/Y70/Z50 ↔ デスク: FOV55/Y55/Z35、線形補間） |
 | createDice() / spawnDice() | 100面ダイス（IcosahedronGeometry）を100個生成・物理演算付き投擲 |
 | generateResults() | ダイス停止後に全ダイスの出目を判定（クリティカル1/ファンブル100カウント） |
 | displayResults() / showStatsOverlay() | 結果表示UI、統計オーバーレイ |
