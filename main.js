@@ -965,11 +965,12 @@ if (contactForm) {
         }
     }
 
-    // --- 数字をカウントアップアニメーションで表示 ---
+    // --- 数字を全桁同時スピンで表示 ---
     function displayCount(count) {
         const digits = container.querySelectorAll('.visitor-digit');
+        const finalStr = String(count).padStart(DIGIT_COUNT, '0');
 
-        // ローディング状態を解除して0を表示
+        // ローディング状態を解除して0位置にリセット（transition なしで即座に）
         digits.forEach(digit => {
             digit.classList.remove('loading', 'error');
             const inner = digit.querySelector('.visitor-digit-inner');
@@ -977,41 +978,25 @@ if (contactForm) {
             inner.style.transform = 'translateY(0)';
         });
 
-        const duration = 1500; // 1.5秒
-        const startTime = performance.now();
-
-        function tick(now) {
-            const elapsed = now - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            // ease-out: 最初が速くて最後がゆっくり
-            const eased = 1 - Math.pow(1 - progress, 3);
-
-            const currentVal = Math.round(eased * count);
-            const str = String(currentVal).padStart(DIGIT_COUNT, '0');
-
-            digits.forEach((digit, i) => {
-                const inner = digit.querySelector('.visitor-digit-inner');
-                const num = parseInt(str[i], 10);
-                const charH = digit.offsetHeight || 40;
-                inner.style.transform = `translateY(-${num * charH}px)`;
-            });
-
-            if (progress < 1) {
-                requestAnimationFrame(tick);
-            } else {
-                // 最終値を確定
-                const finalStr = String(count).padStart(DIGIT_COUNT, '0');
+        // ブラウザにリセットを確定させてからアニメーション開始
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
                 digits.forEach((digit, i) => {
                     const inner = digit.querySelector('.visitor-digit-inner');
-                    const num = parseInt(finalStr[i], 10);
+                    const targetNum = parseInt(finalStr[i], 10);
                     const charH = digit.offsetHeight || 40;
-                    inner.style.transform = `translateY(-${num * charH}px)`;
-                });
-                container.classList.add('loaded');
-            }
-        }
 
-        requestAnimationFrame(tick);
+                    // CSS transition で全桁同時にスピン
+                    inner.style.transition = 'transform 1.5s cubic-bezier(0.22, 1, 0.36, 1)';
+                    inner.style.transform = `translateY(-${targetNum * charH}px)`;
+                });
+
+                // アニメーション完了後にグロー
+                setTimeout(() => {
+                    container.classList.add('loaded');
+                }, 1600);
+            });
+        });
     }
 
     // --- エラー表示 ---

@@ -1,12 +1,13 @@
 # GEMINI.md — AI向け行動ルール
 
-## サーバー起動について
+## デバッグ・画面検証方針
 
-- **テスト目的でも HTTP サーバーを勝手に起動しないこと**
-- ユーザーは必ず `start.bat` を手動で実行してサーバーを起動する
-- `start.bat` は `editor-server.py`（ポート8090）を使用。ページ読み込み時にYouTube RSS + BOOTH OGPを自動取得
-- AI がサーバーを起動すると、ユーザーの `start.bat` とポートが競合し 404 エラーの原因になる
-- 動作確認が必要な場合は、ユーザーに `start.bat` の実行を依頼すること
+- **簡単な確認**: ユーザーが自分でデバッグする（AIは手順を示すだけ）
+- **複雑な確認**: AIがブラウザサブエージェントで画面検証を行う
+- **そのままでは検証が難しい場合**: 以下のいずれかで対応する
+  - デバッグツールを作成する（**main/master ブランチには含めないこと**。feature ブランチまたは `/tmp/` に置く）
+  - 一時的な検証用スクリプトを `/tmp/` に書いて確認する
+- **サーバー起動時の注意**: ユーザーは `start.bat`（`editor-server.py`、ポート8090）を使用する。AIがサーバーを起動する場合はポート競合に注意し、既存プロセスの確認・killを行うこと
 
 ## デザイン仕様
 
@@ -47,11 +48,13 @@
 - **`applyMobileMsgStyle(msg)`を全演出関数で呼ぶ**: `showCelebration`, `showDisappointment`, `showNeutral`, `showDiceFallen`, `showExplosion` の全5関数で必須
 - **results-panelの縮小**: モバイル時は `48vh` に縮小して上部に演出用スペースを確保（`displayResults`で設定、`hideResults`でリセット）
 - **safe-area修正済み**: モバイルメディアクエリ（≤600px, ≤480px）が `#overlay` と `#back-to-site` の safe-area padding を上書きしていたのを修正。`max()` + `env(safe-area-inset-top)` で対応
-- **ダイス結果パネル表示不足**: iPhone縦画面で `results-panel` が8行目までしか表示されない → 次チャットで対応必要
+- **ダイス結果パネル全行表示**: `aspect-ratio: auto` + `padding: 3-4px 0` でセルを横長化、`overflowY: hidden` で48vh内にスクロールなし全10行収容
+- **リザルト動的配置は全サイズ対応**: `applyMobileMsgStyle` と `showStatsOverlay` の rAF 配置をデスクトップでも実行。CSS `.result-message` の `translateY(-50%)` は除去済み（`translateX(-50%)`のみ）
+- **絵文字のモバイル制御**: `emojiScale` 係数 0.22-0.30（大幅縮小）、個数半減、配置範囲を上部(5-25%)に制限。`stats-overlay` は z-index:110 で絵文字の上に表示
 - **iPhone比率テスト**: テスト時は iPhone 比率（例: 390×844 = iPhone 14）を使うこと。400×830 は iPhone 比率ではない
 
 ## 現在のブランチ状態
 
-- `develop` ← **現在地**（safe-area修正・デバッグパネル`?debug`復元済み）
-- `master` ← developと同期済み（Cloudflare Pagesにデプロイ済み）
+- `develop` ← **現在地**（リザルト表示デスクトップ/モバイル両対応済み）
+- `master` ← developと同期未実施（次回マージ待ち）
 - `feature/debug-result-check` ← マージ済み（削除可）

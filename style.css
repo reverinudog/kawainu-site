@@ -1365,7 +1365,7 @@ section {
     gap: 8px;
     width: 100%;
     max-width: 320px;
-    margin: 16px auto 24px;
+    margin: 0 auto;
     padding: 14px 28px;
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 0.92rem;
@@ -1378,7 +1378,8 @@ section {
     transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     letter-spacing: 0.04em;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    z-index: 1;
 }
 
 .timeline-expand-btn::before {
@@ -1388,6 +1389,7 @@ section {
     background: linear-gradient(135deg, rgba(0, 255, 106, 0.08) 0%, transparent 60%);
     opacity: 0;
     transition: opacity 0.3s ease;
+    border-radius: 14px;
 }
 
 .timeline-expand-btn:hover {
@@ -1412,14 +1414,7 @@ section {
 }
 
 .timeline-expand-btn-hidden {
-    opacity: 0;
-    transform: scale(0.95);
-    pointer-events: none;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    max-height: 0;
-    margin: 0 auto;
-    padding: 0 28px;
-    overflow: hidden;
+    display: none !important;
 }
 
 /* --- Contact Section --- */
@@ -1747,28 +1742,54 @@ section {
         font-size: 0.8rem;
     }
 
+    .section-inner {
+        padding: 72px 20px;
+    }
+
     .section-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        margin-bottom: 36px;
+    }
+
+    .section-subtitle {
+        margin-top: -24px;
+        margin-bottom: 36px;
     }
 
     .about-card {
         padding: 32px 24px;
     }
 
+    /* ナビバー: ロゴ非表示、リンクを中央に */
+    .nav-logo {
+        font-size: 1rem;
+        letter-spacing: 0.05em;
+    }
+
+    .nav-inner {
+        padding: 0 16px;
+    }
+
     .nav-links {
-        gap: 18px;
+        gap: 14px;
     }
 
     .nav-links a {
-        font-size: 0.75rem;
+        font-size: 0.72rem;
     }
 
     .nav-dropdown-toggle {
-        font-size: 0.75rem;
+        font-size: 0.72rem;
     }
 
     .nav-dropdown-menu {
         min-width: 140px;
+    }
+
+    /* 訪問者カウンター: 縦配置 */
+    .visitor-counter {
+        flex-direction: column;
+        gap: 8px;
     }
 
     .games-grid {
@@ -1800,6 +1821,10 @@ section {
         padding: 32px 24px;
     }
 
+    .hero-tagline {
+        font-size: 0.85rem;
+        margin-bottom: 40px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1807,22 +1832,62 @@ section {
         font-size: 2.2rem;
     }
 
+    .hero-name-en {
+        letter-spacing: 0.3em;
+    }
+
     .hero-avatar-wrapper {
-        width: 150px;
-        height: 150px;
+        width: 140px;
+        height: 140px;
+        margin-bottom: 24px;
     }
 
     .hero-avatar {
-        width: 150px;
-        height: 150px;
+        width: 140px;
+        height: 140px;
+    }
+
+    .section-inner {
+        padding: 56px 16px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 28px;
+    }
+
+    .section-subtitle {
+        font-size: 0.85rem;
+        margin-top: -18px;
+        margin-bottom: 28px;
+    }
+
+    .hero-tagline {
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        margin-bottom: 36px;
+    }
+
+    /* ナビバー: コンパクト化 */
+    .nav-logo {
+        font-size: 0.85rem;
+        letter-spacing: 0.03em;
+    }
+
+    .nav-inner {
+        padding: 0 12px;
     }
 
     .nav-links {
-        gap: 12px;
+        gap: 8px;
+    }
+
+    .nav-links a {
+        font-size: 0.65rem;
     }
 
     .nav-dropdown-toggle {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
     }
 
     .nav-dropdown-menu {
@@ -1835,6 +1900,22 @@ section {
         transform: translateX(0) translateY(0);
     }
 
+    /* About */
+    .about-card {
+        padding: 24px 18px;
+        border-radius: 16px;
+    }
+
+    .about-greeting {
+        font-size: 1.1rem !important;
+    }
+
+    .about-text p {
+        font-size: 0.9rem;
+        line-height: 1.8;
+    }
+
+    /* カルーセル */
     .content-card {
         flex: 0 0 160px;
     }
@@ -1846,6 +1927,26 @@ section {
     .carousel-track {
         padding: 4px 12px 12px;
         gap: 10px;
+    }
+
+    .link-category-header {
+        padding: 12px 14px;
+        gap: 10px;
+    }
+
+    .link-category-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.3rem;
+        border-radius: 10px;
+    }
+
+    .link-category-title {
+        font-size: 0.92rem;
+    }
+
+    .link-category-more {
+        font-size: 0.7rem;
     }
 
     /* 480px以下: ジグザグ無効→左直線に統一 */
@@ -1936,6 +2037,38 @@ section {
     .timeline-thumb {
         width: 48px;
         height: 48px;
+    }
+
+    .timeline-title {
+        font-size: 0.82rem;
+    }
+
+    .timeline-desc {
+        font-size: 0.72rem;
+    }
+
+    /* Contact */
+    .contact-card {
+        padding: 24px 18px;
+        border-radius: 16px;
+    }
+
+    .form-label {
+        font-size: 0.8rem;
+    }
+
+    .form-input {
+        font-size: 0.85rem;
+        padding: 12px 14px;
+    }
+
+    /* Footer */
+    .footer-inner {
+        padding: 28px 16px;
+    }
+
+    .footer-logo {
+        font-size: 1.2rem;
     }
 }
 

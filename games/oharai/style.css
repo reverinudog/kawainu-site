@@ -393,15 +393,17 @@ body {
 
   #results-grid {
     grid-template-columns: repeat(10, 1fr);
-    gap: 3px;
+    gap: 2px;
   }
 
   .dice-cell {
-    font-size: 0.55rem;
+    font-size: 0.5rem;
+    aspect-ratio: auto;
+    padding: 4px 0;
   }
 
   #results-panel {
-    padding: 14px 14px 16px;
+    padding: 10px 10px 12px;
   }
 
   /* 演出メッセージ: vw固定で必ず小さく */
@@ -535,16 +537,18 @@ body {
 
   #results-grid {
     grid-template-columns: repeat(10, 1fr);
-    gap: 2px;
+    gap: 1px;
   }
 
   .dice-cell {
-    font-size: 0.45rem;
-    border-radius: 4px;
+    font-size: 0.4rem;
+    aspect-ratio: auto;
+    padding: 3px 0;
+    border-radius: 3px;
   }
 
   #results-panel {
-    padding: 10px 8px 12px;
+    padding: 6px 6px 8px;
   }
 
   /* 演出メッセージ */
@@ -645,9 +649,9 @@ body {
 /* --- 共通メッセージ --- */
 .result-message {
   position: absolute;
-  top: 28%;
+  top: 30%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0);
+  transform: translateX(-50%) scale(0);
   font-family: 'Orbitron', 'Noto Sans JP', monospace;
   font-size: 2.5rem;
   font-weight: 900;
@@ -818,15 +822,15 @@ body {
 /* --- メッセージ登場 --- */
 @keyframes messagePopIn {
   0% {
-    transform: translate(-50%, -50%) scale(0) rotate(-5deg);
+    transform: translateX(-50%) scale(0) rotate(-5deg);
   }
 
   60% {
-    transform: translate(-50%, -50%) scale(1.15) rotate(2deg);
+    transform: translateX(-50%) scale(1.15) rotate(2deg);
   }
 
   100% {
-    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    transform: translateX(-50%) scale(1) rotate(0deg);
   }
 }
 
@@ -840,7 +844,7 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 50;
+  z-index: 110;
   display: flex;
   align-items: center;
   justify-content: center;
