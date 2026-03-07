@@ -393,15 +393,17 @@ body {
 
   #results-grid {
     grid-template-columns: repeat(10, 1fr);
-    gap: 3px;
+    gap: 2px;
   }
 
   .dice-cell {
-    font-size: 0.55rem;
+    font-size: 0.5rem;
+    aspect-ratio: auto;
+    padding: 4px 0;
   }
 
   #results-panel {
-    padding: 14px 14px 16px;
+    padding: 10px 10px 12px;
   }
 
   /* 演出メッセージ: vw固定で必ず小さく */
@@ -535,16 +537,18 @@ body {
 
   #results-grid {
     grid-template-columns: repeat(10, 1fr);
-    gap: 2px;
+    gap: 1px;
   }
 
   .dice-cell {
-    font-size: 0.45rem;
-    border-radius: 4px;
+    font-size: 0.4rem;
+    aspect-ratio: auto;
+    padding: 3px 0;
+    border-radius: 3px;
   }
 
   #results-panel {
-    padding: 10px 8px 12px;
+    padding: 6px 6px 8px;
   }
 
   /* 演出メッセージ */
@@ -645,9 +649,9 @@ body {
 /* --- 共通メッセージ --- */
 .result-message {
   position: absolute;
-  top: 28%;
+  top: 30%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0);
+  transform: translateX(-50%) scale(0);
   font-family: 'Orbitron', 'Noto Sans JP', monospace;
   font-size: 2.5rem;
   font-weight: 900;
@@ -818,15 +822,15 @@ body {
 /* --- メッセージ登場 --- */
 @keyframes messagePopIn {
   0% {
-    transform: translate(-50%, -50%) scale(0) rotate(-5deg);
+    transform: translateX(-50%) scale(0) rotate(-5deg);
   }
 
   60% {
-    transform: translate(-50%, -50%) scale(1.15) rotate(2deg);
+    transform: translateX(-50%) scale(1.15) rotate(2deg);
   }
 
   100% {
-    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    transform: translateX(-50%) scale(1) rotate(0deg);
   }
 }
 
@@ -840,7 +844,7 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 50;
+  z-index: 110;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1431,4 +1435,131 @@ body {
 
 .screenshot-mode .fallen-particle {
   opacity: 0.5 !important;
+}
+
+/* ========================================
+   広告
+   ======================================== */
+
+/* --- インタースティシャル広告オーバーレイ --- */
+.ad-interstitial-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.ad-interstitial-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ad-interstitial-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.ad-interstitial-content {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  background: linear-gradient(135deg, rgba(20, 20, 30, 0.98), rgba(10, 10, 18, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 48px 24px 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 255, 106, 0.05);
+  overflow: hidden;
+  transform: scale(0.95) translateY(10px);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ad-interstitial-overlay.visible .ad-interstitial-content {
+  transform: scale(1) translateY(0);
+}
+
+.ad-interstitial-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 1;
+}
+
+.ad-interstitial-close:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
+}
+
+.ad-interstitial-close:active {
+  transform: scale(0.9);
+}
+
+.ad-interstitial-label {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.ad-interstitial-content .adsbygoogle {
+  width: 100%;
+  min-height: 250px;
+}
+
+/* --- スクショ時: 広告を非表示 --- */
+.screenshot-mode .ad-interstitial-overlay {
+  display: none !important;
+}
+
+/* --- 広告レスポンシブ --- */
+@media (max-width: 600px) {
+  .ad-interstitial-content {
+    width: 95%;
+    padding: 44px 16px 16px;
+    border-radius: 12px;
+  }
+
+  .ad-interstitial-close {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ad-interstitial-content {
+    padding: 40px 12px 12px;
+  }
 }

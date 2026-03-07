@@ -8,7 +8,7 @@
                 "title": "#9 【完全初見】TRPG配信者が全力セリフ読みで『都市伝説解体センター』【 川犬 】※ネタバレ注意",
                 "url": "https://www.youtube.com/watch?v=8vqBTd-KGQI",
                 "thumb": "https://i1.ytimg.com/vi/8vqBTd-KGQI/hqdefault.jpg",
-                "date": "2026-03-06"
+                "date": "2026-03-07"
             },
             {
                 "title": "#8 【完全初見】TRPG配信者が全力セリフ読みで『都市伝説解体センター』【 川犬 】※ネタバレ注意",
@@ -55,7 +55,7 @@
         ]
     },
     "booth_trpg": {
-        "label": "TRPG Scenarios",
+        "label": "BOOTH — TRPGシナリオ",
         "icon": "📖",
         "profileUrl": "https://reverinu.booth.pm",
         "items": [
@@ -98,7 +98,7 @@
         ]
     },
     "booth_goods": {
-        "label": "Goods",
+        "label": "BOOTH — グッズ",
         "icon": "🛍️",
         "profileUrl": "https://reverinu-vtuber.booth.pm",
         "items": [

@@ -42,6 +42,37 @@ const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerH
 camera.position.set(0, 55, 35);
 camera.lookAt(0, 0, 0);
 
+// カメラシェイク基準位置（updateCameraForViewport で更新される）
+let cameraBasePos = camera.position.clone();
+
+// --- ビューポートに応じたカメラ動的調整 ---
+// デスクトップ値
+const CAM_DESKTOP = { fov: 55, y: 55, z: 35 };
+// モバイル縦画面値（aspect < 0.6）
+const CAM_MOBILE = { fov: 65, y: 70, z: 50 };
+
+function updateCameraForViewport() {
+  const aspect = window.innerWidth / window.innerHeight;
+  // aspect >= 1.0 → デスクトップ値そのまま
+  // aspect <= 0.6 → モバイル値そのまま
+  // 中間は線形補間
+  const t = Math.max(0, Math.min(1, (aspect - 0.6) / (1.0 - 0.6)));
+  const fov = CAM_MOBILE.fov + (CAM_DESKTOP.fov - CAM_MOBILE.fov) * t;
+  const camY = CAM_MOBILE.y + (CAM_DESKTOP.y - CAM_MOBILE.y) * t;
+  const camZ = CAM_MOBILE.z + (CAM_DESKTOP.z - CAM_MOBILE.z) * t;
+
+  camera.fov = fov;
+  camera.position.set(0, camY, camZ);
+  camera.lookAt(0, 0, 0);
+  camera.updateProjectionMatrix();
+
+  // カメラシェイクの基準位置も更新
+  cameraBasePos.copy(camera.position);
+}
+
+// 初期適用
+updateCameraForViewport();
+
 // --- Lighting (盤面ライトアップ) ---
 const ambientLight = new THREE.AmbientLight(0x334455, 0.15);
 scene.add(ambientLight);
@@ -508,10 +539,13 @@ function shareToX() {
 // --- 絵文字サイズヘルパー（スマホでスケールダウン） ---
 function emojiScale(baseMin, baseMax) {
   const w = window.innerWidth;
-  // 600px以下 → 0.55倍、480px以下 → 0.4倍
-  const factor = w <= 480 ? 0.40 : w <= 600 ? 0.55 : 1.0;
+  // モバイルでは大幅縮小: statsの視認性を確保
+  const factor = w <= 480 ? 0.22 : w <= 600 ? 0.30 : w <= 900 ? 0.55 : 1.0;
   return `${(baseMin + Math.random() * (baseMax - baseMin)) * factor}rem`;
 }
+
+// --- モバイル判定ヘルパー ---
+const isMobileView = () => window.innerWidth <= 600;
 
 // --- 統計情報の派手なオーバーレイ表示 ---
 function showStatsOverlay(critCount, fumbleCount, avg) {
@@ -539,31 +573,29 @@ function showStatsOverlay(critCount, fumbleCount, avg) {
       borderRadius: '0',
       boxSizing: 'border-box',
     });
-    // overlay: flex-startにしてからrAFで動的paddingTopを設定
-    Object.assign(overlay.style, {
-      alignItems: 'flex-start',
-      paddingTop: '0',    // rAFで上書き
-    });
-    // rAFで result-message の下端を取得してその直下にstatsを配置
-    requestAnimationFrame(() => {
-      const app = document.getElementById('app');
-      if (!app) return;
-      const appRect = app.getBoundingClientRect();
-      const msg = document.querySelector('.result-message');
-      let statsTop;
-      if (msg) {
-        const msgRect = msg.getBoundingClientRect();
-        // メッセージ下端 + 10px の余白
-        statsTop = msgRect.bottom - appRect.top + 10;
-      } else {
-        // メッセージがなければボタン下端 + 50px
-        const uiOverlay = document.getElementById('overlay');
-        const btnBottom = uiOverlay ? uiOverlay.getBoundingClientRect().bottom - appRect.top : 150;
-        statsTop = btnBottom + 50;
-      }
-      overlay.style.paddingTop = `${statsTop}px`;
-    });
   }
+
+  // 全サイズ共通: flex-startにしてrAFでメッセージ下に動的配置
+  Object.assign(overlay.style, {
+    alignItems: 'flex-start',
+    paddingTop: '0',
+  });
+  requestAnimationFrame(() => {
+    const app = document.getElementById('app');
+    if (!app) return;
+    const appRect = app.getBoundingClientRect();
+    const msg = document.querySelector('.result-message');
+    let statsTop;
+    if (msg) {
+      const msgRect = msg.getBoundingClientRect();
+      statsTop = msgRect.bottom - appRect.top + (isMobile ? 10 : 20);
+    } else {
+      const uiOverlay = document.getElementById('overlay');
+      const btnBottom = uiOverlay ? uiOverlay.getBoundingClientRect().bottom - appRect.top : 150;
+      statsTop = btnBottom + (isMobile ? 50 : 60);
+    }
+    overlay.style.paddingTop = `${statsTop}px`;
+  });
   overlay.appendChild(container);
 
   const boxPad = isMobile ? (window.innerWidth <= 480 ? '6px 4px' : '8px 6px') : null;
@@ -629,49 +661,41 @@ function showStatsOverlay(critCount, fumbleCount, avg) {
   container.appendChild(avgBox);
 }
 
-// --- モバイル用リザルトメッセージスタイル適用ヘルパー ---
+// --- リザルトメッセージ動的配置ヘルパー（全サイズ対応） ---
 function applyMobileMsgStyle(msg) {
   const w = window.innerWidth;
-  if (w > 600) return; // PCは何もしない
-  const fs = w <= 480 ? `${w * 0.038}px` : `${w * 0.042}px`;
 
-  // まず基本スタイルを適用（top は rAF で動的に上書き）
-  Object.assign(msg.style, {
-    fontSize: fs,
-    whiteSpace: 'normal',
-    overflowWrap: 'break-word',
-    wordBreak: 'break-word',
-    textAlign: 'center',
-    width: '100%',
-    left: '0',
-    right: '0',
-    top: '20%', // fallback（rAF が失敗した場合のみ使われる）
-    padding: '0 16px',
-    letterSpacing: '0',
-    boxSizing: 'border-box',
-    transform: 'scale(0)',
-    animation: 'messagePopInMobile 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards',
-  });
+  // モバイル: コンパクトなスタイルを適用
+  if (w <= 600) {
+    const fs = w <= 480 ? `${w * 0.038}px` : `${w * 0.042}px`;
+    Object.assign(msg.style, {
+      fontSize: fs,
+      whiteSpace: 'normal',
+      overflowWrap: 'break-word',
+      wordBreak: 'break-word',
+      textAlign: 'center',
+      width: '100%',
+      left: '0',
+      right: '0',
+      top: '20%',
+      padding: '0 16px',
+      letterSpacing: '0',
+      boxSizing: 'border-box',
+      transform: 'scale(0)',
+      animation: 'messagePopInMobile 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards',
+    });
+  }
 
-  // DOMに追加された後、「ボタン行の下端」と「ダイス結果パネルの上端」の
-  // 中央にメッセージを動的配置する
+  // 全サイズ共通: ボタン行の下端に基づいて動的配置
   requestAnimationFrame(() => {
     const app = document.getElementById('app');
-    const uiOverlay = document.getElementById('overlay'); // タイトル＋ボタン行
-    const resultsPanel = document.getElementById('results-panel');
+    const uiOverlay = document.getElementById('overlay');
     if (!app || !uiOverlay) return;
 
     const appRect = app.getBoundingClientRect();
     const btnBottom = uiOverlay.getBoundingClientRect().bottom - appRect.top;
-
-    let panelTop = appRect.height * 0.85; // fallback: 画面85%
-    if (resultsPanel) {
-      panelTop = resultsPanel.getBoundingClientRect().top - appRect.top;
-    }
-
-    // ボタン行の直下 + 少し余白に配置（stats-containerの上に被らないよう）
-    const msgTop = btnBottom + 12;
-    msg.style.top = `${msgTop}px`;
+    const gap = w <= 600 ? 12 : 10;
+    msg.style.top = `${btnBottom + gap}px`;
   });
 }
 
@@ -695,14 +719,16 @@ function showCelebration() {
     overlay.appendChild(particle);
   }
 
-  // 🎉 絵文字バースト
+  // 🎉 絵文字バースト（モバイルでは個数・配置範囲を制限）
   const emojis = ['🎉', '🎊', '✨', '🏆', '⭐'];
-  for (let i = 0; i < 12; i++) {
+  const emojiCount = isMobileView() ? 5 : 12;
+  for (let i = 0; i < emojiCount; i++) {
     const emoji = document.createElement('div');
     emoji.className = 'celebration-emoji';
     emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
     emoji.style.left = `${10 + Math.random() * 80}%`;
-    emoji.style.top = `${20 + Math.random() * 40}%`;
+    // モバイル: 画面上部のみ（stats領域を避ける）
+    emoji.style.top = isMobileView() ? `${5 + Math.random() * 20}%` : `${20 + Math.random() * 40}%`;
     emoji.style.animationDelay = `${Math.random() * 1}s`;
     emoji.style.fontSize = emojiScale(2, 5);
     overlay.appendChild(emoji);
@@ -733,14 +759,15 @@ function showDisappointment() {
     overlay.appendChild(drop);
   }
 
-  // 💀 絵文字
+  // 💀 絵文字（モバイルでは個数・配置範囲を制限）
   const emojis = ['💀', '😱', '👻', '💔', '😭'];
-  for (let i = 0; i < 8; i++) {
+  const emojiCount = isMobileView() ? 4 : 8;
+  for (let i = 0; i < emojiCount; i++) {
     const emoji = document.createElement('div');
     emoji.className = 'disappointment-emoji';
     emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
     emoji.style.left = `${10 + Math.random() * 80}%`;
-    emoji.style.top = `${20 + Math.random() * 40}%`;
+    emoji.style.top = isMobileView() ? `${5 + Math.random() * 20}%` : `${20 + Math.random() * 40}%`;
     emoji.style.animationDelay = `${Math.random() * 1.5}s`;
     emoji.style.fontSize = emojiScale(2, 4);
     overlay.appendChild(emoji);
@@ -775,12 +802,13 @@ function showNeutral() {
 
   // 🤷 絵文字
   const emojis = ['🤷', '🤔', '😐', '⚖️', '😶'];
-  for (let i = 0; i < 6; i++) {
+  const emojiCount = isMobileView() ? 3 : 6;
+  for (let i = 0; i < emojiCount; i++) {
     const emoji = document.createElement('div');
     emoji.className = 'neutral-emoji';
     emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
     emoji.style.left = `${15 + Math.random() * 70}%`;
-    emoji.style.top = `${25 + Math.random() * 35}%`;
+    emoji.style.top = isMobileView() ? `${5 + Math.random() * 20}%` : `${25 + Math.random() * 35}%`;
     emoji.style.animationDelay = `${Math.random() * 2}s`;
     emoji.style.fontSize = emojiScale(2, 4);
     overlay.appendChild(emoji);
@@ -813,12 +841,13 @@ function showDiceFallen() {
 
   // 絵文字
   const emojis = ['🎲', '⬇️', '💨', '😅', '🫠'];
-  for (let i = 0; i < 8; i++) {
+  const emojiCount = isMobileView() ? 4 : 8;
+  for (let i = 0; i < emojiCount; i++) {
     const emoji = document.createElement('div');
     emoji.className = 'fallen-emoji';
     emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
     emoji.style.left = `${10 + Math.random() * 80}%`;
-    emoji.style.top = `${20 + Math.random() * 40}%`;
+    emoji.style.top = isMobileView() ? `${5 + Math.random() * 20}%` : `${20 + Math.random() * 40}%`;
     emoji.style.animationDelay = `${Math.random() * 1.5}s`;
     emoji.style.fontSize = emojiScale(2, 4);
     overlay.appendChild(emoji);
@@ -957,7 +986,6 @@ function showExplosion() {
 
 // --- Camera Shake ---
 let shakeIntensity = 0;
-const cameraBasePos = camera.position.clone();
 
 function updateCameraShake() {
   if (shakeIntensity > 0.01) {
@@ -980,6 +1008,9 @@ async function roll() {
   rollBtn.disabled = true;
   rolling = true;
   hideResults();
+
+  // インタースティシャル広告（2回目以降、INTERSTITIAL_INTERVAL回ごと）
+  await showInterstitial();
 
   // 爆発後の環境復帰（ボード・壁がなければ復元）
   if (!scene.children.includes(boardMesh)) {
@@ -1099,8 +1130,8 @@ shareBtn.addEventListener('click', () => {
 // --- Resize ---
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  updateCameraForViewport();
 });
 
 // --- Animation Loop ---
@@ -1148,3 +1179,52 @@ document.getElementById('debug-neutral')?.addEventListener('click', () => debugR
 document.getElementById('debug-normal')?.addEventListener('click', () => debugRoll(null));
 document.getElementById('debug-fallen')?.addEventListener('click', () => debugRoll('fallen'));
 
+// =============================================
+//  広告管理
+// =============================================
+let rollCount = 0;
+const INTERSTITIAL_INTERVAL = 3; // 3回に1回インタースティシャル表示
+
+/**
+ * インタースティシャル広告を表示（Promiseで閉じるまで待機）
+ * - 初回はスキップ
+ * - INTERSTITIAL_INTERVAL回ごとに表示
+ */
+function showInterstitial() {
+  return new Promise((resolve) => {
+    rollCount++;
+    // 初回はスキップ、INTERSTITIAL_INTERVAL回ごとに表示
+    if (rollCount <= 1 || rollCount % INTERSTITIAL_INTERVAL !== 0) {
+      resolve();
+      return;
+    }
+
+    const overlay = document.getElementById('ad-interstitial');
+    const closeBtn = document.getElementById('ad-interstitial-close');
+    if (!overlay || !closeBtn) {
+      resolve();
+      return;
+    }
+
+    // AdSense広告をpush（表示ごとに1回）
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) { /* ignore */ }
+
+    // 表示
+    overlay.style.display = '';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => overlay.classList.add('visible'));
+    });
+
+    function close() {
+      overlay.classList.remove('visible');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        resolve();
+      }, 300);
+      closeBtn.removeEventListener('click', close);
+    }
+    closeBtn.addEventListener('click', close);
+  });
+}

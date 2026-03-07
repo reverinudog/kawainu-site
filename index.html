@@ -20,6 +20,8 @@
     <meta name="twitter:title" content="KAWAKEN OFFICIAL">
     <meta name="twitter:description" content="VTuber 川犬の公式サイト。配信情報、SNSリンク、ミニゲームなど。">
     <meta name="twitter:image" content="assets/ogp.png">
+    <!-- Google AdSense -->
+    <meta name="google-adsense-account" content="ca-pub-2286415100906814">
     <link rel="stylesheet" href="style.css">
     <link rel="preload" href="assets/avatar.png" as="image">
     <link
@@ -86,7 +88,12 @@
     <nav id="navbar">
         <div class="nav-inner">
             <a href="#hero" class="nav-logo">KAWAKEN OFFICIAL</a>
-            <div class="nav-links">
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="メニュー" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <div class="nav-links" id="nav-links">
                 <a href="#about">About</a>
                 <div class="nav-dropdown" id="nav-achievements-dropdown">
                     <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Achievements</button>
