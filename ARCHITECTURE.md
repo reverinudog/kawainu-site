@@ -36,6 +36,8 @@
 │   └── api/
 │       └── count.js         # （後方互換: Pages Functions形式、現在は src/worker.js を使用）
 ├── wrangler.toml   # Cloudflare デプロイ設定（KVバインディング、アセットディレクトリ）
+├── robots.txt      # クローラー制御（GoogleBot/Mediapartners-Google 許可）
+├── sitemap.xml     # サイトマップ（Google Search Console / AdSense 用）
 ├── .gitignore      # Git除外設定
 ├── ARCHITECTURE.md # 本ファイル
 ├── GEMINI.md       # AI向け行動ルール

@@ -53,6 +53,10 @@ export default {
         }
 
         // --- その他: 静的アセットを返す ---
-        return env.ASSETS.fetch(request);
+        try {
+            return await env.ASSETS.fetch(request);
+        } catch {
+            return new Response('Not Found', { status: 404 });
+        }
     },
 };
