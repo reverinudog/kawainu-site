@@ -2,60 +2,11 @@
     "youtube": {
         "label": "YouTube",
         "icon": "▶",
-        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
-        "items": [
-            {
-                "title": "#9 【完全初見】TRPG配信者が全力セリフ読みで『都市伝説解体センター』【 川犬 】※ネタバレ注意",
-                "url": "https://www.youtube.com/watch?v=8vqBTd-KGQI",
-                "thumb": "https://i1.ytimg.com/vi/8vqBTd-KGQI/hqdefault.jpg",
-                "date": "2026-03-07"
-            },
-            {
-                "title": "#8 【完全初見】TRPG配信者が全力セリフ読みで『都市伝説解体センター』【 川犬 】※ネタバレ注意",
-                "url": "https://www.youtube.com/watch?v=4bnWHvxByG0",
-                "thumb": "https://i1.ytimg.com/vi/4bnWHvxByG0/hqdefault.jpg",
-                "date": "2026-02-28"
-            },
-            {
-                "title": "【 CoC 】遺魂ポスト #いおエルポスト #遺魂ポスト01 【 クトゥルフ神話TRPG 】KP 川犬  PL 松永依織/エルセ",
-                "url": "https://www.youtube.com/watch?v=QOXS47l76ps",
-                "thumb": "https://i2.ytimg.com/vi/QOXS47l76ps/hqdefault.jpg",
-                "date": "2026-02-25"
-            },
-            {
-                "title": "【 CoC / 本編③ 】この命が燃え尽き果てるまで #わっしょいこの燃え 【 クトゥルフ神話TRPG 】KPひげさん PL鍵宮シエル/緋衣/きつねさん/川犬",
-                "url": "https://www.youtube.com/watch?v=1axMyp2t5Xg",
-                "thumb": "https://i2.ytimg.com/vi/1axMyp2t5Xg/hqdefault.jpg",
-                "date": "2026-02-24"
-            },
-            {
-                "title": "【限界作業】確定申告、急襲【川犬】",
-                "url": "https://www.youtube.com/watch?v=NuOFiVE0BQM",
-                "thumb": "https://i3.ytimg.com/vi/NuOFiVE0BQM/hqdefault.jpg",
-                "date": "2026-02-21"
-            },
-            {
-                "title": "【 CoC / 後編 】AI KILLED YOU #うえなかAIキル #AIキル18 【 クトゥルフ神話TRPG 】KP川犬 PL 上田悠介/中舘早紀",
-                "url": "https://www.youtube.com/watch?v=pFaGzsN3NN4",
-                "thumb": "https://i1.ytimg.com/vi/pFaGzsN3NN4/hqdefault.jpg",
-                "date": "2026-02-18"
-            },
-            {
-                "title": "【 CoC / 前編 】AI KILLED YOU #うえなかAIキル #AIキル18 【 クトゥルフ神話TRPG 】KP川犬 PL 上田悠介/中舘早紀",
-                "url": "https://www.youtube.com/watch?v=wKqEcKZR5MA",
-                "thumb": "https://i4.ytimg.com/vi/wKqEcKZR5MA/hqdefault.jpg",
-                "date": "2026-02-17"
-            },
-            {
-                "title": "【ネタバレあり】CoCシナリオ『近くて遠きは終着点』の作者の回し方【川犬】",
-                "url": "https://www.youtube.com/watch?v=fvBBXJJg_Wg",
-                "thumb": "https://i3.ytimg.com/vi/fvBBXJJg_Wg/hqdefault.jpg",
-                "date": "2026-02-16"
-            }
-        ]
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA",
+        "items": []
     },
     "booth_trpg": {
-        "label": "BOOTH — TRPGシナリオ",
+        "label": "TRPG Scenarios",
         "icon": "📖",
         "profileUrl": "https://reverinu.booth.pm",
         "items": [
@@ -98,7 +49,7 @@
         ]
     },
     "booth_goods": {
-        "label": "BOOTH — グッズ",
+        "label": "Goods",
         "icon": "🛍️",
         "profileUrl": "https://reverinu-vtuber.booth.pm",
         "items": [
