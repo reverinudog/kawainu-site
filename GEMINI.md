@@ -56,6 +56,15 @@
 
 ## 現在のブランチ状態
 
-- `develop` ← **現在地**（ナビバー ハンバーガーメニュー実装済み）
-- `master` ← developと同期未実施（次回マージ待ち）
+- `develop` ← **現在地**（インタースティシャル広告実装済み）
+- `master` ← developと同期済み（AdSense meta tag + インタースティシャル広告デプロイ済み）
 - `feature/debug-result-check` ← マージ済み（削除可）
+
+## AdSense 広告管理
+
+- **パブリッシャーID**: `ca-pub-2286415100906814`
+- **メインサイト**: `index.html` に meta tag で所有権確認済み
+- **ゲームページ**: `games/oharai/index.html` にAdSenseスクリプト + インタースティシャル広告オーバーレイ
+- **インタースティシャル表示ロジック**: `main.js` の `showInterstitial()` — `rollCount` で3回に1回表示、初回スキップ
+- **広告スロットID**: `ZZZZZZZZZ` はプレースホルダー。AdSense承認後に管理画面で広告ユニット作成 → スロットID取得 → 差し替え
+- **スクショ非表示**: `.screenshot-mode .ad-interstitial-overlay { display: none !important }` で対応済み
