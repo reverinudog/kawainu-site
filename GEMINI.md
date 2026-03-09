@@ -15,6 +15,7 @@
 - VTuber名: **川犬**（英字表記: KAWAKEN）
 - タグライン: Virtual YouTuber | Scenario Writer
 - アバター画像: `assets/avatar.png`（仮置き、ユーザーが後で差し替え予定）
+- フッターロゴ: `assets/logo.png`（KAWAKENロゴ画像）
 
 ## コンテンツ編集ルール
 
@@ -62,8 +63,8 @@
 
 ## 現在のブランチ状態
 
-- `develop` ← **現在地**（robots.txt + sitemap.xml + Worker修正済み）
-- `master` ← developと同期済み（AdSense対応デプロイ済み、審査再申請待ち）
+- `develop` ← **現在地**（Formspree連携 + フッターロゴ画像化 + Contact注記追加）
+- `master` ← developと同期していない（要マージ→自動デプロイ）
 - `feature/debug-result-check` ← マージ済み（削除可）
 
 ## AdSense 広告管理

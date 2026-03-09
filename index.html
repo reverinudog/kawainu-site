@@ -216,8 +216,9 @@
         <div class="section-inner">
             <h2 class="section-title" data-reveal>Contact</h2>
             <p class="section-subtitle" data-reveal>お問い合わせはこちらから</p>
+            <p class="contact-note" data-reveal>※シナリオの誤字脱字・誤植の報告はBOOTHのメッセージ機能をご利用ください。</p>
             <div class="contact-card" data-reveal>
-                <form id="contact-form" action="#" method="POST">
+                <form id="contact-form" action="https://formspree.io/f/mwvrvpao" method="POST">
                     <!-- ハニーポット（ボット対策：人間には見えない入力欄） -->
                     <div class="form-hp" aria-hidden="true">
                         <label for="contact-website">Website</label>
@@ -244,7 +245,7 @@
                             </button>
                             <div class="form-custom-select-menu">
                                 <div class="form-custom-select-option selected" data-value="collab">コラボ・依頼</div>
-                                <div class="form-custom-select-option" data-value="scenario">シナリオについて</div>
+
                                 <div class="form-custom-select-option" data-value="other">その他</div>
                             </div>
                         </div>
@@ -263,7 +264,7 @@
                 <div class="contact-success" id="contact-success">
                     <div class="success-icon">✓</div>
                     <h3 class="success-title">送信完了！</h3>
-                    <p class="success-message">お問い合わせありがとうございます。<br>できるだけ早くご返信いたします。</p>
+                    <p class="success-message">お問い合わせありがとうございます。<br>返信までしばらくお待ちください。</p>
                 </div>
 
             </div>
@@ -273,7 +274,7 @@
     <!-- Footer -->
     <footer id="footer">
         <div class="footer-inner">
-            <div class="footer-logo">川犬</div>
+            <img src="assets/logo.png" alt="KAWAKEN" class="footer-logo">
             <p class="footer-copy">&copy; 2026 川犬 All Rights Reserved.</p>
         </div>
     </footer>
