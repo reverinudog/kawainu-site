@@ -10,6 +10,7 @@
 ├── start.bat       # ローカルHTTPサーバー起動（ポート8090）
 ├── assets/
 │   ├── avatar.png  # アバター画像（仮置き）
+│   ├── logo.png    # KAWAKENロゴ画像（フッター用）
 │   ├── favicon.svg # SVG favicon（モダンブラウザ用）
 │   ├── favicon.ico # ICO favicon（16/32/48px マルチサイズ）
 │   ├── favicon-512.png   # PWAスプラッシュ用アイコン
@@ -54,8 +55,8 @@
 | `#about` | 自己紹介カード（about-card）、ランダム一言 | プロフィール |
 | `#achievements` | 年次タイムライン（JS動的描画）、最新2年のみ初期表示、「以前の歩みを見る」展開ボタン | 実績 |
 | `#links` | カテゴリ別ブロック（YouTube/BOOTH×2/X/Games）、カルーセルUI（JS動的描画）、Gamesは静的HTML | Contents |
-| `#contact` | お問い合わせフォーム（Formspree対応、送信完了UI） | コンタクト |
-| `#footer` | ロゴ、コピーライト | フッター |
+| `#contact` | お問い合わせフォーム（Formspree連携済み、注記テキスト、送信完了UI） | コンタクト |
+| `#footer` | KAWAKENロゴ画像、コピーライト | フッター |
 
 ## style.css 構造
 

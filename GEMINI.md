@@ -14,7 +14,8 @@
 - テーマカラー: **黒 (`#050508`) × ネオングリーン (`#00ff6a`)**
 - VTuber名: **川犬**（英字表記: KAWAKEN）
 - タグライン: Virtual YouTuber | Scenario Writer
-- アバター画像: `assets/avatar.png`（仮置き、ユーザーが後で差し替え予定）
+- アバター画像: `assets/avatar.png`（差し替え済み）
+- フッターロゴ: `assets/logo.png`（KAWAKENロゴ画像）
 
 ## コンテンツ編集ルール
 
@@ -54,10 +55,16 @@
 - **iPhone比率テスト**: テスト時は iPhone 比率（例: 390×844 = iPhone 14）を使うこと。400×830 は iPhone 比率ではない
 - **モバイル盤面リサイズ**: `updateCameraForViewport()` でアスペクト比に応じて FOV/カメラY/Z を線形補間（モバイル: FOV65/Y70/Z50 ↔ デスク: FOV55/Y55/Z35）。`cameraBasePos` も同時更新すること（シェイク基準位置）
 
+## SEO / クローラー対応
+
+- **robots.txt**: プロジェクトルートに配置。GoogleBot + Mediapartners-Google を許可
+- **sitemap.xml**: トップページ + お祓いシミュレーターの2ページ
+- **Worker エラーハンドリング**: `env.ASSETS.fetch()` を try-catch で囲み、存在しないパスで 1101 エラーが出ないように修正済み
+
 ## 現在のブランチ状態
 
-- `develop` ← **現在地**（インタースティシャル広告実装済み）
-- `master` ← developと同期済み（AdSense meta tag + インタースティシャル広告デプロイ済み）
+- `develop` ← **現在地**（Formspree連携 + フッターロゴ画像化 + Contact注記追加）
+- `master` ← developと同期していない（要マージ→自動デプロイ）
 - `feature/debug-result-check` ← マージ済み（削除可）
 
 ## AdSense 広告管理

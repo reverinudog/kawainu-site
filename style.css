@@ -1726,11 +1726,11 @@ section {
 }
 
 .contact-note {
-    margin-top: 20px;
+    margin-top: -28px;
+    margin-bottom: 28px;
     font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.35);
     text-align: center;
-    font-style: italic;
 }
 
 /* ハニーポット（ボット対策） */
@@ -1760,12 +1760,16 @@ section {
 }
 
 .footer-logo {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: #00ff6a;
-    text-shadow: 0 0 15px rgba(0, 255, 106, 0.3);
-    margin-bottom: 12px;
+    height: 80px;
+    width: auto;
+    margin: 0 auto 16px;
+    display: block;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.footer-logo:hover {
+    opacity: 1;
 }
 
 .footer-copy {
