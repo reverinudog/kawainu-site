@@ -14,7 +14,7 @@
 - テーマカラー: **黒 (`#050508`) × ネオングリーン (`#00ff6a`)**
 - VTuber名: **川犬**（英字表記: KAWAKEN）
 - タグライン: Virtual YouTuber | Scenario Writer
-- アバター画像: `assets/avatar.png`（仮置き、ユーザーが後で差し替え予定）
+- アバター画像: `assets/avatar.png`（差し替え済み）
 - フッターロゴ: `assets/logo.png`（KAWAKENロゴ画像）
 
 ## コンテンツ編集ルール

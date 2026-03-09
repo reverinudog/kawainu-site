@@ -3,7 +3,7 @@
 ## 優先タスク
 
 - [x] **お問い合わせフォーム メール送信機能** — Formspree (`https://formspree.io/f/mwvrvpao`) を `index.html` の `action` に設定済み
-- [ ] **アバター画像の差し替え** — ユーザーが画像を用意次第、`assets/avatar.png` を差し替え
+- [x] **アバター画像の差し替え** — `assets/avatar.png` 差し替え済み
 
 ## AdSense 承認後タスク（審査通過後に着手）
 
