@@ -72,11 +72,10 @@
 - `master` ← developと同期していない（要マージ→自動デプロイ）
 - `feature/debug-result-check` ← マージ済み（削除可）
 
-## AdSense 広告管理
+## AdSense（保留中）
 
+- **ステータス**: 審査却下 → 保留中（全コード除去済み）
 - **パブリッシャーID**: `ca-pub-2286415100906814`
-- **メインサイト**: `index.html` に meta tag で所有権確認済み
-- **ゲームページ**: `games/oharai/index.html` にAdSenseスクリプト + インタースティシャル広告オーバーレイ
-- **インタースティシャル表示ロジック**: `main.js` の `showInterstitial()` — `rollCount` で3回に1回表示、初回スキップ
-- **広告スロットID**: `ZZZZZZZZZ` はプレースホルダー。AdSense承認後に管理画面で広告ユニット作成 → スロットID取得 → 差し替え
-- **スクショ非表示**: `.screenshot-mode .ad-interstitial-overlay { display: none !important }` で対応済み
+- **除去済み**: meta tag、AdSenseスクリプト、インタースティシャル広告（HTML/JS/CSS）
+- **再開時**: コンテンツ充実後に再申請。広告コードの再導入が必要
+

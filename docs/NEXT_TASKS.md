@@ -6,11 +6,10 @@
 - [x] **お問い合わせフォーム メール送信機能** — Formspree (`https://formspree.io/f/mwvrvpao`) を `index.html` の `action` に設定済み
 - [x] **アバター画像の差し替え** — `assets/avatar.png` 差し替え済み
 
-## AdSense 承認後タスク（審査通過後に着手）
+## AdSense（保留中）
 
-- [ ] **AdSense 管理画面で広告ユニット作成** — インタースティシャル広告ユニットを作成し、スロットIDを取得
-- [ ] **広告スロットID差し替え** — `games/oharai/index.html` の `ZZZZZZZZZ` を実際のスロットIDに置換
-- [ ] **広告表示の動作確認** — 本番でインタースティシャル広告が正しく表示されるか検証
+- [x] **広告コード完全除去** — meta tag、AdSenseスクリプト、インタースティシャル広告（HTML/JS/CSS）を全て削除済み
+- [ ] **再申請** — コンテンツ充実後にAdSense再申請を検討
 
 ## 将来的タスク
 
