@@ -2,6 +2,7 @@
 
 ## 優先タスク
 
+- [ ] **Cloudflare Turnstile 導入** — ハニーポットからTurnstileに切り替え。Cloudflareダッシュボードでサイトキー/シークレットキー取得 → フロント（ウィジェット埋込）+ Worker（`/api/contact` トークン検証→Formspree転送）実装。詳細は `implementation_plan.md`（前チャット生成）を参照
 - [x] **お問い合わせフォーム メール送信機能** — Formspree (`https://formspree.io/f/mwvrvpao`) を `index.html` の `action` に設定済み
 - [x] **アバター画像の差し替え** — `assets/avatar.png` 差し替え済み
 
@@ -13,8 +14,7 @@
 
 ## 将来的タスク
 
-- [ ] **独自ドメイン取得**
-- [ ] **Cloudflare Turnstile 導入** — ハニーポットから Turnstile（無料）に切り替え、より強力なボット対策
+- [x] **独自ドメイン取得** — `kawaken-official.com` 取得済み
 
 ## 完了済み
 

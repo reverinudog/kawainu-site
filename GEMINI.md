@@ -39,6 +39,7 @@
 ## デプロイ構成
 
 - **ホスティング**: Cloudflare Pages（GitHub連携、master ブランチ自動デプロイ）
+- **独自ドメイン**: `kawaken-official.com`
 - **カウンターAPI**: `src/worker.js`（Cloudflare Workers、同一ドメイン `/api/count`）
 - **KV ストレージ**: `VISITOR_KV`（訪問者カウント保存）
 - **設定ファイル**: `wrangler.toml`（KVバインディング、アセットディレクトリ）
@@ -60,6 +61,10 @@
 - **robots.txt**: プロジェクトルートに配置。GoogleBot + Mediapartners-Google を許可
 - **sitemap.xml**: トップページ + お祓いシミュレーターの2ページ
 - **Worker エラーハンドリング**: `env.ASSETS.fetch()` を try-catch で囲み、存在しないパスで 1101 エラーが出ないように修正済み
+
+## 次チャットの優先タスク
+
+- **Cloudflare Turnstile 導入**: ハニーポット → Turnstile 切替。Cloudflareダッシュボードでサイトキー/シークレットキー取得が先。フロント（ウィジェット）+ Worker（`/api/contact`）の実装が必要
 
 ## 現在のブランチ状態
 
