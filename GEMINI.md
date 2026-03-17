@@ -39,6 +39,7 @@
 ## デプロイ構成
 
 - **ホスティング**: Cloudflare Pages（GitHub連携、master ブランチ自動デプロイ）
+- **独自ドメイン**: `kawaken-official.com`
 - **カウンターAPI**: `src/worker.js`（Cloudflare Workers、同一ドメイン `/api/count`）
 - **KV ストレージ**: `VISITOR_KV`（訪問者カウント保存）
 - **設定ファイル**: `wrangler.toml`（KVバインディング、アセットディレクトリ）
@@ -61,17 +62,20 @@
 - **sitemap.xml**: トップページ + お祓いシミュレーターの2ページ
 - **Worker エラーハンドリング**: `env.ASSETS.fetch()` を try-catch で囲み、存在しないパスで 1101 エラーが出ないように修正済み
 
+## 次チャットの優先タスク
+
+- **Cloudflare Turnstile 導入**: ハニーポット → Turnstile 切替。Cloudflareダッシュボードでサイトキー/シークレットキー取得が先。フロント（ウィジェット）+ Worker（`/api/contact`）の実装が必要
+
 ## 現在のブランチ状態
 
 - `develop` ← **現在地**（Formspree連携 + フッターロゴ画像化 + Contact注記追加）
 - `master` ← developと同期していない（要マージ→自動デプロイ）
 - `feature/debug-result-check` ← マージ済み（削除可）
 
-## AdSense 広告管理
+## AdSense（保留中）
 
+- **ステータス**: 審査却下 → 保留中（全コード除去済み）
 - **パブリッシャーID**: `ca-pub-2286415100906814`
-- **メインサイト**: `index.html` に meta tag で所有権確認済み
-- **ゲームページ**: `games/oharai/index.html` にAdSenseスクリプト + インタースティシャル広告オーバーレイ
-- **インタースティシャル表示ロジック**: `main.js` の `showInterstitial()` — `rollCount` で3回に1回表示、初回スキップ
-- **広告スロットID**: `ZZZZZZZZZ` はプレースホルダー。AdSense承認後に管理画面で広告ユニット作成 → スロットID取得 → 差し替え
-- **スクショ非表示**: `.screenshot-mode .ad-interstitial-overlay { display: none !important }` で対応済み
+- **除去済み**: meta tag、AdSenseスクリプト、インタースティシャル広告（HTML/JS/CSS）
+- **再開時**: コンテンツ充実後に再申請。広告コードの再導入が必要
+
