@@ -2,57 +2,8 @@
     "youtube": {
         "label": "YouTube",
         "icon": "▶",
-        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
-        "items": [
-            {
-                "title": "#10 【完全初見】TRPG配信者が全力セリフ読みで『都市伝説解体センター』【 川犬 】※ネタバレ注意",
-                "url": "https://www.youtube.com/watch?v=X54cVJGCFzo",
-                "thumb": "https://i1.ytimg.com/vi/X54cVJGCFzo/hqdefault.jpg",
-                "date": "2026-04-06"
-            },
-            {
-                "title": "【 CoC 】遺魂ポスト #とよきぐポスト #遺魂ポスト05 【 クトゥルフ神話TRPG 】KP 川犬  PL とりさん/ヨシダノシノブ/きつねさん/ぐすたん",
-                "url": "https://www.youtube.com/watch?v=SWO_GNrLBak",
-                "thumb": "https://i4.ytimg.com/vi/SWO_GNrLBak/hqdefault.jpg",
-                "date": "2026-04-04"
-            },
-            {
-                "title": "【 CoC 】遺魂ポスト #みこいちかんなポスト #遺魂ポスト04 【 クトゥルフ神話TRPG 】KP 川犬  PL 堰代ミコ/宗谷いちか/茜音カンナ",
-                "url": "https://www.youtube.com/watch?v=nLuH7JheG3c",
-                "thumb": "https://i3.ytimg.com/vi/nLuH7JheG3c/hqdefault.jpg",
-                "date": "2026-04-02"
-            },
-            {
-                "title": "【AIがゲームマスターのRPG】開発中のゲームを少し見せたい【 川犬 】",
-                "url": "https://www.youtube.com/watch?v=tfh4nfFJDQ8",
-                "thumb": "https://i1.ytimg.com/vi/tfh4nfFJDQ8/hqdefault.jpg",
-                "date": "2026-03-31"
-            },
-            {
-                "title": "【 シナリオアプデ and more… 】アンドロイドはシンギュラリティの到達を夢見る&君の名に花束を【 川犬 】",
-                "url": "https://www.youtube.com/watch?v=P-1VwaxYr70",
-                "thumb": "https://i1.ytimg.com/vi/P-1VwaxYr70/hqdefault.jpg",
-                "date": "2026-03-15"
-            },
-            {
-                "title": "#9 【完全初見】TRPG配信者が全力セリフ読みで『都市伝説解体センター』【 川犬 】※ネタバレ注意",
-                "url": "https://www.youtube.com/watch?v=8vqBTd-KGQI",
-                "thumb": "https://i1.ytimg.com/vi/8vqBTd-KGQI/hqdefault.jpg",
-                "date": "2026-03-07"
-            },
-            {
-                "title": "#8 【完全初見】TRPG配信者が全力セリフ読みで『都市伝説解体センター』【 川犬 】※ネタバレ注意",
-                "url": "https://www.youtube.com/watch?v=4bnWHvxByG0",
-                "thumb": "https://i1.ytimg.com/vi/4bnWHvxByG0/hqdefault.jpg",
-                "date": "2026-02-28"
-            },
-            {
-                "title": "【 CoC 】遺魂ポスト #いおエルポスト #遺魂ポスト01 【 クトゥルフ神話TRPG 】KP 川犬  PL 松永依織/エルセ",
-                "url": "https://www.youtube.com/watch?v=QOXS47l76ps",
-                "thumb": "https://i2.ytimg.com/vi/QOXS47l76ps/hqdefault.jpg",
-                "date": "2026-02-25"
-            }
-        ]
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA",
+        "items": []
     },
     "booth_trpg": {
         "label": "TRPG Scenarios",
