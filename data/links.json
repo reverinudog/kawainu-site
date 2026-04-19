@@ -2,8 +2,57 @@
     "youtube": {
         "label": "YouTube",
         "icon": "▶",
-        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA",
-        "items": []
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
+        "items": [
+            {
+                "title": "【 CoC/前編 】天獄 #花雪猫天獄 #天獄04 【 クトゥルフ神話TRPG 】KP川犬 PL花守ゆみり/雪城眞尋/neon",
+                "url": "https://www.youtube.com/watch?v=T68_IQTqOH4",
+                "thumb": "https://i1.ytimg.com/vi/T68_IQTqOH4/hqdefault.jpg",
+                "date": "2026-04-18"
+            },
+            {
+                "title": "【マダミス】『そらとくじらのエンゲ』#かほさいらくエン ( PL：今城沙耶、川犬、さきまさき、保谷伸 )【川犬視点】",
+                "url": "https://www.youtube.com/watch?v=pbJVXdWJGAw",
+                "thumb": "https://i1.ytimg.com/vi/pbJVXdWJGAw/hqdefault.jpg",
+                "date": "2026-04-17"
+            },
+            {
+                "title": "【 CoC/後編 】天獄 #花雪猫天獄 #天獄04 【 クトゥルフ神話TRPG 】KP川犬 PL花守ゆみり/雪城眞尋/neon",
+                "url": "https://www.youtube.com/watch?v=9FQrARyybeE",
+                "thumb": "https://i2.ytimg.com/vi/9FQrARyybeE/hqdefault.jpg",
+                "date": "2026-04-11"
+            },
+            {
+                "title": "【AIがゲームマスターのRPG】開発中のゲームを少し見せたい【 川犬 】",
+                "url": "https://www.youtube.com/watch?v=hJRfEFFsIo0",
+                "thumb": "https://i1.ytimg.com/vi/hJRfEFFsIo0/hqdefault.jpg",
+                "date": "2026-04-11"
+            },
+            {
+                "title": "#10 【完全初見】TRPG配信者が全力セリフ読みで『都市伝説解体センター』【 川犬 】※ネタバレ注意",
+                "url": "https://www.youtube.com/watch?v=X54cVJGCFzo",
+                "thumb": "https://i1.ytimg.com/vi/X54cVJGCFzo/hqdefault.jpg",
+                "date": "2026-04-07"
+            },
+            {
+                "title": "【 CoC 】遺魂ポスト #とよきぐポスト #遺魂ポスト05 【 クトゥルフ神話TRPG 】KP 川犬  PL とりさん/ヨシダノシノブ/きつねさん/ぐすたん",
+                "url": "https://www.youtube.com/watch?v=SWO_GNrLBak",
+                "thumb": "https://i4.ytimg.com/vi/SWO_GNrLBak/hqdefault.jpg",
+                "date": "2026-04-04"
+            },
+            {
+                "title": "【 CoC 】遺魂ポスト #みこいちかんなポスト #遺魂ポスト04 【 クトゥルフ神話TRPG 】KP 川犬  PL 堰代ミコ/宗谷いちか/茜音カンナ",
+                "url": "https://www.youtube.com/watch?v=nLuH7JheG3c",
+                "thumb": "https://i3.ytimg.com/vi/nLuH7JheG3c/hqdefault.jpg",
+                "date": "2026-04-02"
+            },
+            {
+                "title": "【AIがゲームマスターのRPG】開発中のゲームを少し見せたい【 川犬 】",
+                "url": "https://www.youtube.com/watch?v=tfh4nfFJDQ8",
+                "thumb": "https://i1.ytimg.com/vi/tfh4nfFJDQ8/hqdefault.jpg",
+                "date": "2026-03-31"
+            }
+        ]
     },
     "booth_trpg": {
         "label": "TRPG Scenarios",
