@@ -2,8 +2,57 @@
     "youtube": {
         "label": "YouTube",
         "icon": "▶",
-        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA",
-        "items": []
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
+        "items": [
+            {
+                "title": "【 CoC 】遺魂ポスト #とうゆポスト #遺魂ポスト07 【 クトゥルフ神話TRPG 】KP 川犬  PL 魔王トゥルシー/未確認動物うまぴ/浮々ゆにこ",
+                "url": "https://www.youtube.com/watch?v=zL0ducNCTGY",
+                "thumb": "https://i3.ytimg.com/vi/zL0ducNCTGY/hqdefault.jpg",
+                "date": "2026-04-25"
+            },
+            {
+                "title": "【 CoC 】遺魂ポスト #なにうにポスト #遺魂ポスト06 【 クトゥルフ神話TRPG 】KP 川犬  PL 上田悠介/中舘早紀/サボり屋ニコ/にゅーい",
+                "url": "https://www.youtube.com/watch?v=bcYJnPlmuiQ",
+                "thumb": "https://i3.ytimg.com/vi/bcYJnPlmuiQ/hqdefault.jpg",
+                "date": "2026-04-24"
+            },
+            {
+                "title": "【 CoC/後編 】天獄 #花雪猫天獄 #天獄04 【 クトゥルフ神話TRPG 】KP川犬 PL花守ゆみり/雪城眞尋/neon",
+                "url": "https://www.youtube.com/watch?v=9FQrARyybeE",
+                "thumb": "https://i2.ytimg.com/vi/9FQrARyybeE/hqdefault.jpg",
+                "date": "2026-04-19"
+            },
+            {
+                "title": "【 CoC/前編 】天獄 #花雪猫天獄 #天獄04 【 クトゥルフ神話TRPG 】KP川犬 PL花守ゆみり/雪城眞尋/neon",
+                "url": "https://www.youtube.com/watch?v=T68_IQTqOH4",
+                "thumb": "https://i1.ytimg.com/vi/T68_IQTqOH4/hqdefault.jpg",
+                "date": "2026-04-18"
+            },
+            {
+                "title": "【マダミス】『そらとくじらのエンゲ』#かほさいらくエン ( PL：今城沙耶、川犬、さきまさき、保谷伸 )【川犬視点】",
+                "url": "https://www.youtube.com/watch?v=pbJVXdWJGAw",
+                "thumb": "https://i1.ytimg.com/vi/pbJVXdWJGAw/hqdefault.jpg",
+                "date": "2026-04-17"
+            },
+            {
+                "title": "【AIがゲームマスターのRPG】開発中のゲームを少し見せたい【 川犬 】",
+                "url": "https://www.youtube.com/watch?v=hJRfEFFsIo0",
+                "thumb": "https://i1.ytimg.com/vi/hJRfEFFsIo0/hqdefault.jpg",
+                "date": "2026-04-11"
+            },
+            {
+                "title": "#10 【完全初見】TRPG配信者が全力セリフ読みで『都市伝説解体センター』【 川犬 】※ネタバレ注意",
+                "url": "https://www.youtube.com/watch?v=X54cVJGCFzo",
+                "thumb": "https://i1.ytimg.com/vi/X54cVJGCFzo/hqdefault.jpg",
+                "date": "2026-04-07"
+            },
+            {
+                "title": "【 CoC 】遺魂ポスト #とよきぐポスト #遺魂ポスト05 【 クトゥルフ神話TRPG 】KP 川犬  PL とりさん/ヨシダノシノブ/きつねさん/ぐすたん",
+                "url": "https://www.youtube.com/watch?v=SWO_GNrLBak",
+                "thumb": "https://i4.ytimg.com/vi/SWO_GNrLBak/hqdefault.jpg",
+                "date": "2026-04-04"
+            }
+        ]
     },
     "booth_trpg": {
         "label": "TRPG Scenarios",
@@ -29,6 +78,12 @@
                 "description": "※在庫には限りがございます。なるべく入手したいと考えている方は「入荷お知らせメールを受け取る」をぜひご利用ください。"
             },
             {
+                "title": "【🔔5/5まで30%OFF CoC6th】わたしたちは石油王 SPLL:E195594",
+                "url": "https://reverinu.booth.pm/items/5935789",
+                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/5935789/20d7502c-65e1-4a1a-815c-60d6e31e57ed_base_resized.jpg",
+                "description": "――散財せよ、湯水の如く。 ▼石油王適性診断 https://kuizy.net/analysis/26049 ポットラックパーティ2024参加作品。 性癖は【散財】 ショップをフォローすれば大きなア"
+            },
+            {
                 "title": "【本文無料 / 超絶アップデート】ハートフルワンダーランド【CoC6th】",
                 "url": "https://reverinu.booth.pm/items/3709312",
                 "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/3709312/0a22e679-0065-4b7b-ba01-d9aaa99c4dc8_base_resized.jpg",
@@ -39,12 +94,6 @@
                 "url": "https://reverinu.booth.pm/items/7204923",
                 "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/7204923/97421336-3bf9-4ceb-a123-f0b17003ebf1_base_resized.jpg",
                 "description": "仰げば尊し、わが師の恩 少年少女は天国を卒業する ▼天獄NPC相性診断 https://kuizy.net/analysis/28711 （Xにてポストしてくださると嬉しいです！目指せトレンド入りー！"
-            },
-            {
-                "title": "【CoC6thシナリオ集】404街のタクシー SPLL:E192114",
-                "url": "https://reverinu.booth.pm/items/6842172",
-                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/6842172/970005a4-6b70-4de9-9bfb-16dd298326ba_base_resized.jpg",
-                "description": "検索しても見つからず、地図にも載っていない。 どこにも存在しないはずの街、404街。 あなたは、この不思議な街の新米タクシードライバーだ。 #一晩で遊べるシナリオ企画 参加作品。 ショップをフォローす"
             }
         ]
     },
