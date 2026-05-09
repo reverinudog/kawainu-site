@@ -2,8 +2,57 @@
     "youtube": {
         "label": "YouTube",
         "icon": "▶",
-        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA",
-        "items": []
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
+        "items": [
+            {
+                "title": "【 CoC / 前編 】AI KILLED YOU #けむさらAIキル #AIキル19 【 クトゥルフ神話TRPG 】KP川犬 PL 音海早良/猫吹ケムリ",
+                "url": "https://www.youtube.com/watch?v=1XG9F8pKPR4",
+                "thumb": "https://i2.ytimg.com/vi/1XG9F8pKPR4/hqdefault.jpg",
+                "date": "2026-05-08"
+            },
+            {
+                "title": "ゲーム作りながら雑談【 川犬 】",
+                "url": "https://www.youtube.com/watch?v=Sr7mJixYePU",
+                "thumb": "https://i4.ytimg.com/vi/Sr7mJixYePU/hqdefault.jpg",
+                "date": "2026-05-06"
+            },
+            {
+                "title": "【 CoC / 後編 】AI KILLED YOU #けむさらAIキル #AIキル19 【 クトゥルフ神話TRPG 】KP川犬 PL 音海早良/猫吹ケムリ",
+                "url": "https://www.youtube.com/watch?v=bZKEy0Yh0Tg",
+                "thumb": "https://i3.ytimg.com/vi/bZKEy0Yh0Tg/hqdefault.jpg",
+                "date": "2026-05-02"
+            },
+            {
+                "title": "【 CoC 】遺魂ポスト #とうゆポスト #遺魂ポスト07 【 クトゥルフ神話TRPG 】KP 川犬  PL 魔王トゥルシー/未確認動物うまぴ/浮々ゆにこ",
+                "url": "https://www.youtube.com/watch?v=zL0ducNCTGY",
+                "thumb": "https://i3.ytimg.com/vi/zL0ducNCTGY/hqdefault.jpg",
+                "date": "2026-05-01"
+            },
+            {
+                "title": "【 CoC 】遺魂ポスト #なにうにポスト #遺魂ポスト06 【 クトゥルフ神話TRPG 】KP 川犬  PL 上田悠介/中舘早紀/サボり屋ニコ/にゅーい",
+                "url": "https://www.youtube.com/watch?v=bcYJnPlmuiQ",
+                "thumb": "https://i3.ytimg.com/vi/bcYJnPlmuiQ/hqdefault.jpg",
+                "date": "2026-04-24"
+            },
+            {
+                "title": "【 CoC/後編 】天獄 #花雪猫天獄 #天獄04 【 クトゥルフ神話TRPG 】KP川犬 PL花守ゆみり/雪城眞尋/neon",
+                "url": "https://www.youtube.com/watch?v=9FQrARyybeE",
+                "thumb": "https://i2.ytimg.com/vi/9FQrARyybeE/hqdefault.jpg",
+                "date": "2026-04-19"
+            },
+            {
+                "title": "【 CoC/前編 】天獄 #花雪猫天獄 #天獄04 【 クトゥルフ神話TRPG 】KP川犬 PL花守ゆみり/雪城眞尋/neon",
+                "url": "https://www.youtube.com/watch?v=T68_IQTqOH4",
+                "thumb": "https://i1.ytimg.com/vi/T68_IQTqOH4/hqdefault.jpg",
+                "date": "2026-04-18"
+            },
+            {
+                "title": "【マダミス】『そらとくじらのエンゲ』#かほさいらくエン ( PL：今城沙耶、川犬、さきまさき、保谷伸 )【川犬視点】",
+                "url": "https://www.youtube.com/watch?v=pbJVXdWJGAw",
+                "thumb": "https://i1.ytimg.com/vi/pbJVXdWJGAw/hqdefault.jpg",
+                "date": "2026-04-17"
+            }
+        ]
     },
     "booth_trpg": {
         "label": "TRPG Scenarios",
