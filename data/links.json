@@ -2,57 +2,8 @@
     "youtube": {
         "label": "YouTube",
         "icon": "▶",
-        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
-        "items": [
-            {
-                "title": "AIがGMのTRPG風RPG【Co-create Stories紹介動画】",
-                "url": "https://www.youtube.com/watch?v=KjfekCjncRQ",
-                "thumb": "https://i4.ytimg.com/vi/KjfekCjncRQ/hqdefault.jpg",
-                "date": "2026-05-28"
-            },
-            {
-                "title": "【 ファンタジーTRPG 】慈悲なきスペグナ #えいりスペグナ #スペグナ06 【 慈悲なきアイオニア 】GM川犬 PL炯遊えいり",
-                "url": "https://www.youtube.com/watch?v=WKANe3B-XJo",
-                "thumb": "https://i4.ytimg.com/vi/WKANe3B-XJo/hqdefault.jpg",
-                "date": "2026-05-25"
-            },
-            {
-                "title": "ゲーム作りながら雑談【 川犬 】",
-                "url": "https://www.youtube.com/watch?v=2FyIfpJP2VQ",
-                "thumb": "https://i3.ytimg.com/vi/2FyIfpJP2VQ/hqdefault.jpg",
-                "date": "2026-05-14"
-            },
-            {
-                "title": "【 CoC / 後編 】AI KILLED YOU #けむさらAIキル #AIキル19 【 クトゥルフ神話TRPG 】KP川犬 PL 音海早良/猫吹ケムリ",
-                "url": "https://www.youtube.com/watch?v=bZKEy0Yh0Tg",
-                "thumb": "https://i3.ytimg.com/vi/bZKEy0Yh0Tg/hqdefault.jpg",
-                "date": "2026-05-09"
-            },
-            {
-                "title": "【 CoC / 前編 】AI KILLED YOU #けむさらAIキル #AIキル19 【 クトゥルフ神話TRPG 】KP川犬 PL 音海早良/猫吹ケムリ",
-                "url": "https://www.youtube.com/watch?v=1XG9F8pKPR4",
-                "thumb": "https://i2.ytimg.com/vi/1XG9F8pKPR4/hqdefault.jpg",
-                "date": "2026-05-08"
-            },
-            {
-                "title": "ゲーム作りながら雑談【 川犬 】",
-                "url": "https://www.youtube.com/watch?v=Sr7mJixYePU",
-                "thumb": "https://i4.ytimg.com/vi/Sr7mJixYePU/hqdefault.jpg",
-                "date": "2026-05-06"
-            },
-            {
-                "title": "【 CoC 】遺魂ポスト #とうゆポスト #遺魂ポスト07 【 クトゥルフ神話TRPG 】KP 川犬  PL 魔王トゥルシー/未確認動物うまぴ/浮々ゆにこ",
-                "url": "https://www.youtube.com/watch?v=zL0ducNCTGY",
-                "thumb": "https://i3.ytimg.com/vi/zL0ducNCTGY/hqdefault.jpg",
-                "date": "2026-05-01"
-            },
-            {
-                "title": "【 CoC 】遺魂ポスト #なにうにポスト #遺魂ポスト06 【 クトゥルフ神話TRPG 】KP 川犬  PL 上田悠介/中舘早紀/サボり屋ニコ/にゅーい",
-                "url": "https://www.youtube.com/watch?v=bcYJnPlmuiQ",
-                "thumb": "https://i3.ytimg.com/vi/bcYJnPlmuiQ/hqdefault.jpg",
-                "date": "2026-04-24"
-            }
-        ]
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA",
+        "items": []
     },
     "booth_trpg": {
         "label": "TRPG Scenarios",
