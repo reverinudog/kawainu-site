@@ -5,6 +5,12 @@
         "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
         "items": [
             {
+                "title": "【視聴者参加型RPG #3】魔剣フランスパンを装備する〇〇〇〇〇〇〇毒おばあちゃん（17歳）【 川犬 】",
+                "url": "https://www.youtube.com/watch?v=LY5PL8g0cvU",
+                "thumb": "https://i1.ytimg.com/vi/LY5PL8g0cvU/hqdefault.jpg",
+                "date": "2026-06-04"
+            },
+            {
                 "title": "【Instantale】貴族権獲得RTA - 超高難易度のAI駆動ローグライクRPG【川犬】",
                 "url": "https://www.youtube.com/watch?v=fZo5XX8TbsI",
                 "thumb": "https://i3.ytimg.com/vi/fZo5XX8TbsI/hqdefault.jpg",
@@ -45,12 +51,6 @@
                 "url": "https://www.youtube.com/watch?v=KjfekCjncRQ",
                 "thumb": "https://i4.ytimg.com/vi/KjfekCjncRQ/hqdefault.jpg",
                 "date": "2026-05-28"
-            },
-            {
-                "title": "ゲーム作りながら雑談【 川犬 】",
-                "url": "https://www.youtube.com/watch?v=2FyIfpJP2VQ",
-                "thumb": "https://i3.ytimg.com/vi/2FyIfpJP2VQ/hqdefault.jpg",
-                "date": "2026-05-14"
             }
         ]
     },
