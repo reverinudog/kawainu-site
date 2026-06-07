@@ -5,6 +5,12 @@
         "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
         "items": [
             {
+                "title": "【超高難易度人狼村編 #1】AI駆動RPG【Co-create Stories】",
+                "url": "https://www.youtube.com/watch?v=2gZca-_Tm48",
+                "thumb": "https://i3.ytimg.com/vi/2gZca-_Tm48/hqdefault.jpg",
+                "date": "2026-06-07"
+            },
+            {
                 "title": "【視聴者参加型RPG #4】死んだらそこで人生終了だ……！【 川犬 】",
                 "url": "https://www.youtube.com/watch?v=lwAqiAj47D8",
                 "thumb": "https://i1.ytimg.com/vi/lwAqiAj47D8/hqdefault.jpg",
@@ -45,12 +51,6 @@
                 "url": "https://www.youtube.com/watch?v=H3yPVEgbhfk",
                 "thumb": "https://i1.ytimg.com/vi/H3yPVEgbhfk/hqdefault.jpg",
                 "date": "2026-06-01"
-            },
-            {
-                "title": "Generative RPG『Co-create Stories』トレーラー動画",
-                "url": "https://www.youtube.com/watch?v=XOJlzYg-fLc",
-                "thumb": "https://i1.ytimg.com/vi/XOJlzYg-fLc/hqdefault.jpg",
-                "date": "2026-05-31"
             }
         ]
     },
