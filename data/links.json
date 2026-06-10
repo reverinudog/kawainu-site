@@ -2,57 +2,8 @@
     "youtube": {
         "label": "YouTube",
         "icon": "▶",
-        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
-        "items": [
-            {
-                "title": "【Instantale】もしも水戸黄門が異世界転生したら - 超高難易度のAI駆動ローグライクRPG【川犬】",
-                "url": "https://www.youtube.com/watch?v=o_hjqCBPgW0",
-                "thumb": "https://i4.ytimg.com/vi/o_hjqCBPgW0/hqdefault.jpg",
-                "date": "2026-06-09"
-            },
-            {
-                "title": "【超高難易度人狼村編 #1】AI駆動RPG【Co-create Stories】",
-                "url": "https://www.youtube.com/watch?v=2gZca-_Tm48",
-                "thumb": "https://i3.ytimg.com/vi/2gZca-_Tm48/hqdefault.jpg",
-                "date": "2026-06-07"
-            },
-            {
-                "title": "【視聴者参加型RPG #4】死んだらそこで人生終了だ……！【 川犬 】",
-                "url": "https://www.youtube.com/watch?v=lwAqiAj47D8",
-                "thumb": "https://i1.ytimg.com/vi/lwAqiAj47D8/hqdefault.jpg",
-                "date": "2026-06-05"
-            },
-            {
-                "title": "【視聴者参加型RPG #3】魔剣フランスパンを装備する〇〇〇〇〇〇〇毒おばあちゃん（17歳）【 川犬 】",
-                "url": "https://www.youtube.com/watch?v=LY5PL8g0cvU",
-                "thumb": "https://i1.ytimg.com/vi/LY5PL8g0cvU/hqdefault.jpg",
-                "date": "2026-06-05"
-            },
-            {
-                "title": "【Instantale】貴族権獲得RTA - 超高難易度のAI駆動ローグライクRPG【川犬】",
-                "url": "https://www.youtube.com/watch?v=fZo5XX8TbsI",
-                "thumb": "https://i3.ytimg.com/vi/fZo5XX8TbsI/hqdefault.jpg",
-                "date": "2026-06-04"
-            },
-            {
-                "title": "【Instantale】超高難易度のAI駆動ローグライクRPGが出たらしい【川犬】",
-                "url": "https://www.youtube.com/watch?v=MT9pEbZTIAE",
-                "thumb": "https://i2.ytimg.com/vi/MT9pEbZTIAE/hqdefault.jpg",
-                "date": "2026-06-03"
-            },
-            {
-                "title": "【 ファンタジーTRPG 】慈悲なきスペグナ #えいりスペグナ #スペグナ06 【 慈悲なきアイオニア 】GM川犬 PL炯遊えいり",
-                "url": "https://www.youtube.com/watch?v=WKANe3B-XJo",
-                "thumb": "https://i4.ytimg.com/vi/WKANe3B-XJo/hqdefault.jpg",
-                "date": "2026-06-02"
-            },
-            {
-                "title": "【視聴者参加型RPG #2】魔剣フランスパンを装備する〇〇〇〇〇〇〇毒おばあちゃん（17歳）【 川犬 】",
-                "url": "https://www.youtube.com/watch?v=rhEigBXLigk",
-                "thumb": "https://i3.ytimg.com/vi/rhEigBXLigk/hqdefault.jpg",
-                "date": "2026-06-01"
-            }
-        ]
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA",
+        "items": []
     },
     "booth_trpg": {
         "label": "TRPG Scenarios",
