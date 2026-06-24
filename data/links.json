@@ -2,14 +2,75 @@
     "youtube": {
         "label": "YouTube",
         "icon": "▶",
-        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA",
-        "items": []
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
+        "items": [
+            {
+                "title": "【 CoC 】近くて遠きは終着点 #きなさひちかしゅう #ちかしゅう07 【 クトゥルフ神話TRPG 】KP 川犬  PL すぎうらきりと/藍月なくる/さけこ。/ひよりん*",
+                "url": "https://www.youtube.com/watch?v=xRiRUjZ6cbA",
+                "thumb": "https://i1.ytimg.com/vi/xRiRUjZ6cbA/hqdefault.jpg",
+                "date": "2026-06-23"
+            },
+            {
+                "title": "#12 【完全初見】TRPG配信者が全力セリフ読みで『都市伝説解体センター』【 川犬 】※ネタバレ注意",
+                "url": "https://www.youtube.com/watch?v=AL9ZnwxS5i0",
+                "thumb": "https://i2.ytimg.com/vi/AL9ZnwxS5i0/hqdefault.jpg",
+                "date": "2026-06-21"
+            },
+            {
+                "title": "【 CoC 】近くて遠きは終着点 #おかねやちかしゅう #ちかしゅう06 【 クトゥルフ神話TRPG 】KP 川犬  PL おらんじ～な/影。/neon/栗山やんみ",
+                "url": "https://www.youtube.com/watch?v=vdcrA85eI60",
+                "thumb": "https://i3.ytimg.com/vi/vdcrA85eI60/hqdefault.jpg",
+                "date": "2026-06-20"
+            },
+            {
+                "title": "【視聴者参加型RPG #7】君の発言がゲームに反映される──！【 川犬 】",
+                "url": "https://www.youtube.com/watch?v=KuEtnKZHT40",
+                "thumb": "https://i4.ytimg.com/vi/KuEtnKZHT40/hqdefault.jpg",
+                "date": "2026-06-20"
+            },
+            {
+                "title": "30,000人達成 & アンシギュ君花グッズ情報公開【 川犬 】",
+                "url": "https://www.youtube.com/watch?v=HI06iluKEKg",
+                "thumb": "https://i1.ytimg.com/vi/HI06iluKEKg/hqdefault.jpg",
+                "date": "2026-06-20"
+            },
+            {
+                "title": "【視聴者参加型RPG #6】君の発言がゲームに反映される──！【 川犬 】",
+                "url": "https://www.youtube.com/watch?v=9dEYfVWeETU",
+                "thumb": "https://i2.ytimg.com/vi/9dEYfVWeETU/hqdefault.jpg",
+                "date": "2026-06-17"
+            },
+            {
+                "title": "#11 【完全初見】TRPG配信者が全力セリフ読みで『都市伝説解体センター』【 川犬 】※ネタバレ注意",
+                "url": "https://www.youtube.com/watch?v=S_wnOzqg0Mk",
+                "thumb": "https://i4.ytimg.com/vi/S_wnOzqg0Mk/hqdefault.jpg",
+                "date": "2026-06-15"
+            },
+            {
+                "title": "【視聴者参加型RPG #5】ゲーム内に視聴者参加機能組み込んでしまった【 川犬 】",
+                "url": "https://www.youtube.com/watch?v=fTUvJfH7eSs",
+                "thumb": "https://i3.ytimg.com/vi/fTUvJfH7eSs/hqdefault.jpg",
+                "date": "2026-06-12"
+            }
+        ]
     },
     "booth_trpg": {
         "label": "TRPG Scenarios",
         "icon": "📖",
         "profileUrl": "https://reverinu.booth.pm",
         "items": [
+            {
+                "title": "アンシギュ&君花グッズ『A journey for two, with you.』",
+                "url": "https://reverinu.booth.pm/items/8493430",
+                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/8493430/5e1b8afb-8395-447d-bfb5-e09c03f3c0db_base_resized.jpg",
+                "description": "近未来キャンペーンシナリオ 『アンドロイドはシンギュラリティの到達を夢見る』 『君の名に花束を』 のグッズが出ました！ 数に限りがございます！おはやめに～！ スチルイラスト：tenP様 https:/"
+            },
+            {
+                "title": "【君花もリメイク！】近未来クトゥルフ神話TRPGシナリオ集『アンドロイドはシンギュラリティの到達を夢見る』『君の名に花束を』（2部キャンペーン）",
+                "url": "https://reverinu.booth.pm/items/2273308",
+                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/2273308/94f8947d-4d82-41ff-92b4-82d2c1a964dd_base_resized.jpg",
+                "description": "アンシギュのリメイク版出ました！ 君花のリメイク版も出ました！ ▼このシナリオが好きな方へ 他にもおすすめシナリオがございます。 https://reverinu.booth.pm/items/487"
+            },
             {
                 "title": "【🌐Multilingual Support】Co-create Stories【AIがGMのRPG】",
                 "url": "https://reverinu.booth.pm/items/8435817",
@@ -23,12 +84,6 @@
                 "description": "他者の命を奪い、目指せ。地上へ。 —―スペグナ。 それは、苦痛と悲哀と憤怒と怨恨と孤独と絶望と、わずかな希望が織り交ざった闘技場。 あなたは、血なまぐさい円形の戦場を踏みしめながら、まっすぐと前を見据"
             },
             {
-                "title": "【君花もリメイク！】近未来クトゥルフ神話TRPGシナリオ集『アンドロイドはシンギュラリティの到達を夢見る』『君の名に花束を』（2部キャンペーン）",
-                "url": "https://reverinu.booth.pm/items/2273308",
-                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/2273308/94f8947d-4d82-41ff-92b4-82d2c1a964dd_base_resized.jpg",
-                "description": "アンシギュのリメイク版出ました！ 君花のリメイク版も出ました！ ▼このシナリオが好きな方へ 他にもおすすめシナリオがございます。 https://reverinu.booth.pm/items/487"
-            },
-            {
                 "title": "【CoC6th/エモクロア】遺魂ポスト SPLL:E189174",
                 "url": "https://reverinu.booth.pm/items/7912143",
                 "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/7912143/1d533b5f-a5f6-4e7c-9edc-616a7d9a2184_base_resized.jpg",
@@ -39,12 +94,6 @@
                 "url": "https://reverinu.booth.pm/items/7546868",
                 "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/7546868/83b66c61-7eab-42bb-8a9d-0c80d91b782a_base_resized.jpg",
                 "description": "※在庫には限りがございます。なるべく入手したいと考えている方は「入荷お知らせメールを受け取る」をぜひご利用ください。"
-            },
-            {
-                "title": "【CoC6thシナリオ集】404街のタクシー SPLL:E192114",
-                "url": "https://reverinu.booth.pm/items/6842172",
-                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/6842172/970005a4-6b70-4de9-9bfb-16dd298326ba_base_resized.jpg",
-                "description": "検索しても見つからず、地図にも載っていない。 どこにも存在しないはずの街、404街。 あなたは、この不思議な街の新米タクシードライバーだ。 #一晩で遊べるシナリオ企画 参加作品。 ショップをフォローす"
             }
         ]
     },
