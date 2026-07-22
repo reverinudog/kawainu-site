@@ -2,57 +2,8 @@
     "youtube": {
         "label": "YouTube",
         "icon": "▶",
-        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
-        "items": [
-            {
-                "title": "【 #最終検体 】黒幕系VTuberがデスゲームに迷い込んだようです【 川犬視点 】",
-                "url": "https://www.youtube.com/watch?v=0h9s3KvYMdQ",
-                "thumb": "https://i1.ytimg.com/vi/0h9s3KvYMdQ/hqdefault.jpg",
-                "date": "2026-07-18"
-            },
-            {
-                "title": "【 CoC 】近くて遠きは終着点 #にじさんじちかしゅう #ちかしゅう08 【 クトゥルフ神話TRPG 】KP 川犬  PL 渚トラウト/一橋綾人/周央サンゴ/健屋花那",
-                "url": "https://www.youtube.com/watch?v=5mmfzDzTOh4",
-                "thumb": "https://i2.ytimg.com/vi/5mmfzDzTOh4/hqdefault.jpg",
-                "date": "2026-07-17"
-            },
-            {
-                "title": "ChatGPTに無理やりTRPGのGMをやらせてみたｗｗ【GPT-Live】",
-                "url": "https://www.youtube.com/watch?v=yAyUdSYBPz0",
-                "thumb": "https://i2.ytimg.com/vi/yAyUdSYBPz0/hqdefault.jpg",
-                "date": "2026-07-10"
-            },
-            {
-                "title": "【視聴者参加型RPG #8】君の発言がゲームに反映される──！【 川犬 】",
-                "url": "https://www.youtube.com/watch?v=FPViPeBUTbE",
-                "thumb": "https://i3.ytimg.com/vi/FPViPeBUTbE/hqdefault.jpg",
-                "date": "2026-07-07"
-            },
-            {
-                "title": "【 CoC 】近くて遠きは終着点 #きなさひちかしゅう #ちかしゅう07 【 クトゥルフ神話TRPG 】KP 川犬  PL すぎうらきりと/藍月なくる/さけこ。/ひよりん*",
-                "url": "https://www.youtube.com/watch?v=xRiRUjZ6cbA",
-                "thumb": "https://i1.ytimg.com/vi/xRiRUjZ6cbA/hqdefault.jpg",
-                "date": "2026-06-30"
-            },
-            {
-                "title": "#12 【完全初見】TRPG配信者が全力セリフ読みで『都市伝説解体センター』【 川犬 】※ネタバレ注意",
-                "url": "https://www.youtube.com/watch?v=AL9ZnwxS5i0",
-                "thumb": "https://i2.ytimg.com/vi/AL9ZnwxS5i0/hqdefault.jpg",
-                "date": "2026-06-21"
-            },
-            {
-                "title": "【視聴者参加型RPG #7】君の発言がゲームに反映される──！【 川犬 】",
-                "url": "https://www.youtube.com/watch?v=KuEtnKZHT40",
-                "thumb": "https://i4.ytimg.com/vi/KuEtnKZHT40/hqdefault.jpg",
-                "date": "2026-06-20"
-            },
-            {
-                "title": "30,000人達成 & アンシギュ君花グッズ情報公開【 川犬 】",
-                "url": "https://www.youtube.com/watch?v=HI06iluKEKg",
-                "thumb": "https://i1.ytimg.com/vi/HI06iluKEKg/hqdefault.jpg",
-                "date": "2026-06-20"
-            }
-        ]
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA",
+        "items": []
     },
     "booth_trpg": {
         "label": "TRPG Scenarios",
