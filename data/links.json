@@ -2,57 +2,8 @@
     "youtube": {
         "label": "YouTube",
         "icon": "▶",
-        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
-        "items": [
-            {
-                "title": "【 CoC 】神話生物専門料理店・神味処の回し方！【ネタバレあり】",
-                "url": "https://www.youtube.com/watch?v=ev84VLQAiEE",
-                "thumb": "https://i2.ytimg.com/vi/ev84VLQAiEE/hqdefault.jpg",
-                "date": "2026-08-12"
-            },
-            {
-                "title": "【 CoC 】近くて遠きは終着点 #おかねやちかしゅう #ちかしゅう06 【 クトゥルフ神話TRPG 】KP 川犬  PL おらんじ～な/影。/neon/栗山やんみ",
-                "url": "https://www.youtube.com/watch?v=vdcrA85eI60",
-                "thumb": "https://i3.ytimg.com/vi/vdcrA85eI60/hqdefault.jpg",
-                "date": "2026-08-01"
-            },
-            {
-                "title": "【 CoC 伍 】神話生物専門料理店・神味処 #神味処01 【 クトゥルフ神話TRPG 】KP 川犬  PL ふぁいと犬/pinu./榊ゆうり",
-                "url": "https://www.youtube.com/watch?v=xn-FO2BFjW8",
-                "thumb": "https://i1.ytimg.com/vi/xn-FO2BFjW8/hqdefault.jpg",
-                "date": "2026-07-27"
-            },
-            {
-                "title": "【 CoC 肆 】神話生物専門料理店・神味処 #神味処01 【 クトゥルフ神話TRPG 】KP 川犬  PL ふぁいと犬/pinu./榊ゆうり",
-                "url": "https://www.youtube.com/watch?v=1KbGSpbWkKI",
-                "thumb": "https://i2.ytimg.com/vi/1KbGSpbWkKI/hqdefault.jpg",
-                "date": "2026-07-27"
-            },
-            {
-                "title": "【 CoC 参 】神話生物専門料理店・神味処 #神味処01 【 クトゥルフ神話TRPG 】KP 川犬  PL ふぁいと犬/pinu./榊ゆうり",
-                "url": "https://www.youtube.com/watch?v=W_NwiyXjlfo",
-                "thumb": "https://i4.ytimg.com/vi/W_NwiyXjlfo/hqdefault.jpg",
-                "date": "2026-07-27"
-            },
-            {
-                "title": "【 CoC 弐 】神話生物専門料理店・神味処 #神味処01 【 クトゥルフ神話TRPG 】KP 川犬  PL ふぁいと犬/pinu./榊ゆうり",
-                "url": "https://www.youtube.com/watch?v=6jIISgm9DnQ",
-                "thumb": "https://i3.ytimg.com/vi/6jIISgm9DnQ/hqdefault.jpg",
-                "date": "2026-07-27"
-            },
-            {
-                "title": "【 CoC 壱 】神話生物専門料理店・神味処 #神味処01 【 クトゥルフ神話TRPG 】KP 川犬  PL ふぁいと犬/pinu./榊ゆうり",
-                "url": "https://www.youtube.com/watch?v=Mq6neGHuX0o",
-                "thumb": "https://i2.ytimg.com/vi/Mq6neGHuX0o/hqdefault.jpg",
-                "date": "2026-07-27"
-            },
-            {
-                "title": "【 CoC 】近くて遠きは終着点 #にじさんじちかしゅう #ちかしゅう08 【 クトゥルフ神話TRPG 】KP 川犬  PL 渚トラウト/一橋綾人/周央サンゴ/健屋花那",
-                "url": "https://www.youtube.com/watch?v=5mmfzDzTOh4",
-                "thumb": "https://i2.ytimg.com/vi/5mmfzDzTOh4/hqdefault.jpg",
-                "date": "2026-07-24"
-            }
-        ]
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA",
+        "items": []
     },
     "booth_trpg": {
         "label": "TRPG Scenarios",
