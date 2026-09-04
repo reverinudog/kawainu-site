@@ -2,8 +2,57 @@
     "youtube": {
         "label": "YouTube",
         "icon": "▶",
-        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA",
-        "items": []
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
+        "items": [
+            {
+                "title": "【 CoC 予備日 】神話生物専門料理店・神味処 #神味処01 【 クトゥルフ神話TRPG 】KP 川犬  PL ふぁいと犬/pinu./榊ゆうり",
+                "url": "https://www.youtube.com/watch?v=8sEi-k7g_K0",
+                "thumb": "https://i1.ytimg.com/vi/8sEi-k7g_K0/hqdefault.jpg",
+                "date": "2026-09-04"
+            },
+            {
+                "title": "【 近未来CoC 】君の名に花束をおくらない #宗松シギュ花 【 クトゥルフ神話TRPG 】KP川犬 PL 宗谷いちか/松永依織",
+                "url": "https://www.youtube.com/watch?v=PQQ40x77cYc",
+                "thumb": "https://i1.ytimg.com/vi/PQQ40x77cYc/hqdefault.jpg",
+                "date": "2026-08-27"
+            },
+            {
+                "title": "【 近未来CoC 】バイオロイドはシンギュラリティの到達を夢見る #宗松シギュ花 【 クトゥルフ神話TRPG 】KP川犬 PL 宗谷いちか/松永依織",
+                "url": "https://www.youtube.com/watch?v=xUwiYBrlMR0",
+                "thumb": "https://i1.ytimg.com/vi/xUwiYBrlMR0/hqdefault.jpg",
+                "date": "2026-08-26"
+            },
+            {
+                "title": "8周年カウントダウン&雑談【 川犬 】",
+                "url": "https://www.youtube.com/watch?v=WziYHrHFgPI",
+                "thumb": "https://i4.ytimg.com/vi/WziYHrHFgPI/hqdefault.jpg",
+                "date": "2026-08-26"
+            },
+            {
+                "title": "【 怪談 】夜の海【 川犬 】",
+                "url": "https://www.youtube.com/watch?v=OhbuZcGtD0Q",
+                "thumb": "https://i4.ytimg.com/vi/OhbuZcGtD0Q/hqdefault.jpg",
+                "date": "2026-08-17"
+            },
+            {
+                "title": "【Co-create Stories #10】本気のシリアス回【 川犬 】",
+                "url": "https://www.youtube.com/watch?v=3NWex4fugQ4",
+                "thumb": "https://i4.ytimg.com/vi/3NWex4fugQ4/hqdefault.jpg",
+                "date": "2026-08-17"
+            },
+            {
+                "title": "【視聴者参加型RPG #9】君の発言がゲームに反映される──！【 川犬 】",
+                "url": "https://www.youtube.com/watch?v=vKIqhumg2sE",
+                "thumb": "https://i3.ytimg.com/vi/vKIqhumg2sE/hqdefault.jpg",
+                "date": "2026-08-16"
+            },
+            {
+                "title": "【 CoC 】神話生物専門料理店・神味処の回し方！【ネタバレあり】",
+                "url": "https://www.youtube.com/watch?v=ev84VLQAiEE",
+                "thumb": "https://i2.ytimg.com/vi/ev84VLQAiEE/hqdefault.jpg",
+                "date": "2026-08-12"
+            }
+        ]
     },
     "booth_trpg": {
         "label": "TRPG Scenarios",
