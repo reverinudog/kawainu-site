@@ -2,8 +2,57 @@
     "youtube": {
         "label": "YouTube",
         "icon": "▶",
-        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA",
-        "items": []
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
+        "items": [
+            {
+                "title": "#2 【完全初見】TRPG配信者が『アクアリウムは踊らない』【 川犬 】※ネタバレ注意",
+                "url": "https://www.youtube.com/watch?v=h18g-Cn8aDI",
+                "thumb": "https://i1.ytimg.com/vi/h18g-Cn8aDI/hqdefault.jpg",
+                "date": "2026-10-15"
+            },
+            {
+                "title": "ChatGPTにTRPGのGMをやらせてみた コンビニ編【川犬】 #chatgpt #trpg #川犬",
+                "url": "https://www.youtube.com/watch?v=zaY40fyDHaw",
+                "thumb": "https://i3.ytimg.com/vi/zaY40fyDHaw/hqdefault.jpg",
+                "date": "2026-10-15"
+            },
+            {
+                "title": "【 CoC/後編 】天獄 #うさちゃん天獄 #天獄05 【 クトゥルフ神話TRPG 】KP川犬 PL作楽つきひ/七篠さよ/未確認動物うまぴ",
+                "url": "https://www.youtube.com/watch?v=J44kFFNI_ns",
+                "thumb": "https://i3.ytimg.com/vi/J44kFFNI_ns/hqdefault.jpg",
+                "date": "2026-10-15"
+            },
+            {
+                "title": "【 CoC/前編 】天獄 #うさちゃん天獄 #天獄05 【 クトゥルフ神話TRPG 】KP川犬 PL作楽つきひ/七篠さよ/未確認動物うまぴ",
+                "url": "https://www.youtube.com/watch?v=fgm5arfPLnM",
+                "thumb": "https://i3.ytimg.com/vi/fgm5arfPLnM/hqdefault.jpg",
+                "date": "2026-10-15"
+            },
+            {
+                "title": "ChatGPTにTRPGのGMをやらせてみた【川犬】 #chatgpt #trpg #川犬",
+                "url": "https://www.youtube.com/watch?v=Ur4MmXNfDJE",
+                "thumb": "https://i2.ytimg.com/vi/Ur4MmXNfDJE/hqdefault.jpg",
+                "date": "2026-10-14"
+            },
+            {
+                "title": "#1 【完全初見】TRPG配信者が『アクアリウムは踊らない』【 川犬 】※ネタバレ注意",
+                "url": "https://www.youtube.com/watch?v=ybIgifjf_ec",
+                "thumb": "https://i2.ytimg.com/vi/ybIgifjf_ec/hqdefault.jpg",
+                "date": "2026-10-11"
+            },
+            {
+                "title": "【配信者向け】小さくて高性能なキャプボ！？【#CovertDock3 #ShadowCast3】",
+                "url": "https://www.youtube.com/watch?v=jHbiEO8aBO4",
+                "thumb": "https://i3.ytimg.com/vi/jHbiEO8aBO4/hqdefault.jpg",
+                "date": "2026-09-30"
+            },
+            {
+                "title": "クトゥルフ神話TRPG 近くて遠きは終着点 無印＋Another PV #coc #クトゥルフ神話trpg",
+                "url": "https://www.youtube.com/watch?v=Od3q4qxNNig",
+                "thumb": "https://i4.ytimg.com/vi/Od3q4qxNNig/hqdefault.jpg",
+                "date": "2026-09-29"
+            }
+        ]
     },
     "booth_trpg": {
         "label": "TRPG Scenarios",
