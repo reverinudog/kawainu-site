@@ -2,8 +2,57 @@
     "youtube": {
         "label": "YouTube",
         "icon": "▶",
-        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA",
-        "items": []
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
+        "items": [
+            {
+                "title": "【 CoC/前編 】天獄 #うさちゃん天獄 #天獄05 【 クトゥルフ神話TRPG 】KP川犬 PL作楽つきひ/七篠さよ/未確認動物うまぴ",
+                "url": "https://www.youtube.com/watch?v=fgm5arfPLnM",
+                "thumb": "https://i3.ytimg.com/vi/fgm5arfPLnM/hqdefault.jpg",
+                "date": "2026-10-20"
+            },
+            {
+                "title": "ChatGPTにTRPGのGMをやらせてみた ファンタジー編【川犬】 #chatgpt #trpg #川犬",
+                "url": "https://www.youtube.com/watch?v=chsH_Eygmv0",
+                "thumb": "https://i4.ytimg.com/vi/chsH_Eygmv0/hqdefault.jpg",
+                "date": "2026-10-16"
+            },
+            {
+                "title": "#2 【完全初見】TRPG配信者が『アクアリウムは踊らない』【 川犬 】※ネタバレ注意",
+                "url": "https://www.youtube.com/watch?v=h18g-Cn8aDI",
+                "thumb": "https://i1.ytimg.com/vi/h18g-Cn8aDI/hqdefault.jpg",
+                "date": "2026-10-15"
+            },
+            {
+                "title": "ChatGPTにTRPGのGMをやらせてみた コンビニ編【川犬】 #chatgpt #trpg #川犬",
+                "url": "https://www.youtube.com/watch?v=zaY40fyDHaw",
+                "thumb": "https://i3.ytimg.com/vi/zaY40fyDHaw/hqdefault.jpg",
+                "date": "2026-10-15"
+            },
+            {
+                "title": "【 CoC/後編 】天獄 #うさちゃん天獄 #天獄05 【 クトゥルフ神話TRPG 】KP川犬 PL作楽つきひ/七篠さよ/未確認動物うまぴ",
+                "url": "https://www.youtube.com/watch?v=J44kFFNI_ns",
+                "thumb": "https://i3.ytimg.com/vi/J44kFFNI_ns/hqdefault.jpg",
+                "date": "2026-10-15"
+            },
+            {
+                "title": "ChatGPTにTRPGのGMをやらせてみた【川犬】 #chatgpt #trpg #川犬",
+                "url": "https://www.youtube.com/watch?v=Ur4MmXNfDJE",
+                "thumb": "https://i2.ytimg.com/vi/Ur4MmXNfDJE/hqdefault.jpg",
+                "date": "2026-10-14"
+            },
+            {
+                "title": "#1 【完全初見】TRPG配信者が『アクアリウムは踊らない』【 川犬 】※ネタバレ注意",
+                "url": "https://www.youtube.com/watch?v=ybIgifjf_ec",
+                "thumb": "https://i2.ytimg.com/vi/ybIgifjf_ec/hqdefault.jpg",
+                "date": "2026-10-11"
+            },
+            {
+                "title": "【配信者向け】小さくて高性能なキャプボ！？【#CovertDock3 #ShadowCast3】",
+                "url": "https://www.youtube.com/watch?v=jHbiEO8aBO4",
+                "thumb": "https://i3.ytimg.com/vi/jHbiEO8aBO4/hqdefault.jpg",
+                "date": "2026-09-30"
+            }
+        ]
     },
     "booth_trpg": {
         "label": "TRPG Scenarios",
@@ -11,10 +60,16 @@
         "profileUrl": "https://reverinu.booth.pm",
         "items": [
             {
+                "title": "🔔10/26まで20%OFF【リニューアル/CoC6th】近くて遠きは終着点Another SPLL:E196957",
+                "url": "https://reverinu.booth.pm/items/5826495",
+                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/5826495/2d54c202-eccc-4e5c-b747-c9ecda53cbc5_base_resized.jpg",
+                "description": "――これは似て非なるもう一つの終着点へと至る物語。 ※本シナリオは『近くて遠きは終着点(無印)』未通過でも楽しんでいただける内容となっております。本シナリオ通過後に無印を通過することも可能です。 ht"
+            },
+            {
                 "title": "【完全無料/CoC6th】近くて遠きは終着点",
                 "url": "https://reverinu.booth.pm/items/5077218",
-                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/5077218/fe7bd2eb-dc4a-4078-996e-59ba04a5cb27_base_resized.jpg",
-                "description": "――あなたたちは知っている。 この扉が『終着点』であることを。 Ver1.9.9がでました。Ver2.0.0に先駆けて素材とトレーラーをリニューアルしました！ ショップをフォローすれば大きなアップデー"
+                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/5077218/424064c1-ae99-4856-a8c0-312b6a983f1e_base_resized.jpg",
+                "description": "――あなたたちは知っている。 この扉が『終着点』であることを。 Ver2.0.0がでました。より回しやすくなりました！！ ショップをフォローすれば大きなアップデートが来た時に気づけるのでオススメです！"
             },
             {
                 "title": "【TRPGプレイヤー向け便利ツール】卓鯖ビルダー",
@@ -23,9 +78,9 @@
                 "description": "TRPGやろうぜ！ 立卓ー！ でも、Discordの準備が面倒だぜ！ そんなときに！ 卓鯖ビルダー！ 卓鯖ビルダーはDiscordでの卓ごとに手作業で作っていたチャンネル一式を、あらかじめ作っておいた"
             },
             {
-                "title": "【CoC6th】神話生物専門料理店・神味処 SPLL:E188850",
+                "title": "🔔10/26まで20%OFF【CoC6th】神話生物専門料理店・神味処 SPLL:E188850",
                 "url": "https://reverinu.booth.pm/items/8633695",
-                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/8633695/e34f8816-d83a-46bc-a98b-f423eb082a11_base_resized.jpg",
+                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/8633695/441267fa-cd72-4405-abea-f2be94dbb677_base_resized.jpg",
                 "description": "한국어판을 시범적으로 지원합니다. 제품판에는 한국어판 시나리오북도 함께 포함되어 있습니다. 단, 코코포리아 방은 일본어판으로 되어 있으므로 필요에 따라 수정해 주세요. それは「食材"
             },
             {
@@ -39,12 +94,6 @@
                 "url": "https://reverinu.booth.pm/items/2273308",
                 "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/2273308/94f8947d-4d82-41ff-92b4-82d2c1a964dd_base_resized.jpg",
                 "description": "アンシギュのリメイク版出ました！ 君花のリメイク版も出ました！ グッズも出ました！！！！ https://reverinu.booth.pm/items/8493430 ▼このシナリオが好きな方へ 他"
-            },
-            {
-                "title": "【好きなキャラで好きな物語を生きるRPG】Co-create Stories【AI利用料0円モード/🌐日英中韓対応】",
-                "url": "https://reverinu.booth.pm/items/8435817",
-                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/8435817/2619b755-b049-4e71-952e-27e7b0e149c0_base_resized.jpg",
-                "description": "🌐 EN / 简体·繁體中文 / 한국어 / 日本語 supported. You can switch languages in-game. (This page is written in Jap"
             }
         ]
     },
