@@ -2,14 +2,69 @@
     "youtube": {
         "label": "YouTube",
         "icon": "▶",
-        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA",
-        "items": []
+        "profileUrl": "https://www.youtube.com/channel/UC1B8BqE9nhTIVh-egZPGZbA?sub_confirmation=1",
+        "items": [
+            {
+                "title": "#3 【完全初見】TRPG配信者が『アクアリウムは踊らない』【 川犬 】※ネタバレ注意",
+                "url": "https://www.youtube.com/watch?v=S9MmDHmc2gI",
+                "thumb": "https://i4.ytimg.com/vi/S9MmDHmc2gI/hqdefault.jpg",
+                "date": "2026-10-27"
+            },
+            {
+                "title": "【 CoC/後編 】天獄 #うさちゃん天獄 #天獄05 【 クトゥルフ神話TRPG 】KP川犬 PL作楽つきひ/七篠さよ/未確認動物うまぴ",
+                "url": "https://www.youtube.com/watch?v=J44kFFNI_ns",
+                "thumb": "https://i3.ytimg.com/vi/J44kFFNI_ns/hqdefault.jpg",
+                "date": "2026-10-22"
+            },
+            {
+                "title": "【 CoC/前編 】天獄 #うさちゃん天獄 #天獄05 【 クトゥルフ神話TRPG 】KP川犬 PL作楽つきひ/七篠さよ/未確認動物うまぴ",
+                "url": "https://www.youtube.com/watch?v=fgm5arfPLnM",
+                "thumb": "https://i3.ytimg.com/vi/fgm5arfPLnM/hqdefault.jpg",
+                "date": "2026-10-20"
+            },
+            {
+                "title": "ChatGPTにTRPGのGMをやらせてみた ファンタジー編【川犬】 #chatgpt #trpg #川犬",
+                "url": "https://www.youtube.com/watch?v=chsH_Eygmv0",
+                "thumb": "https://i4.ytimg.com/vi/chsH_Eygmv0/hqdefault.jpg",
+                "date": "2026-10-16"
+            },
+            {
+                "title": "#2 【完全初見】TRPG配信者が『アクアリウムは踊らない』【 川犬 】※ネタバレ注意",
+                "url": "https://www.youtube.com/watch?v=h18g-Cn8aDI",
+                "thumb": "https://i1.ytimg.com/vi/h18g-Cn8aDI/hqdefault.jpg",
+                "date": "2026-10-15"
+            },
+            {
+                "title": "ChatGPTにTRPGのGMをやらせてみた コンビニ編【川犬】 #chatgpt #trpg #川犬",
+                "url": "https://www.youtube.com/watch?v=zaY40fyDHaw",
+                "thumb": "https://i3.ytimg.com/vi/zaY40fyDHaw/hqdefault.jpg",
+                "date": "2026-10-15"
+            },
+            {
+                "title": "ChatGPTにTRPGのGMをやらせてみた【川犬】 #chatgpt #trpg #川犬",
+                "url": "https://www.youtube.com/watch?v=Ur4MmXNfDJE",
+                "thumb": "https://i2.ytimg.com/vi/Ur4MmXNfDJE/hqdefault.jpg",
+                "date": "2026-10-14"
+            },
+            {
+                "title": "#1 【完全初見】TRPG配信者が『アクアリウムは踊らない』【 川犬 】※ネタバレ注意",
+                "url": "https://www.youtube.com/watch?v=ybIgifjf_ec",
+                "thumb": "https://i2.ytimg.com/vi/ybIgifjf_ec/hqdefault.jpg",
+                "date": "2026-10-11"
+            }
+        ]
     },
     "booth_trpg": {
         "label": "TRPG Scenarios",
         "icon": "📖",
         "profileUrl": "https://reverinu.booth.pm",
         "items": [
+            {
+                "title": "【CoC6th/エモクロア】窓の中の箱庭にて",
+                "url": "https://reverinu.booth.pm/items/3081106",
+                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/3081106/20ccf004-97b7-4337-b19e-cf08bf6dc89d_base_resized.jpg",
+                "description": "目目目目目目目目目目目目目目目目目目目目目目目目目目目目目目 目が合った。 ――いや、目と\"逢\"った。 目目目目目目目目目目目目目目目目目目目目目目目目目目目目目目 ▼このシナリオが好きな方へ 他にも"
+            },
             {
                 "title": "【リニューアル/CoC6th】近くて遠きは終着点Another SPLL:E196957",
                 "url": "https://reverinu.booth.pm/items/5826495",
@@ -33,12 +88,6 @@
                 "url": "https://reverinu.booth.pm/items/8633695",
                 "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/8633695/e34f8816-d83a-46bc-a98b-f423eb082a11_base_resized.jpg",
                 "description": "한국어판을 시범적으로 지원합니다. 제품판에는 한국어판 시나리오북도 함께 포함되어 있습니다. 단, 코코포리아 방은 일본어판으로 되어 있으므로 필요에 따라 수정해 주세요. それは「食材"
-            },
-            {
-                "title": "アンシギュ&君花グッズ『A journey for two, with you.』",
-                "url": "https://reverinu.booth.pm/items/8493430",
-                "thumb": "https://booth.pximg.net/c/620x620/a1d6ba49-af02-4b2d-82a1-4dea1f027c9e/i/8493430/5e1b8afb-8395-447d-bfb5-e09c03f3c0db_base_resized.jpg",
-                "description": "近未来キャンペーンシナリオ 『アンドロイドはシンギュラリティの到達を夢見る』 『君の名に花束を』 のグッズが出ました！ 数に限りがございます！おはやめに～！ スチルイラスト：tenP様 https:/"
             },
             {
                 "title": "【君花もリメイク！】近未来クトゥルフ神話TRPGシナリオ集『アンドロイドはシンギュラリティの到達を夢見る』『君の名に花束を』（2部キャンペーン）",
