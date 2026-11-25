@@ -1612,6 +1612,17 @@ section {
     line-height: 1.7;
 }
 
+.form-privacy-note {
+    margin: 4px 0 0;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.form-privacy-note a {
+    color: #00ff6a;
+}
+
 .form-submit {
     display: flex;
     align-items: center;
